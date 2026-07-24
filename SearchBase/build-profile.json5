@@ -1,0 +1,60 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\CuteDuan\\.ohos\\config\\default_SearchBase_3F8PNQkv-YP6WYsM94qXtZNvMlvlOf47Fsy_6DS3wxQ=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B046D26A55385F82AAACEF6089A07BBF7CF3322E3EEC56DEE031074EBA133C03F4CF913E9C3FD24",
+          "profile": "C:\\Users\\CuteDuan\\.ohos\\config\\default_SearchBase_3F8PNQkv-YP6WYsM94qXtZNvMlvlOf47Fsy_6DS3wxQ=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\CuteDuan\\.ohos\\config\\default_SearchBase_3F8PNQkv-YP6WYsM94qXtZNvMlvlOf47Fsy_6DS3wxQ=.p12",
+          "storePassword": "0000001B94947DE6770DD827F6A3C9C0F7E92371BB27BCB4B3A9EE45E43FA29AB35FCB69D5AD8EB5A4A5F9"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "targetSdkVersion": "6.1.0(23)",
+        "compatibleSdkVersion": "6.0.0(20)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug",
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "search",
+      "srcPath": "./component/search",
+    }
+  ]
+}
