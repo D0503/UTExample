@@ -1,0 +1,6 @@
+# ninja log v6
+1	169	1784797540845920959	tinyxml2-test-build/CMakeFiles/tinyxml2.dir/tinyxml2.cpp.o	fe01a3631147cc6f
+171	255	1784797541015347342	tinyxml2-test-build/libtinyxml2.a	77e600957234cbe6
+2	395	1784797540846440709	CMakeFiles/entry_test.dir/native_test_napi.cpp.o	fe4213b3a01f0081
+2	423	1784797540846816167	CMakeFiles/entry_test.dir/tests/tinyxml2_tests.cpp.o	985844a89df06111
+423	467	1784797541267363104	/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/build/default/intermediates/cmake/ohosTest/obj/x86_64/libentry_test.so	37b8ef089c790eb1

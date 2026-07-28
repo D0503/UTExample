@@ -1,0 +1,80 @@
+ninja: Entering directory `D:\HW\UTDesign\cases\libuv\libuv-golden-demo\entry\.cxx\default\default\debug\x86_64'
+[1/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/strtok.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[2/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/version.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[3/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/strscpy.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[4/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/uv-data-getter-setters.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[5/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/thread-common.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[6/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/fs-poll.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[7/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/inet.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[8/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/dl.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[9/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/random.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[10/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/idna.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[11/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/timer.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[12/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/getaddrinfo.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[13/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/threadpool.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[14/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/async.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[15/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/uv-common.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[16/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/core.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[17/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/fs.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[18/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/procfs-exepath.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[19/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/poll.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[20/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/random-getrandom.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[21/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/loop-watcher.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[22/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/random-devurandom.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[23/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/getnameinfo.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[24/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/random-sysctl-linux.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[25/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/process.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[26/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/loop.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[27/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/tty.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[28/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/tcp.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[29/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/pipe.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[30/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/thread.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[31/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/proctitle.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[32/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/signal.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[33/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/stream.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+D:/HW/UTDesign/cases/libuv/libuv-golden-demo/library/src/unix/stream.c:990:56: warning: comparison of integers of different signs: 'unsigned long' and 'long' [-Wsign-compare]
+  for (cmsg = CMSG_FIRSTHDR(msg); cmsg != NULL; cmsg = CMSG_NXTHDR(msg, cmsg)) {
+                                                       ^~~~~~~~~~~~~~~~~~~~~~
+E:/DevEco Studio/sdk/default/openharmony/native/sysroot/usr/include/sys/socket.h:360:44: note: expanded from macro 'CMSG_NXTHDR'
+        __CMSG_LEN(cmsg) + sizeof(struct cmsghdr) >= __MHDR_END(mhdr) - (unsigned char *)(cmsg) \
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning generated.
+[34/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/udp.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[35/37] Building C object libuv-build/CMakeFiles/uv_a.dir/src/unix/linux.c.o
+clang: warning: argument unused during compilation: '--gcc-toolchain=E:/DevEco Studio/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+[36/37] Linking C static library libuv-build\libuv.a
+[37/37] Linking CXX shared library D:\HW\UTDesign\cases\libuv\libuv-golden-demo\entry\build\default\intermediates\cmake\default\obj\x86_64\libentry.so

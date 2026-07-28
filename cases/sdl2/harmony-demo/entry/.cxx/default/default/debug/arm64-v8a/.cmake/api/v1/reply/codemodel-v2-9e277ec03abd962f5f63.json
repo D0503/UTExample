@@ -1,0 +1,194 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-5c56eed329a85d7ca96c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.6.0"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "sdl2",
+					"childIndexes" : 
+					[
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-sdl2-Debug-962575d582099d772f62.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.11"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"build" : "cjson",
+					"childIndexes" : 
+					[
+						3,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-cjson-Debug-bb32e2f6b309899a7351.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.5"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 2,
+					"source" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/third_party/cjson",
+					"targetIndexes" : 
+					[
+						2,
+						4
+					]
+				},
+				{
+					"build" : "cjson/tests",
+					"jsonFile" : "directory-cjson.tests-Debug-9bc62e5ed72c8d3dd987.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.5"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/third_party/cjson/tests"
+				},
+				{
+					"build" : "cjson/fuzzing",
+					"jsonFile" : "directory-cjson.fuzzing-Debug-b2800eb3818e7b34137a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.5"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/third_party/cjson/fuzzing"
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "sdl2_gui_validation",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						2
+					],
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "SDL2",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2,
+						3,
+						4
+					],
+					"name" : "cJSON",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						2,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "SDL2::@5c348aa8f160714199f9",
+					"jsonFile" : "target-SDL2-Debug-4cdc071bf4cc33cb90b9.json",
+					"name" : "SDL2",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "SDL2main::@5c348aa8f160714199f9",
+					"jsonFile" : "target-SDL2main-Debug-351507abceaa546a3135.json",
+					"name" : "SDL2main",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "cjson::@5229f3b4a20129d7edbc",
+					"jsonFile" : "target-cjson-Debug-741dd731c70e943ace92.json",
+					"name" : "cjson",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "entry::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-entry-Debug-2e406371ccda22067427.json",
+					"name" : "entry",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "uninstall::@5229f3b4a20129d7edbc",
+					"jsonFile" : "target-uninstall-Debug-e59260aa577b4117ebd2.json",
+					"name" : "uninstall",
+					"projectIndex" : 2
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/arm64-v8a",
+		"source" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/src/main/cpp"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

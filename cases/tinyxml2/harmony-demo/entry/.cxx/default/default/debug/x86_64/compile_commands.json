@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64",
+  "command": "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/clang++ --target=x86_64-linux-ohos --gcc-toolchain=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm --sysroot=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot -DTINYXML2_DEBUG -D_FILE_OFFSET_BITS=64 -Dentry_EXPORTS -I/Users/guoyutong/command-line-tools/sdk/default/hms/native/sysroot/usr/include -I/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/library -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security  -std=c++17 -D__MUSL__ -O0 -g -fno-limit-debug-info  -fPIC -o CMakeFiles/entry.dir/napi_init.cpp.o -c /Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/src/main/cpp/napi_init.cpp",
+  "file": "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/src/main/cpp/napi_init.cpp",
+  "output": "CMakeFiles/entry.dir/napi_init.cpp.o"
+},
+{
+  "directory": "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64",
+  "command": "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/clang++ --target=x86_64-linux-ohos --gcc-toolchain=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm --sysroot=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot -DTINYXML2_DEBUG -D_FILE_OFFSET_BITS=64 -I/Users/guoyutong/command-line-tools/sdk/default/hms/native/sysroot/usr/include -I/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/library -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security  -std=c++17 -D__MUSL__ -O0 -g -fno-limit-debug-info  -fPIC -fvisibility=hidden -fvisibility-inlines-hidden -o tinyxml2-build/CMakeFiles/tinyxml2.dir/tinyxml2.cpp.o -c /Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/library/tinyxml2.cpp",
+  "file": "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/library/tinyxml2.cpp",
+  "output": "tinyxml2-build/CMakeFiles/tinyxml2.dir/tinyxml2.cpp.o"
+}
+]

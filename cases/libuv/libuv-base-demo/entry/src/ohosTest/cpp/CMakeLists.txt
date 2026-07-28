@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.15)
+project(libuv_harmony_test)
+
+get_filename_component(LIBUV_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../../../library" ABSOLUTE)
+get_filename_component(MAIN_CPP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../main/cpp" ABSOLUTE)
+set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
+set(LIBUV_BUILD_SHARED OFF CACHE BOOL "" FORCE)
+set(LIBUV_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(LIBUV_BUILD_BENCH OFF CACHE BOOL "" FORCE)
+add_subdirectory("${LIBUV_SOURCE_DIR}" libuv-test-build)
+
+add_library(entry_test SHARED native_test_napi.cpp "${MAIN_CPP_DIR}/libuv_checks.cpp")
+target_compile_features(entry_test PRIVATE cxx_std_17)
+target_include_directories(entry_test PRIVATE "${MAIN_CPP_DIR}" "${LIBUV_SOURCE_DIR}/include")
+target_link_libraries(entry_test PUBLIC uv_a libace_napi.z.so)

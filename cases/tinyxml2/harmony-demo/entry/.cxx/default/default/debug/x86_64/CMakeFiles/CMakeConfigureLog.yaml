@@ -1,0 +1,384 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeDetermineSystem.cmake:228 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The target system is: OHOS - 1 - x86_64
+      The host system is: Darwin - 25.5.0 - arm64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/clang 
+      Build flags: -fdata-sections;-ffunction-sections;-funwind-tables;-fstack-protector-strong;-no-canonical-prefixes;-fno-addrsig;-Wa,--noexecstack;-Wformat;-Werror=format-security;-D__MUSL__
+      Id flags: -c;--target=x86_64-linux-ohos 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
+      
+      The C compiler identification is Clang, found in:
+        /Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/3.28.2/CompilerIdC/CMakeCCompilerId.o
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/clang++ 
+      Build flags: -fdata-sections;-ffunction-sections;-funwind-tables;-fstack-protector-strong;-no-canonical-prefixes;-fno-addrsig;-Wa,--noexecstack;-Wformat;-Werror=format-security;-std=c++17;-D__MUSL__
+      Id flags: -c;--target=x86_64-linux-ohos 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
+      
+      The CXX compiler identification is Clang, found in:
+        /Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/3.28.2/CompilerIdCXX/CMakeCXXCompilerId.o
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/CMakeScratch/TryCompile-bD37Kp"
+      binary: "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/CMakeScratch/TryCompile-bD37Kp"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
+      CMAKE_CXX_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm"
+      CMAKE_CXX_COMPILER_TARGET: "x86_64-linux-ohos"
+      CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm"
+      CMAKE_C_COMPILER_TARGET: "x86_64-linux-ohos"
+      CMAKE_C_FLAGS: "-fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat  -D__MUSL__"
+      CMAKE_C_FLAGS_DEBUG: "-O0 -g -fno-limit-debug-info "
+      CMAKE_EXE_LINKER_FLAGS: "--rtlib=compiler-rt -fuse-ld=lld -Wl,--build-id=sha1 -Wl,--warn-shared-textrel -Wl,--fatal-warnings -lunwind -Wl,--no-undefined -Qunused-arguments -Wl,-z,noexecstack -Wl,--gc-sections "
+      CMAKE_POSITION_INDEPENDENT_CODE: "TRUE"
+      CMAKE_SYSROOT: "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot"
+      HMOS_SDK_NATIVE: "/Users/guoyutong/command-line-tools/sdk/default/hms/native"
+      OHOS_ARCH: "x86_64"
+      OHOS_SDK_NATIVE: "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/CMakeScratch/TryCompile-bD37Kp'
+        
+        Run Build Command(s): /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/bin/ninja -v cmTC_ffa49
+        [1/2] /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/clang --target=x86_64-linux-ohos --gcc-toolchain=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm --sysroot=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot   -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat  -D__MUSL__  -fPIE   -v -MD -MT CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o -c /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeCCompilerABI.c
+        OHOS (dev) clang version 15.0.4 (llvm-project 42cc7b4e11ddd57551a15d0a9ce0fa81ea32f6ab)
+        Target: x86_64-unknown-linux-ohos
+        Thread model: posix
+        InstalledDir: /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin
+        clang: warning: argument unused during compilation: '--gcc-toolchain=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+         (in-process)
+         "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/clang" -cc1 -triple x86_64-unknown-linux-ohos -emit-obj -mrelax-all --mrelax-relocations -mnoexecstack -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=1 -target-cpu x86-64 -tune-cpu generic -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=gdb -v -ffunction-sections -fdata-sections -fcoverage-compilation-dir=/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/CMakeScratch/TryCompile-bD37Kp -resource-dir /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4 -dependency-file CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o -sys-header-deps -D __MUSL__ -isysroot /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot -internal-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/include -internal-externc-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include/x86_64-linux-ohos -internal-externc-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/include -internal-externc-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include -Wformat -fdebug-compilation-dir=/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/CMakeScratch/TryCompile-bD37Kp -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o -x c /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeCCompilerABI.c
+        clang -cc1 version 15.0.4 based upon LLVM 15.0.4 default target arm64-apple-darwin25.5.0
+        ignoring nonexistent directory "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/include
+         /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include/x86_64-linux-ohos
+         /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include
+        End of search list.
+        [2/2] : && /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/clang --target=x86_64-linux-ohos --gcc-toolchain=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm --sysroot=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat  -D__MUSL__ --rtlib=compiler-rt -fuse-ld=lld -Wl,--build-id=sha1 -Wl,--warn-shared-textrel -Wl,--fatal-warnings -lunwind -Wl,--no-undefined -Qunused-arguments -Wl,-z,noexecstack -Wl,--gc-sections  -v CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o -o cmTC_ffa49   && :
+        OHOS (dev) clang version 15.0.4 (llvm-project 42cc7b4e11ddd57551a15d0a9ce0fa81ea32f6ab)
+        Target: x86_64-unknown-linux-ohos
+        Thread model: posix
+        InstalledDir: /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin
+         "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/ld.lld" --sysroot=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot -pie -z now -z relro -z max-page-size=4096 --hash-style=gnu --hash-style=both --enable-new-dtags --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib/ld-musl-x86_64.so.1 -o cmTC_ffa49 /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/Scrt1.o /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crti.o /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtbegin.o -L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos -L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/ -L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/../lib/x86_64-linux-ohos/ -L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/ --build-id=sha1 --warn-shared-textrel --fatal-warnings -lunwind --no-undefined -z noexecstack --gc-sections CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a -l:libunwind.a -lc /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a -l:libunwind.a /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtend.o /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crtn.o
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/include]
+          add: [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include/x86_64-linux-ohos]
+          add: [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include]
+        end of search list found
+        collapse include dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/include] ==> [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/include]
+        collapse include dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include/x86_64-linux-ohos] ==> [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include/x86_64-linux-ohos]
+        collapse include dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include] ==> [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include]
+        implicit include dirs: [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/include;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include/x86_64-linux-ohos;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld\\.lld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/CMakeScratch/TryCompile-bD37Kp']
+        ignore line: []
+        ignore line: [Run Build Command(s): /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/bin/ninja -v cmTC_ffa49]
+        ignore line: [[1/2] /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/clang --target=x86_64-linux-ohos --gcc-toolchain=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm --sysroot=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot   -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa --noexecstack -Wformat  -D__MUSL__  -fPIE   -v -MD -MT CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o -c /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeCCompilerABI.c]
+        ignore line: [OHOS (dev) clang version 15.0.4 (llvm-project 42cc7b4e11ddd57551a15d0a9ce0fa81ea32f6ab)]
+        ignore line: [Target: x86_64-unknown-linux-ohos]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin]
+        ignore line: [clang: warning: argument unused during compilation: '--gcc-toolchain=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]]
+        ignore line: [ (in-process)]
+        ignore line: [ "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/clang" -cc1 -triple x86_64-unknown-linux-ohos -emit-obj -mrelax-all --mrelax-relocations -mnoexecstack -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=1 -target-cpu x86-64 -tune-cpu generic -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=gdb -v -ffunction-sections -fdata-sections -fcoverage-compilation-dir=/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/CMakeScratch/TryCompile-bD37Kp -resource-dir /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4 -dependency-file CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o -sys-header-deps -D __MUSL__ -isysroot /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot -internal-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/include -internal-externc-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include/x86_64-linux-ohos -internal-externc-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/include -internal-externc-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include -Wformat -fdebug-compilation-dir=/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/CMakeScratch/TryCompile-bD37Kp -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o -x c /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeCCompilerABI.c]
+        ignore line: [clang -cc1 version 15.0.4 based upon LLVM 15.0.4 default target arm64-apple-darwin25.5.0]
+        ignore line: [ignoring nonexistent directory "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/include]
+        ignore line: [ /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include/x86_64-linux-ohos]
+        ignore line: [ /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include]
+        ignore line: [End of search list.]
+        ignore line: [[2/2] : && /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/clang --target=x86_64-linux-ohos --gcc-toolchain=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm --sysroot=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat  -D__MUSL__ --rtlib=compiler-rt -fuse-ld=lld -Wl,--build-id=sha1 -Wl,--warn-shared-textrel -Wl,--fatal-warnings -lunwind -Wl,--no-undefined -Qunused-arguments -Wl,-z,noexecstack -Wl,--gc-sections  -v CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o -o cmTC_ffa49   && :]
+        ignore line: [OHOS (dev) clang version 15.0.4 (llvm-project 42cc7b4e11ddd57551a15d0a9ce0fa81ea32f6ab)]
+        ignore line: [Target: x86_64-unknown-linux-ohos]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin]
+        link line: [ "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/ld.lld" --sysroot=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot -pie -z now -z relro -z max-page-size=4096 --hash-style=gnu --hash-style=both --enable-new-dtags --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib/ld-musl-x86_64.so.1 -o cmTC_ffa49 /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/Scrt1.o /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crti.o /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtbegin.o -L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos -L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/ -L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/../lib/x86_64-linux-ohos/ -L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/ --build-id=sha1 --warn-shared-textrel --fatal-warnings -lunwind --no-undefined -z noexecstack --gc-sections CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a -l:libunwind.a -lc /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a -l:libunwind.a /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtend.o /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crtn.o]
+          arg [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/ld.lld] ==> ignore
+          arg [--sysroot=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-znow] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-zmax-page-size=4096] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--hash-style=both] ==> ignore
+          arg [--enable-new-dtags] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib/ld-musl-x86_64.so.1] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_ffa49] ==> ignore
+          arg [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/Scrt1.o] ==> obj [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/Scrt1.o]
+          arg [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crti.o] ==> obj [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crti.o]
+          arg [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtbegin.o] ==> obj [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtbegin.o]
+          arg [-L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos] ==> dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos]
+          arg [-L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/] ==> dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/]
+          arg [-L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/../lib/x86_64-linux-ohos/] ==> dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/../lib/x86_64-linux-ohos/]
+          arg [-L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/] ==> dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/]
+          arg [--build-id=sha1] ==> ignore
+          arg [--warn-shared-textrel] ==> ignore
+          arg [--fatal-warnings] ==> ignore
+          arg [-lunwind] ==> lib [unwind]
+          arg [--no-undefined] ==> ignore
+          arg [-znoexecstack] ==> ignore
+          arg [--gc-sections] ==> ignore
+          arg [CMakeFiles/cmTC_ffa49.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a] ==> lib [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a]
+          arg [-l:libunwind.a] ==> lib [-l:libunwind.a]
+          arg [-lc] ==> lib [c]
+          arg [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a] ==> lib [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a]
+          arg [-l:libunwind.a] ==> lib [-l:libunwind.a]
+          arg [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtend.o] ==> obj [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtend.o]
+          arg [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crtn.o] ==> obj [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crtn.o]
+        remove lib [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a]
+        remove lib [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a]
+        collapse library dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos] ==> [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos]
+        collapse library dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/] ==> [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib]
+        collapse library dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/../lib/x86_64-linux-ohos/] ==> [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/x86_64-linux-ohos]
+        collapse library dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/] ==> [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos]
+        implicit libs: [unwind;-l:libunwind.a;c;-l:libunwind.a]
+        implicit objs: [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/Scrt1.o;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crti.o;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtbegin.o;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtend.o;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crtn.o]
+        implicit dirs: [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/x86_64-linux-ohos;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/CMakeScratch/TryCompile-QBbpuw"
+      binary: "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/CMakeScratch/TryCompile-QBbpuw"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
+      CMAKE_CXX_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm"
+      CMAKE_CXX_COMPILER_TARGET: "x86_64-linux-ohos"
+      CMAKE_CXX_FLAGS: "-fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat  -std=c++17 -D__MUSL__"
+      CMAKE_CXX_FLAGS_DEBUG: "-O0 -g -fno-limit-debug-info "
+      CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm"
+      CMAKE_C_COMPILER_TARGET: "x86_64-linux-ohos"
+      CMAKE_EXE_LINKER_FLAGS: "--rtlib=compiler-rt -fuse-ld=lld -Wl,--build-id=sha1 -Wl,--warn-shared-textrel -Wl,--fatal-warnings -lunwind -Wl,--no-undefined -Qunused-arguments -Wl,-z,noexecstack -Wl,--gc-sections "
+      CMAKE_POSITION_INDEPENDENT_CODE: "TRUE"
+      CMAKE_SYSROOT: "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot"
+      HMOS_SDK_NATIVE: "/Users/guoyutong/command-line-tools/sdk/default/hms/native"
+      OHOS_ARCH: "x86_64"
+      OHOS_SDK_NATIVE: "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/CMakeScratch/TryCompile-QBbpuw'
+        
+        Run Build Command(s): /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/bin/ninja -v cmTC_97fbd
+        [1/2] /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/clang++ --target=x86_64-linux-ohos --gcc-toolchain=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm --sysroot=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot   -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat  -std=c++17 -D__MUSL__  -fPIE   -v -MD -MT CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o -c /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp
+        OHOS (dev) clang version 15.0.4 (llvm-project 42cc7b4e11ddd57551a15d0a9ce0fa81ea32f6ab)
+        Target: x86_64-unknown-linux-ohos
+        Thread model: posix
+        InstalledDir: /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin
+        clang++: warning: argument unused during compilation: '--gcc-toolchain=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]
+         (in-process)
+         "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/clang++" -cc1 -triple x86_64-unknown-linux-ohos -emit-obj -mrelax-all --mrelax-relocations -mnoexecstack -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=1 -target-cpu x86-64 -tune-cpu generic -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=gdb -v -ffunction-sections -fdata-sections -fcoverage-compilation-dir=/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/CMakeScratch/TryCompile-QBbpuw -resource-dir /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4 -dependency-file CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -D __MUSL__ -isysroot /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot -internal-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/../include/libcxx-ohos/include/c++/v1 -internal-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/include -internal-externc-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include/x86_64-linux-ohos -internal-externc-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/include -internal-externc-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include -Wformat -std=c++17 -fdeprecated-macro -fdebug-compilation-dir=/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/CMakeScratch/TryCompile-QBbpuw -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o -x c++ /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp
+        clang -cc1 version 15.0.4 based upon LLVM 15.0.4 default target arm64-apple-darwin25.5.0
+        ignoring nonexistent directory "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/../include/libcxx-ohos/include/c++/v1
+         /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/include
+         /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include/x86_64-linux-ohos
+         /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include
+        End of search list.
+        [2/2] : && /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/clang++ --target=x86_64-linux-ohos --gcc-toolchain=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm --sysroot=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat  -std=c++17 -D__MUSL__ --rtlib=compiler-rt -fuse-ld=lld -Wl,--build-id=sha1 -Wl,--warn-shared-textrel -Wl,--fatal-warnings -lunwind -Wl,--no-undefined -Qunused-arguments -Wl,-z,noexecstack -Wl,--gc-sections  -v CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_97fbd   && :
+        OHOS (dev) clang version 15.0.4 (llvm-project 42cc7b4e11ddd57551a15d0a9ce0fa81ea32f6ab)
+        Target: x86_64-unknown-linux-ohos
+        Thread model: posix
+        InstalledDir: /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin
+         "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/ld.lld" --sysroot=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot -pie -z now -z relro -z max-page-size=4096 --hash-style=gnu --hash-style=both --enable-new-dtags --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib/ld-musl-x86_64.so.1 -o cmTC_97fbd /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/Scrt1.o /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crti.o /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtbegin.o -L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos -L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/ -L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/../lib/x86_64-linux-ohos/ -L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/ --build-id=sha1 --warn-shared-textrel --fatal-warnings -lunwind --no-undefined -z noexecstack --gc-sections CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o -lc++ -lc++abi -lunwind -lm /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a -l:libunwind.a -lc /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a -l:libunwind.a /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtend.o /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crtn.o
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/../include/libcxx-ohos/include/c++/v1]
+          add: [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/include]
+          add: [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include/x86_64-linux-ohos]
+          add: [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include]
+        end of search list found
+        collapse include dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/../include/libcxx-ohos/include/c++/v1] ==> [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/include/libcxx-ohos/include/c++/v1]
+        collapse include dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/include] ==> [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/include]
+        collapse include dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include/x86_64-linux-ohos] ==> [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include/x86_64-linux-ohos]
+        collapse include dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include] ==> [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include]
+        implicit include dirs: [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/include/libcxx-ohos/include/c++/v1;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/include;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include/x86_64-linux-ohos;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
+      - "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld\\.lld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/CMakeScratch/TryCompile-QBbpuw']
+        ignore line: []
+        ignore line: [Run Build Command(s): /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/bin/ninja -v cmTC_97fbd]
+        ignore line: [[1/2] /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/clang++ --target=x86_64-linux-ohos --gcc-toolchain=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm --sysroot=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot   -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa --noexecstack -Wformat  -std=c++17 -D__MUSL__  -fPIE   -v -MD -MT CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o -c /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [OHOS (dev) clang version 15.0.4 (llvm-project 42cc7b4e11ddd57551a15d0a9ce0fa81ea32f6ab)]
+        ignore line: [Target: x86_64-unknown-linux-ohos]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin]
+        ignore line: [clang++: warning: argument unused during compilation: '--gcc-toolchain=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm' [-Wunused-command-line-argument]]
+        ignore line: [ (in-process)]
+        ignore line: [ "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/clang++" -cc1 -triple x86_64-unknown-linux-ohos -emit-obj -mrelax-all --mrelax-relocations -mnoexecstack -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=1 -target-cpu x86-64 -tune-cpu generic -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=gdb -v -ffunction-sections -fdata-sections -fcoverage-compilation-dir=/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/CMakeScratch/TryCompile-QBbpuw -resource-dir /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4 -dependency-file CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -D __MUSL__ -isysroot /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot -internal-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/../include/libcxx-ohos/include/c++/v1 -internal-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/include -internal-externc-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include/x86_64-linux-ohos -internal-externc-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/include -internal-externc-isystem /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include -Wformat -std=c++17 -fdeprecated-macro -fdebug-compilation-dir=/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/CMakeScratch/TryCompile-QBbpuw -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o -x c++ /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [clang -cc1 version 15.0.4 based upon LLVM 15.0.4 default target arm64-apple-darwin25.5.0]
+        ignore line: [ignoring nonexistent directory "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/../include/libcxx-ohos/include/c++/v1]
+        ignore line: [ /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/include]
+        ignore line: [ /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include/x86_64-linux-ohos]
+        ignore line: [ /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/include]
+        ignore line: [End of search list.]
+        ignore line: [[2/2] : && /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/clang++ --target=x86_64-linux-ohos --gcc-toolchain=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm --sysroot=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat  -std=c++17 -D__MUSL__ --rtlib=compiler-rt -fuse-ld=lld -Wl,--build-id=sha1 -Wl,--warn-shared-textrel -Wl,--fatal-warnings -lunwind -Wl,--no-undefined -Qunused-arguments -Wl,-z,noexecstack -Wl,--gc-sections  -v CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_97fbd   && :]
+        ignore line: [OHOS (dev) clang version 15.0.4 (llvm-project 42cc7b4e11ddd57551a15d0a9ce0fa81ea32f6ab)]
+        ignore line: [Target: x86_64-unknown-linux-ohos]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin]
+        link line: [ "/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/ld.lld" --sysroot=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot -pie -z now -z relro -z max-page-size=4096 --hash-style=gnu --hash-style=both --enable-new-dtags --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib/ld-musl-x86_64.so.1 -o cmTC_97fbd /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/Scrt1.o /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crti.o /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtbegin.o -L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos -L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/ -L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/../lib/x86_64-linux-ohos/ -L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/ --build-id=sha1 --warn-shared-textrel --fatal-warnings -lunwind --no-undefined -z noexecstack --gc-sections CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o -lc++ -lc++abi -lunwind -lm /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a -l:libunwind.a -lc /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a -l:libunwind.a /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtend.o /Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crtn.o]
+          arg [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/ld.lld] ==> ignore
+          arg [--sysroot=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-znow] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-zmax-page-size=4096] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--hash-style=both] ==> ignore
+          arg [--enable-new-dtags] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib/ld-musl-x86_64.so.1] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_97fbd] ==> ignore
+          arg [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/Scrt1.o] ==> obj [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/Scrt1.o]
+          arg [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crti.o] ==> obj [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crti.o]
+          arg [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtbegin.o] ==> obj [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtbegin.o]
+          arg [-L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos] ==> dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos]
+          arg [-L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/] ==> dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/]
+          arg [-L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/../lib/x86_64-linux-ohos/] ==> dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/../lib/x86_64-linux-ohos/]
+          arg [-L/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/] ==> dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/]
+          arg [--build-id=sha1] ==> ignore
+          arg [--warn-shared-textrel] ==> ignore
+          arg [--fatal-warnings] ==> ignore
+          arg [-lunwind] ==> lib [unwind]
+          arg [--no-undefined] ==> ignore
+          arg [-znoexecstack] ==> ignore
+          arg [--gc-sections] ==> ignore
+          arg [CMakeFiles/cmTC_97fbd.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lc++] ==> lib [c++]
+          arg [-lc++abi] ==> lib [c++abi]
+          arg [-lunwind] ==> lib [unwind]
+          arg [-lm] ==> lib [m]
+          arg [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a] ==> lib [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a]
+          arg [-l:libunwind.a] ==> lib [-l:libunwind.a]
+          arg [-lc] ==> lib [c]
+          arg [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a] ==> lib [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a]
+          arg [-l:libunwind.a] ==> lib [-l:libunwind.a]
+          arg [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtend.o] ==> obj [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtend.o]
+          arg [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crtn.o] ==> obj [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crtn.o]
+        remove lib [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a]
+        remove lib [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/libclang_rt.builtins.a]
+        collapse library dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos] ==> [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos]
+        collapse library dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/] ==> [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib]
+        collapse library dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/bin/../lib/x86_64-linux-ohos/] ==> [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/x86_64-linux-ohos]
+        collapse library dir [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/] ==> [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos]
+        implicit libs: [unwind;c++;c++abi;unwind;m;-l:libunwind.a;c;-l:libunwind.a]
+        implicit objs: [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/Scrt1.o;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crti.o;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtbegin.o;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos/clang_rt.crtend.o;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/crtn.o]
+        implicit dirs: [/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/clang/15.0.4/lib/x86_64-linux-ohos;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/llvm/lib/x86_64-linux-ohos;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos]
+        implicit fwks: []
+      
+      
+...

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "tinyxml2",
+  "executor": "native",
+  "suites": [
+    {
+      "level": "L1",
+      "runner": "napi-ohostest",
+      "selector": "Tinyxml2LoadSuite"
+    },
+    {
+      "level": "L2",
+      "runner": "napi-ohostest",
+      "selector": "Tinyxml2CoreSuite"
+    }
+  ]
+}

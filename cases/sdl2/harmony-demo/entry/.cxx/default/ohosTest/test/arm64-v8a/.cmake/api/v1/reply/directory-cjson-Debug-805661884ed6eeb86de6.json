@@ -1,0 +1,77 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/third_party/cjson/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 149,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 150,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 151,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/include/cjson",
+			"paths" : 
+			[
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/third_party/cjson/cJSON.h"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/lib/pkgconfig",
+			"paths" : 
+			[
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/ohosTest/test/arm64-v8a/cjson/libcjson.pc"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/lib",
+			"paths" : 
+			[
+				"cjson/libcjson.a"
+			],
+			"targetId" : "cjson::@5229f3b4a20129d7edbc",
+			"targetIndex" : 2,
+			"type" : "target"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "cjson",
+		"source" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/third_party/cjson"
+	}
+}

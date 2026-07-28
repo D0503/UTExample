@@ -1,0 +1,3 @@
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/third_party/cjson/cJSON.h
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/ohosTest/debug/arm64-v8a/cjson/CMakeFiles/uninstall
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/ohosTest/debug/arm64-v8a/cjson/CMakeFiles/uninstall.rule

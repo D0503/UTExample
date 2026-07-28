@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "libuv Base validation module"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "libuv Base validation ability"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "libuv Base"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/entry.dir
+D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/edit_cache.dir
+D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/rebuild_cache.dir
+D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/list_install_components.dir
+D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/install.dir
+D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/install/local.dir
+D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/.cxx/default/default/debug/x86_64/CMakeFiles/install/strip.dir
+D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/.cxx/default/default/debug/x86_64/libuv-build/CMakeFiles/uv_a.dir
+D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/.cxx/default/default/debug/x86_64/libuv-build/CMakeFiles/edit_cache.dir
+D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/.cxx/default/default/debug/x86_64/libuv-build/CMakeFiles/rebuild_cache.dir
+D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/.cxx/default/default/debug/x86_64/libuv-build/CMakeFiles/list_install_components.dir
+D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/.cxx/default/default/debug/x86_64/libuv-build/CMakeFiles/install.dir
+D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/.cxx/default/default/debug/x86_64/libuv-build/CMakeFiles/install/local.dir
+D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/.cxx/default/default/debug/x86_64/libuv-build/CMakeFiles/install/strip.dir

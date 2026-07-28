@@ -1,0 +1,194 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-47a37b7d4b60b756211d.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.6.0"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "sdl2-test-build",
+					"childIndexes" : 
+					[
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-sdl2-test-build-Debug-f54a8fcc8df33b0d4f5e.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.11"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"build" : "cjson",
+					"childIndexes" : 
+					[
+						3,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-cjson-Debug-59cb760c2701548431e9.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.5"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 2,
+					"source" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/third_party/cjson",
+					"targetIndexes" : 
+					[
+						2,
+						4
+					]
+				},
+				{
+					"build" : "cjson/tests",
+					"jsonFile" : "directory-cjson.tests-Debug-9bc62e5ed72c8d3dd987.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.5"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/third_party/cjson/tests"
+				},
+				{
+					"build" : "cjson/fuzzing",
+					"jsonFile" : "directory-cjson.fuzzing-Debug-b2800eb3818e7b34137a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.5"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/third_party/cjson/fuzzing"
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "sdl2_harmony_test",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						2
+					],
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "SDL2",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2,
+						3,
+						4
+					],
+					"name" : "cJSON",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						2,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "SDL2::@fe58832402f4c4615b76",
+					"jsonFile" : "target-SDL2-Debug-ac1e17115fd888ec7103.json",
+					"name" : "SDL2",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "SDL2main::@fe58832402f4c4615b76",
+					"jsonFile" : "target-SDL2main-Debug-6470e56764da5ed6c810.json",
+					"name" : "SDL2main",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "cjson::@5229f3b4a20129d7edbc",
+					"jsonFile" : "target-cjson-Debug-e3e136b0a62dd8ebaf06.json",
+					"name" : "cjson",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "entry_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-entry_test-Debug-bc9d15ce864599e42788.json",
+					"name" : "entry_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "uninstall::@5229f3b4a20129d7edbc",
+					"jsonFile" : "target-uninstall-Debug-526501da0323910cc4d6.json",
+					"name" : "uninstall",
+					"projectIndex" : 2
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/ohosTest/debug/arm64-v8a",
+		"source" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/src/ohosTest/cpp"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

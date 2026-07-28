@@ -1,0 +1,255 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 2284,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 2302,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 2307,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 2322,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 2347,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 2350,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 2352,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/build/default/intermediates/cmake/default/obj/arm64-v8a/libSDL2.so"
+			],
+			"targetId" : "SDL2::@5c348aa8f160714199f9",
+			"targetIndex" : 0,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"sdl2/libSDL2maind.a"
+			],
+			"targetId" : "SDL2main::@5c348aa8f160714199f9",
+			"targetIndex" : 1,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/SDL2",
+			"exportName" : "SDL2Targets",
+			"exportTargets" : 
+			[
+				{
+					"id" : "SDL2::@5c348aa8f160714199f9",
+					"index" : 0
+				},
+				{
+					"id" : "SDL2main::@5c348aa8f160714199f9",
+					"index" : 1
+				},
+				{
+					"id" : "cjson::@5229f3b4a20129d7edbc",
+					"index" : 2
+				}
+			],
+			"paths" : 
+			[
+				"sdl2/CMakeFiles/Export/f084604df1a27ef5b4fef7c7544737d1/SDL2Targets.cmake"
+			],
+			"type" : "export"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Devel",
+			"destination" : "lib/cmake/SDL2",
+			"paths" : 
+			[
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/SDL2Config.cmake",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/test/arm64-v8a/SDL2ConfigVersion.cmake"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "Unspecified",
+			"destination" : "include/SDL2",
+			"paths" : 
+			[
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_assert.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_atomic.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_audio.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_bits.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_blendmode.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_clipboard.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_config_android.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_config_iphoneos.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_config_macosx.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_config_minimal.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_config_ohos.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_config_os2.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_config_pandora.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_config_psp.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_config_windows.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_config_winrt.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_config_wiz.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_copying.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_cpuinfo.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_egl.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_endian.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_error.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_events.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_filesystem.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_gamecontroller.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_gesture.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_haptic.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_hints.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_joystick.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_keyboard.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_keycode.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_loadso.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_log.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_main.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_messagebox.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_metal.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_mouse.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_mutex.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_name.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_opengl.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_opengl_glext.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_opengles.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_opengles2.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_opengles2_gl2.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_opengles2_gl2ext.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_opengles2_gl2platform.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_opengles2_khrplatform.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_pixels.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_platform.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_power.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_quit.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_rect.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_render.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_revision.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_rwops.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_scancode.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_sensor.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_shape.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_stdinc.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_surface.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_system.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_syswm.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_test.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_test_assert.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_test_common.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_test_compare.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_test_crc32.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_test_font.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_test_fuzzer.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_test_harness.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_test_images.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_test_log.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_test_md5.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_test_memory.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_test_random.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_thread.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_timer.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_touch.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_types.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_version.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_video.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/SDL_vulkan.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/begin_code.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include/close_code.h",
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/test/arm64-v8a/sdl2/include/SDL_config.h"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 5,
+			"component" : "Unspecified",
+			"destination" : "lib/pkgconfig",
+			"paths" : 
+			[
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/test/arm64-v8a/sdl2/sdl2.pc"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 6,
+			"component" : "Unspecified",
+			"destination" : "bin",
+			"paths" : 
+			[
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/test/arm64-v8a/sdl2/sdl2-config"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 7,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/share/aclocal",
+			"paths" : 
+			[
+				"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/sdl2.m4"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "sdl2",
+		"source" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library"
+	}
+}

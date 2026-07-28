@@ -1,0 +1,7 @@
+# ninja log v6
+1	139	1784797534145666385	tinyxml2-build/CMakeFiles/tinyxml2.dir/tinyxml2.cpp.o	a28e77cfc02933e8
+1	302	1784797534145944469	CMakeFiles/entry.dir/napi_init.cpp.o	5a3fccdee90661c9
+139	687	1784797534284153392	tinyxml2-build/libtinyxml2.a	24806342ad835afd
+687	731	1784797534831894877	/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/build/default/intermediates/cmake/default/obj/x86_64/libentry.so	336d711c5c4b12f9
+5	543	1784798307428591196	CMakeFiles/entry.dir/napi_init.cpp.o	5a3fccdee90661c9
+544	683	1784798307967342970	/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/build/default/intermediates/cmake/default/obj/x86_64/libentry.so	336d711c5c4b12f9

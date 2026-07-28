@@ -1,0 +1,2 @@
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/harmony-demo/entry/src/ohosTest/cpp/CMakeLists.txt
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/tinyxml2/library/CMakeLists.txt

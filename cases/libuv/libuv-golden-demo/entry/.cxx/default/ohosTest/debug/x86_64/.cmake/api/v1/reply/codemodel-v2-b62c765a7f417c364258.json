@@ -1,0 +1,104 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.6.0"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "libuv-test-build",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-libuv-test-build-Debug-fbb30dbd4ae4c6299d7a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "D:/HW/UTDesign/cases/libuv/libuv-golden-demo/library",
+					"targetIndexes" : 
+					[
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "libuv_harmony_test",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "libuv",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "entry_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-entry_test-Debug-e83d11b0cd98eb8168be.json",
+					"name" : "entry_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "uv_a::@6fb286bca93c69aced1f",
+					"jsonFile" : "target-uv_a-Debug-826fa0a72c66cef291e9.json",
+					"name" : "uv_a",
+					"projectIndex" : 1
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/.cxx/default/ohosTest/debug/x86_64",
+		"source" : "D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/src/ohosTest/cpp"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

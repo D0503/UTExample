@@ -1,0 +1,19 @@
+E:\DevEco Studio\sdk\default\openharmony\native\build-tools\cmake\bin\cmake.exe
+-HD:\HW\UTDesign\cases\libuv\libuv-golden-demo\entry\src\ohosTest\cpp
+-BD:\HW\UTDesign\cases\libuv\libuv-golden-demo\entry\.cxx\default\ohosTest\debug\x86_64
+-DOHOS_ARCH=x86_64
+-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=D:\HW\UTDesign\cases\libuv\libuv-golden-demo\entry\build\default\intermediates\cmake\ohosTest\obj\x86_64
+-DCMAKE_BUILD_TYPE=Debug
+-DOHOS_SDK_NATIVE=E:\DevEco Studio\sdk\default\openharmony\native
+-DCMAKE_SYSTEM_NAME=OHOS
+-DCMAKE_OHOS_ARCH_ABI=x86_64
+-DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+-DCMAKE_TOOLCHAIN_FILE=E:\DevEco Studio\sdk\default\hms\native\build\cmake\hmos.toolchain.cmake
+-GNinja
+-DCMAKE_MAKE_PROGRAM=E:\DevEco Studio\sdk\default\openharmony\native\build-tools\cmake\bin\ninja.exe
+-DCMAKE_FIND_ROOT_PATH=D:\HW\UTDesign\cases\libuv\libuv-golden-demo\entry\.cxx\default\ohosTest\debug\hvigor\x86_64
+-DPACKAGE_FIND_FILE=D:\HW\UTDesign\cases\libuv\libuv-golden-demo\entry\.cxx\default\ohosTest\debug\hvigor\x86_64\summary.cmake
+--no-warn-unused-cli
+-DCMAKE_CXX_FLAGS=-std=c++17
+-DHMOS_SDK_NATIVE=E:\DevEco Studio\sdk\default\hms\native
+-DOHOS_COMPATIBLE_SDK_VERSION=6.1.0(23)

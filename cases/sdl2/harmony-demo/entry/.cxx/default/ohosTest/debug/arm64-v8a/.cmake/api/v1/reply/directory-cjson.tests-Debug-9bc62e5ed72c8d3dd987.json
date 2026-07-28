@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "cjson/tests",
+		"source" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/third_party/cjson/tests"
+	}
+}

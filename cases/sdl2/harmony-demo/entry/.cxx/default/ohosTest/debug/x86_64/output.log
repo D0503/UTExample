@@ -1,0 +1,460 @@
+Not searching for unused variables given on the command line.
+-- The C compiler identification is Clang 15.0.4
+-- The CXX compiler identification is Clang 15.0.4
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/llvm/bin/clang - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/llvm/bin/clang++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+CMake Deprecation Warning at /Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/CMakeLists.txt:5 (cmake_minimum_required):
+  Compatibility with CMake < 3.5 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+-- Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE) 
+-- Performing Test HAVE_GCC_WALL
+-- Performing Test HAVE_GCC_WALL - Success
+-- Performing Test HAVE_GCC_NO_STRICT_ALIASING
+-- Performing Test HAVE_GCC_NO_STRICT_ALIASING - Success
+-- Performing Test HAVE_GCC_WDECLARATION_AFTER_STATEMENT
+-- Performing Test HAVE_GCC_WDECLARATION_AFTER_STATEMENT - Success
+-- Performing Test HAVE_GCC_WERROR_DECLARATION_AFTER_STATEMENT
+-- Performing Test HAVE_GCC_WERROR_DECLARATION_AFTER_STATEMENT - Success
+-- Performing Test HAVE_GCC_ATOMICS
+-- Performing Test HAVE_GCC_ATOMICS - Success
+-- Performing Test HAVE_GCC_PREFERRED_STACK_BOUNDARY
+-- Performing Test HAVE_GCC_PREFERRED_STACK_BOUNDARY - Failed
+-- Performing Test HAVE_GCC_FVISIBILITY
+-- Performing Test HAVE_GCC_FVISIBILITY - Failed
+-- Performing Test HAVE_GCC_WSHADOW
+-- Performing Test HAVE_GCC_WSHADOW - Success
+-- Performing Test HAVE_NO_UNDEFINED
+-- Performing Test HAVE_NO_UNDEFINED - Success
+-- Performing Test HAVE_MMX
+-- Performing Test HAVE_MMX - Success
+-- Performing Test HAVE_3DNOW
+-- Performing Test HAVE_3DNOW - Success
+-- Performing Test HAVE_SSE
+-- Performing Test HAVE_SSE - Success
+-- Performing Test HAVE_SSE2
+-- Performing Test HAVE_SSE2 - Success
+-- Performing Test HAVE_SSE3
+-- Performing Test HAVE_SSE3 - Success
+-- Looking for immintrin.h
+-- Looking for immintrin.h - found
+-- Performing Test HAVE_ALTIVEC_H_HDR
+-- Performing Test HAVE_ALTIVEC_H_HDR - Failed
+-- Performing Test HAVE_ALTIVEC
+-- Performing Test HAVE_ALTIVEC - Failed
+-- Performing Test ARMSIMD_FOUND
+-- Performing Test ARMSIMD_FOUND - Failed
+-- Performing Test ARMNEON_FOUND
+-- Performing Test ARMNEON_FOUND - Failed
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for stdio.h
+-- Looking for stdio.h - found
+-- Looking for stdlib.h
+-- Looking for stdlib.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Looking for stdarg.h
+-- Looking for stdarg.h - found
+-- Looking for malloc.h
+-- Looking for malloc.h - found
+-- Looking for memory.h
+-- Looking for memory.h - found
+-- Looking for string.h
+-- Looking for string.h - found
+-- Looking for limits.h
+-- Looking for limits.h - found
+-- Looking for strings.h
+-- Looking for strings.h - found
+-- Looking for wchar.h
+-- Looking for wchar.h - found
+-- Looking for inttypes.h
+-- Looking for inttypes.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for ctype.h
+-- Looking for ctype.h - found
+-- Looking for math.h
+-- Looking for math.h - found
+-- Looking for iconv.h
+-- Looking for iconv.h - found
+-- Looking for signal.h
+-- Looking for signal.h - found
+-- Looking for libunwind.h
+-- Looking for libunwind.h - not found
+-- Looking for 8 include files dlfcn.h, ..., float.h
+-- Looking for 8 include files dlfcn.h, ..., float.h - found
+-- Check size of size_t
+-- Check size of size_t - done
+-- Looking for M_PI
+-- Looking for M_PI - found
+-- Performing Test HAVE_MPROTECT
+-- Performing Test HAVE_MPROTECT - Success
+-- Looking for strtod
+-- Looking for strtod - found
+-- Looking for malloc
+-- Looking for malloc - found
+-- Looking for calloc
+-- Looking for calloc - found
+-- Looking for realloc
+-- Looking for realloc - found
+-- Looking for free
+-- Looking for free - found
+-- Looking for getenv
+-- Looking for getenv - found
+-- Looking for setenv
+-- Looking for setenv - found
+-- Looking for putenv
+-- Looking for putenv - found
+-- Looking for unsetenv
+-- Looking for unsetenv - found
+-- Looking for qsort
+-- Looking for qsort - found
+-- Looking for abs
+-- Looking for abs - found
+-- Looking for bcopy
+-- Looking for bcopy - found
+-- Looking for memset
+-- Looking for memset - found
+-- Looking for memcpy
+-- Looking for memcpy - found
+-- Looking for memmove
+-- Looking for memmove - found
+-- Looking for memcmp
+-- Looking for memcmp - found
+-- Looking for strlen
+-- Looking for strlen - found
+-- Looking for strlcpy
+-- Looking for strlcpy - found
+-- Looking for strlcat
+-- Looking for strlcat - found
+-- Looking for _strrev
+-- Looking for _strrev - not found
+-- Looking for _strupr
+-- Looking for _strupr - not found
+-- Looking for _strlwr
+-- Looking for _strlwr - not found
+-- Looking for strchr
+-- Looking for strchr - found
+-- Looking for strrchr
+-- Looking for strrchr - found
+-- Looking for strstr
+-- Looking for strstr - found
+-- Looking for strtok_r
+-- Looking for strtok_r - found
+-- Looking for itoa
+-- Looking for itoa - not found
+-- Looking for _ltoa
+-- Looking for _ltoa - not found
+-- Looking for _uitoa
+-- Looking for _uitoa - not found
+-- Looking for _ultoa
+-- Looking for _ultoa - not found
+-- Looking for strtol
+-- Looking for strtol - found
+-- Looking for strtoul
+-- Looking for strtoul - found
+-- Looking for _i64toa
+-- Looking for _i64toa - not found
+-- Looking for _ui64toa
+-- Looking for _ui64toa - not found
+-- Looking for strtoll
+-- Looking for strtoll - found
+-- Looking for strtoull
+-- Looking for strtoull - found
+-- Looking for atoi
+-- Looking for atoi - found
+-- Looking for atof
+-- Looking for atof - found
+-- Looking for strcmp
+-- Looking for strcmp - found
+-- Looking for strncmp
+-- Looking for strncmp - found
+-- Looking for _stricmp
+-- Looking for _stricmp - not found
+-- Looking for strcasecmp
+-- Looking for strcasecmp - found
+-- Looking for _strnicmp
+-- Looking for _strnicmp - not found
+-- Looking for strncasecmp
+-- Looking for strncasecmp - found
+-- Looking for wcscmp
+-- Looking for wcscmp - found
+-- Looking for wcsdup
+-- Looking for wcsdup - found
+-- Looking for wcslcat
+-- Looking for wcslcat - not found
+-- Looking for wcslcpy
+-- Looking for wcslcpy - not found
+-- Looking for wcslen
+-- Looking for wcslen - found
+-- Looking for wcsncmp
+-- Looking for wcsncmp - found
+-- Looking for wcsstr
+-- Looking for wcsstr - found
+-- Looking for sscanf
+-- Looking for sscanf - found
+-- Looking for vsscanf
+-- Looking for vsscanf - found
+-- Looking for vsnprintf
+-- Looking for vsnprintf - found
+-- Looking for fopen64
+-- Looking for fopen64 - found
+-- Looking for fseeko
+-- Looking for fseeko - found
+-- Looking for fseeko64
+-- Looking for fseeko64 - found
+-- Looking for sigaction
+-- Looking for sigaction - found
+-- Looking for setjmp
+-- Looking for setjmp - found
+-- Looking for nanosleep
+-- Looking for nanosleep - found
+-- Looking for sysconf
+-- Looking for sysconf - found
+-- Looking for sysctlbyname
+-- Looking for sysctlbyname - not found
+-- Looking for getauxval
+-- Looking for getauxval - found
+-- Looking for poll
+-- Looking for poll - found
+-- Looking for _Exit
+-- Looking for _Exit - found
+-- Looking for pow in m
+-- Looking for pow in m - found
+-- Looking for atan
+-- Looking for atan - found
+-- Looking for atan2
+-- Looking for atan2 - found
+-- Looking for atanf
+-- Looking for atanf - found
+-- Looking for atan2f
+-- Looking for atan2f - found
+-- Looking for ceil
+-- Looking for ceil - found
+-- Looking for ceilf
+-- Looking for ceilf - found
+-- Looking for copysign
+-- Looking for copysign - found
+-- Looking for copysignf
+-- Looking for copysignf - found
+-- Looking for cos
+-- Looking for cos - found
+-- Looking for cosf
+-- Looking for cosf - found
+-- Looking for exp
+-- Looking for exp - found
+-- Looking for expf
+-- Looking for expf - found
+-- Looking for fabs
+-- Looking for fabs - found
+-- Looking for fabsf
+-- Looking for fabsf - found
+-- Looking for floor
+-- Looking for floor - found
+-- Looking for floorf
+-- Looking for floorf - found
+-- Looking for fmod
+-- Looking for fmod - found
+-- Looking for fmodf
+-- Looking for fmodf - found
+-- Looking for log
+-- Looking for log - found
+-- Looking for logf
+-- Looking for logf - found
+-- Looking for log10
+-- Looking for log10 - found
+-- Looking for log10f
+-- Looking for log10f - found
+-- Looking for pow
+-- Looking for pow - found
+-- Looking for powf
+-- Looking for powf - found
+-- Looking for scalbn
+-- Looking for scalbn - found
+-- Looking for scalbnf
+-- Looking for scalbnf - found
+-- Looking for sin
+-- Looking for sin - found
+-- Looking for sinf
+-- Looking for sinf - found
+-- Looking for sqrt
+-- Looking for sqrt - found
+-- Looking for sqrtf
+-- Looking for sqrtf - found
+-- Looking for tan
+-- Looking for tan - found
+-- Looking for tanf
+-- Looking for tanf - found
+-- Looking for acos
+-- Looking for acos - found
+-- Looking for acosf
+-- Looking for acosf - found
+-- Looking for asin
+-- Looking for asin - found
+-- Looking for asinf
+-- Looking for asinf - found
+-- Looking for iconv_open in iconv
+-- Looking for iconv_open in iconv - not found
+-- Looking for alloca.h
+-- Looking for alloca.h - found
+-- Looking for alloca
+-- Looking for alloca - not found
+-- Performing Test HAVE_SA_SIGACTION
+-- Performing Test HAVE_SA_SIGACTION - Success
+-- Looking for dlopen
+-- Looking for dlopen - found
+CMake Deprecation Warning at /Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/third_party/cjson/CMakeLists.txt:2 (cmake_minimum_required):
+  Compatibility with CMake < 3.5 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+-- Performing Test FLAG_SUPPORTED_fvisibilityhidden
+-- Performing Test FLAG_SUPPORTED_fvisibilityhidden - Success
+-- Performing Test HAVE_ARM_MODE
+-- Performing Test HAVE_ARM_MODE - Success
+-- Performing Test VULKAN_PASSED_OHOS_CHECKS
+-- Performing Test VULKAN_PASSED_OHOS_CHECKS - Success
+-- Performing Test HAVE_RECURSIVE_MUTEXES
+-- Performing Test HAVE_RECURSIVE_MUTEXES - Success
+-- Performing Test HAVE_PTHREADS_SEM
+-- Performing Test HAVE_PTHREADS_SEM - Success
+-- Performing Test HAVE_SEM_TIMEDWAIT
+-- Performing Test HAVE_SEM_TIMEDWAIT - Success
+-- Performing Test HAVE_PTHREAD_NP_H
+-- Performing Test HAVE_PTHREAD_NP_H - Failed
+-- Looking for pthread_setname_np
+-- Looking for pthread_setname_np - found
+-- Looking for pthread_set_name_np
+-- Looking for pthread_set_name_np - not found
+sh: /Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/build-scripts/updaterev.sh: No such file or directory
+-- 
+-- SDL2 was configured with the following options:
+-- 
+-- Platform: OHOS-1
+-- 64-bit:   TRUE
+-- Compiler: /Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/llvm/bin/clang
+-- 
+-- Subsystems:
+--   Atomic:	ON
+--   Audio:	ON
+--   Video:	ON
+--   Render:	ON
+--   Events:	ON
+--   Joystick:	ON
+--   Haptic:	ON
+--   Power:	ON
+--   Threads:	ON
+--   Timers:	ON
+--   File:	ON
+--   Loadso:	ON
+--   CPUinfo:	ON
+--   Filesystem:	ON
+--   Dlopen:	ON
+--   Sensor:	ON
+-- 
+-- Options:
+--   3DNOW                  (Wanted: ON): ON
+--   ALSA                   (Wanted: ON): OFF
+--   ALSA_SHARED            (Wanted: ON): OFF
+--   ALTIVEC                (Wanted: ON): OFF
+--   ARMNEON                (Wanted: ON): OFF
+--   ARMSIMD                (Wanted: ON): OFF
+--   ARTS                   (Wanted: ON): OFF
+--   ARTS_SHARED            (Wanted: ON): OFF
+--   ASSEMBLY               (Wanted: ON): ON
+--   ASSERTIONS             (Wanted: auto): auto
+--   BACKGROUNDING_SIGNAL   (Wanted: OFF): OFF
+--   CLOCK_GETTIME          (Wanted: OFF): OFF
+--   DIRECTFB_SHARED        (Wanted: OFF): OFF
+--   DIRECTX                (Wanted: OFF): OFF
+--   DISKAUDIO              (Wanted: ON): ON
+--   DUMMYAUDIO             (Wanted: ON): ON
+--   ESD                    (Wanted: ON): OFF
+--   ESD_SHARED             (Wanted: ON): OFF
+--   FOREGROUNDING_SIGNAL   (Wanted: OFF): OFF
+--   FUSIONSOUND            (Wanted: OFF): OFF
+--   FUSIONSOUND_SHARED     (Wanted: OFF): OFF
+--   GCC_ATOMICS            (Wanted: ON): ON
+--   HIDAPI                 (Wanted: OFF): OFF
+--   INPUT_TSLIB            (Wanted: ON): OFF
+--   JACK                   (Wanted: ON): OFF
+--   JACK_SHARED            (Wanted: ON): OFF
+--   KMSDRM_SHARED          (Wanted: ON): OFF
+--   LIBC                   (Wanted: ON): ON
+--   LIBSAMPLERATE          (Wanted: ON): OFF
+--   LIBSAMPLERATE_SHARED   (Wanted: ON): OFF
+--   MMX                    (Wanted: ON): ON
+--   NAS                    (Wanted: ON): OFF
+--   NAS_SHARED             (Wanted: ON): OFF
+--   OSS                    (Wanted: ON): OFF
+--   PTHREADS               (Wanted: ON): ON
+--   PTHREADS_SEM           (Wanted: ON): ON
+--   PULSEAUDIO             (Wanted: ON): OFF
+--   PULSEAUDIO_SHARED      (Wanted: ON): OFF
+--   RENDER_D3D             (Wanted: OFF): OFF
+--   RENDER_METAL           (Wanted: OFF): OFF
+--   RPATH                  (Wanted: ON): ON
+--   SDL_DLOPEN             (Wanted: ON): ON
+--   SDL_STATIC_PIC         (Wanted: OFF): OFF
+--   SDL_TEST               (Wanted: OFF): OFF
+--   SNDIO                  (Wanted: ON): OFF
+--   SSE                    (Wanted: ON): ON
+--   SSE2                   (Wanted: ON): ON
+--   SSE3                   (Wanted: ON): ON
+--   SSEMATH                (Wanted: ON): OFF
+--   VIDEO_COCOA            (Wanted: OFF): OFF
+--   VIDEO_DIRECTFB         (Wanted: OFF): OFF
+--   VIDEO_DUMMY            (Wanted: ON): ON
+--   VIDEO_KMSDRM           (Wanted: ON): OFF
+--   VIDEO_METAL            (Wanted: OFF): OFF
+--   VIDEO_OFFSCREEN        (Wanted: OFF): OFF
+--   VIDEO_OPENGL           (Wanted: ON): OFF
+--   VIDEO_OPENGLES         (Wanted: ON): ON
+--   VIDEO_RPI              (Wanted: ON): OFF
+--   VIDEO_VIVANTE          (Wanted: ON): OFF
+--   VIDEO_VULKAN           (Wanted: OFF): OFF
+--   VIDEO_WAYLAND          (Wanted: ON): OFF
+--   VIDEO_WAYLAND_QT_TOUCH (Wanted: ON): OFF
+--   VIDEO_X11              (Wanted: ON): OFF
+--   VIDEO_X11_XCURSOR      (Wanted: ON): OFF
+--   VIDEO_X11_XINERAMA     (Wanted: ON): OFF
+--   VIDEO_X11_XINPUT       (Wanted: ON): OFF
+--   VIDEO_X11_XRANDR       (Wanted: ON): OFF
+--   VIDEO_X11_XSCRNSAVER   (Wanted: ON): OFF
+--   VIDEO_X11_XSHAPE       (Wanted: ON): OFF
+--   VIDEO_X11_XVM          (Wanted: ON): OFF
+--   WASAPI                 (Wanted: OFF): OFF
+--   WAYLAND_SHARED         (Wanted: ON): OFF
+--   X11_SHARED             (Wanted: ON): OFF
+-- 
+--  CFLAGS:        -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security  -D__MUSL__ -idirafter /Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/src/video/khronos
+--  EXTRA_CFLAGS:  -D_REENTRANT -msse3 -msse2 -msse -m3dnow -mmmx -Wshadow -Wdeclaration-after-statement -Werror=declaration-after-statement -fno-strict-aliasing -Wall 
+--  EXTRA_LDFLAGS: -Wl,--no-undefined;-lpthread
+--  EXTRA_LIBS:    m;/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/libace_napi.z.so;/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/libhilog_ndk.z.so;/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/libace_ndk.z.so;/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/librawfile.z.so;/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/libpixelmap_ndk.z.so;cjson;/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/sysroot/usr/lib/x86_64-linux-ohos/libohaudio.so
+-- 
+--  Build Shared Library: ON
+--  Build Static Library: OFF
+-- 
+-- If something was not detected, although the libraries
+-- were installed, then make sure you have set the
+-- CFLAGS and LDFLAGS environment variables correctly.
+-- 
+-- Configuring done (18.5s)
+-- Generating done (0.0s)
+-- Build files have been written to: /Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/ohosTest/debug/x86_64

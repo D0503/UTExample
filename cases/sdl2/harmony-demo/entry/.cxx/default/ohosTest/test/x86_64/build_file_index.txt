@@ -1,0 +1,5 @@
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/src/ohosTest/cpp/CMakeLists.txt
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/CMakeLists.txt
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/third_party/cjson/CMakeLists.txt
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/third_party/cjson/fuzzing/CMakeLists.txt
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/third_party/cjson/tests/CMakeLists.txt

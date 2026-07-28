@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "sdl2",
+  "executor": "native",
+  "suites": [
+    {
+      "level": "L1",
+      "runner": "napi-ohostest",
+      "selector": "SdlLoadSuite"
+    },
+    {
+      "level": "L2",
+      "runner": "napi-ohostest",
+      "selector": "SdlRenderSuite",
+      "requires": {
+        "target": "emulator",
+        "capabilities": ["display"]
+      }
+    },
+    {
+      "level": "L2",
+      "runner": "napi-ohostest",
+      "selector": "SdlGuiStateSuite"
+    },
+    {
+      "level": "L3",
+      "runner": "ui-ohostest",
+      "selector": "SdlPointerUiSuite",
+      "requires": {
+        "target": "emulator",
+        "capabilities": ["display", "pointer", "gpu"]
+      },
+      "timeoutMs": 120000
+    },
+    {
+      "level": "L3",
+      "runner": "ui-ohostest",
+      "selector": "SdlKeyboardUiSuite",
+      "requires": {
+        "target": "emulator",
+        "capabilities": ["display", "keyboard", "gpu"]
+      },
+      "timeoutMs": 120000
+    }
+  ]
+}

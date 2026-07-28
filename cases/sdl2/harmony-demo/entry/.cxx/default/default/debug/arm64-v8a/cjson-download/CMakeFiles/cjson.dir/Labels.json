@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/arm64-v8a/cjson-download/CMakeFiles/cjson"
+		},
+		{
+			"file" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/arm64-v8a/cjson-download/CMakeFiles/cjson.rule"
+		},
+		{
+			"file" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/arm64-v8a/cjson-download/CMakeFiles/cjson-complete.rule"
+		},
+		{
+			"file" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/arm64-v8a/cjson-download/cjson-prefix/src/cjson-stamp/cjson-build.rule"
+		},
+		{
+			"file" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/arm64-v8a/cjson-download/cjson-prefix/src/cjson-stamp/cjson-configure.rule"
+		},
+		{
+			"file" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/arm64-v8a/cjson-download/cjson-prefix/src/cjson-stamp/cjson-download.rule"
+		},
+		{
+			"file" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/arm64-v8a/cjson-download/cjson-prefix/src/cjson-stamp/cjson-install.rule"
+		},
+		{
+			"file" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/arm64-v8a/cjson-download/cjson-prefix/src/cjson-stamp/cjson-mkdir.rule"
+		},
+		{
+			"file" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/arm64-v8a/cjson-download/cjson-prefix/src/cjson-stamp/cjson-patch.rule"
+		},
+		{
+			"file" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/arm64-v8a/cjson-download/cjson-prefix/src/cjson-stamp/cjson-test.rule"
+		},
+		{
+			"file" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/arm64-v8a/cjson-download/cjson-prefix/src/cjson-stamp/cjson-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"cjson"
+		],
+		"name" : "cjson"
+	}
+}

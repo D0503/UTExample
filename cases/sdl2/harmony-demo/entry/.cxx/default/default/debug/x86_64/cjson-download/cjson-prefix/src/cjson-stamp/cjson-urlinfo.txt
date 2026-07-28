@@ -1,0 +1,12 @@
+# This is a generated file and its contents are an internal implementation detail.
+# The download step will be re-executed if anything in this file changes.
+# No other meaning or use of this file is supported.
+
+method=url
+command=/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/bin/cmake;-P;/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/x86_64/cjson-download/cjson-prefix/src/cjson-stamp/download-cjson.cmake;COMMAND;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/bin/cmake;-P;/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/x86_64/cjson-download/cjson-prefix/src/cjson-stamp/verify-cjson.cmake;COMMAND;/Users/guoyutong/command-line-tools/sdk/default/openharmony/native/build-tools/cmake/bin/cmake;-P;/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/x86_64/cjson-download/cjson-prefix/src/cjson-stamp/extract-cjson.cmake
+source_dir=/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/x86_64/cjson-source
+work_dir=/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/x86_64
+url(s)=https://gitee.com/mirrors/cJSON/repository/archive/v1.7.15.zip
+hash=SHA256=7a10eccfbf907bf0d6adc695dc7e503f33b83f50a8f31470b82f92352ecc57e4
+no_extract=
+

@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "tinyxml2 validation module"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "tinyxml2 validation ability"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "tinyxml2 validation"
+    }
+  ]
+}

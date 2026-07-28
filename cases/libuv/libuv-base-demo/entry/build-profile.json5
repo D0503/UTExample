@@ -1,0 +1,33 @@
+{
+  "apiType": "stageMode",
+  "buildOption": {
+    "externalNativeOptions": {
+      "path": "./src/main/cpp/CMakeLists.txt",
+      "arguments": "",
+      "cppFlags": "-std=c++17",
+      "abiFilters": [
+        "x86_64"
+      ]
+    }
+  },
+  "targets": [
+    {
+      "name": "default"
+    },
+    {
+      "name": "ohosTest",
+      "config": {
+        "buildOption": {
+          "externalNativeOptions": {
+            "path": "./src/ohosTest/cpp/CMakeLists.txt",
+            "arguments": "",
+            "cppFlags": "-std=c++17",
+            "abiFilters": [
+              "x86_64"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

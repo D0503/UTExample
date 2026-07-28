@@ -1,0 +1,122 @@
+{
+  "HVIGOR_OHOS_PLUGIN": {
+    "MODULES": [
+      {
+        "MODULE_NAME": "923fe53966c6cd9343e11af776cd4b05be315ea4b200b02e4d5dfb0f929b73bf",
+        "API_TYPE": "stageMode",
+        "INCLUDE_IN_BUILD": true,
+        "IS_COMMAND_LINE_ENTRY_MODULE": true,
+        "MODULE_TYPE": "entry",
+        "INCREMENTAL_TASKS": {
+          "BUILD_NATIVE_WITH_CMAKE": false,
+          "COMPILE_ARKTS": false
+        },
+        "IS_INCREMENTAL_MODULE": false
+      }
+    ],
+    "NATIVE_COMPILER": "Default",
+    "IS_FULL_BUILD": true,
+    "BUILD_MODE": "debug"
+  },
+  "HVIGOR": {
+    "IS_INCREMENTAL": true,
+    "IS_DAEMON": false,
+    "IS_PARALLEL": true,
+    "IS_HVIGORFILE_TYPE_CHECK": false,
+    "TASK_TIME": {
+      "923fe53966c6cd9343e11af776cd4b05be315ea4b200b02e4d5dfb0f929b73bf": {
+        "CreateModuleInfo": 1264700,
+        "GenerateMetadata": 5170600,
+        "ConfigureCmake": 40527500,
+        "MergeProfile": 6392300,
+        "CreateBuildProfile": 7489200,
+        "PreCheckSyscap": 1055500,
+        "GeneratePkgContextInfo": 18079800,
+        "GeneratePkgSdkInfo": 6071500,
+        "ProcessIntegratedHsp": 960000,
+        "MakePackInfo": 10378700,
+        "SyscapTransform": 23381200,
+        "ProcessProfile": 264025900,
+        "ProcessRouterMap": 6348600,
+        "ProcessShareConfig": 5171000,
+        "ProcessStartupConfig": 1851900,
+        "ProcessResource": 6573400,
+        "GenerateLoaderJson": 13870800,
+        "CompileResource": 455027000,
+        "BuildJS": 4507700,
+        "CompileArkTS": 7701095900,
+        "BuildNativeWithCmake": 11232077400
+      }
+    },
+    "APIS": [
+      "getProperty"
+    ],
+    "CONFIG_EXPERIMENT": {
+      "ENABLE_MODULE_SKIP": false,
+      "ENABLE_CPP_FUNCTION_LEVEL_INCREMENTAL": false
+    },
+    "CONFIG_PROPERTIES": {},
+    "BUILD_ID": "202607280953427680",
+    "ERROR_MESSAGE": [
+      {
+        "CODE": "00308018",
+        "STACK": "Error: Exceptions happened while executing ***\\sdk\\default\\openharmony\\native\\build-tools\\cmake\\bin\\ninja.exe -C D:\\HW\\UTDesign\\cases\\libuv\\libuv-base-demo\\entry\\.cxx\\default\\default\\debug\\x8***4.\n...\n\u001b[32m\"***\\sdk\\default\\openharmony\\native\\llvm\\bin\\clang.exe\" --target=x86_64-linux-ohos23.0.0 --gcc-toolchain=\"E:/DevEco Studio/sdk/default/openharmony/native/llvm\" --sysroot=\"E:/DevEco Studio/sdk/default/openharmony/native/sysroot\" -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -D_LARGEFILE_SOURCE -D_POSIX_C_SOURCE=200112 -I\"E:/DevEco Studio/sdk/default/hms/native/sysroot/usr/include\" -ID:/HW/UTDesign/cases/libuv/libuv-base-demo/library/include -ID:/HW/UTDesign/cases/libuv/libuv-base-demo/library/src -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security -Wunguarded-availability  -D__MUSL__ -O0 -g -fno-limit-debug-info  -std=gnu90 -fPIC -fvisibility=hidden -Wstrict-prototypes -Wextra -Wall -Wno-unused-parameter -fno-strict-aliasing -Werror=implicit-function-declaration -MD -MT libuv-build/CMakeFiles/uv_a.dir/src/unix/thread.c.o -MF libuv-build\\CMakeFiles\\uv_a.dir\\src\\unix\\th***d.c.o.d -o libuv-build/CMakeFiles/uv_a.dir/src/unix/thread.c.o -c D:/HW/UTDesign/cases/libuv/libuv-base-demo/library/src/unix/thread.c\u001b[32m\u001b[39m\n...\n    at ChildProcess.<anonymous> (***\\tools\\hvigor\\hvigor-ohos-plugin\\src\\tasks\\ab***e.js:1:2767)\n...",
+        "PROJECT_CONFIG": {
+          "buildMode": "Debug",
+          "compileMode": "esmodule",
+          "moduleType": "entry",
+          "targetName": ".default",
+          "packageManagerType": "ohpm",
+          "isLocalTest": false,
+          "needCoverageInsert": false,
+          "debugLine": false,
+          "compileSdkVersion": 23,
+          "compatibleSdkVersion": 23,
+          "originCompatibleSdkVersion": "6.1.0(23)",
+          "etsLoaderVersion": "6.1.0.105",
+          "etsLoaderReleaseType": "Release",
+          "aotCompileMode": "type",
+          "isCrossplatform": false,
+          "bundleType": "app",
+          "apiVersion": 23,
+          "isFaMode": false,
+          "deviceTypes": [
+            "2in1"
+          ],
+          "integratedHsp": false,
+          "branchElimination": false,
+          "tsImportSendable": false,
+          "resolveConflictMode": true,
+          "useNativeResolver": true,
+          "shouldEmitJs": true,
+          "useTscResolve": false,
+          "singleFileEmit": false,
+          "executionMode": "memory",
+          "isHarDeduplicateEnabled": false,
+          "autoLazyImport": false,
+          "allowEmptyBundleName": false,
+          "reExportCheckMode": "noCheck",
+          "usePathPlaceholder": false,
+          "writeRollupCache": true,
+          "isExpandImportEnabled": false,
+          "ignoreCrossplatformCheck": false,
+          "skipOhModulesLint": false,
+          "enableStrictCheckOHModule": false,
+          "useDeclarationFileSignature": false,
+          "isPreloadSoEnabled": false,
+          "runtimeOS": "HarmonyOS",
+          "sdkInfo": "false:23:6.1.0.105:Release",
+          "useSourceHash": false,
+          "isByteCodeHarOptimize": false,
+          "copyCodeResourceEnable": true,
+          "uiTransformOptimization": false
+        }
+      },
+      {
+        "CODE": "00308018",
+        "TIMESTAMP": "1785203640349"
+      }
+    ],
+    "TOTAL_TIME": 17600381400
+  }
+}

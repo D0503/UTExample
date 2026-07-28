@@ -1,0 +1,1 @@
+{"name":"entry","version":"1.0.0","description":"tinyxml2 Native validation entry module","dependencies":{"libentry.so":"file:./src/main/cpp/types/libentry"},"devDependencies":{"libentry_test.so":"file:./src/ohosTest/cpp/types/libentry_test"}}

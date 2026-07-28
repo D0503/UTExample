@@ -1,0 +1,14 @@
+# Target labels
+ cjson
+# Source files and their labels
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/x86_64/cjson-download/CMakeFiles/cjson
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/x86_64/cjson-download/CMakeFiles/cjson.rule
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/x86_64/cjson-download/CMakeFiles/cjson-complete.rule
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/x86_64/cjson-download/cjson-prefix/src/cjson-stamp/cjson-build.rule
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/x86_64/cjson-download/cjson-prefix/src/cjson-stamp/cjson-configure.rule
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/x86_64/cjson-download/cjson-prefix/src/cjson-stamp/cjson-download.rule
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/x86_64/cjson-download/cjson-prefix/src/cjson-stamp/cjson-install.rule
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/x86_64/cjson-download/cjson-prefix/src/cjson-stamp/cjson-mkdir.rule
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/x86_64/cjson-download/cjson-prefix/src/cjson-stamp/cjson-patch.rule
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/x86_64/cjson-download/cjson-prefix/src/cjson-stamp/cjson-test.rule
+/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/default/debug/x86_64/cjson-download/cjson-prefix/src/cjson-stamp/cjson-update.rule

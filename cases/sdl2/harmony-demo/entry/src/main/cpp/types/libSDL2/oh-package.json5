@@ -1,0 +1,6 @@
+{
+  "name": "libSDL2.so",
+  "types": "./index.d.ts",
+  "version": "2.0.12",
+  "description": "SDL2 HarmonyOS NAPI bridge"
+}

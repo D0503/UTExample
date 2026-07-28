@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "libuv Golden validation module"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "libuv Golden validation ability"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "libuv Golden"
+    }
+  ]
+}

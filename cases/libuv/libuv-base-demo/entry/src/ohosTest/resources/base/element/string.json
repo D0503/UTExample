@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_test_desc",
+      "value": "tinyxml2 native tests"
+    },
+    {
+      "name": "TestAbility_desc",
+      "value": "tinyxml2 test ability"
+    },
+    {
+      "name": "TestAbility_label",
+      "value": "tinyxml2 tests"
+    }
+  ]
+}

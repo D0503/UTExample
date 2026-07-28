@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_test_desc",
+      "value": "SDL2 native and GUI tests"
+    },
+    {
+      "name": "TestAbility_desc",
+      "value": "SDL2 GUI test ability"
+    },
+    {
+      "name": "TestAbility_label",
+      "value": "SDL2 GUI tests"
+    }
+  ]
+}

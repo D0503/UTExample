@@ -1,0 +1,182 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "sdl2-test-build/libSDL2maind.a"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"install",
+			"add_definitions",
+			"include_directories",
+			"include",
+			"project"
+		],
+		"files" : 
+		[
+			"/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/CMakeLists.txt",
+			"/Applications/DevEco-Studio.app/Contents/sdk/default/hms/native/build/cmake/hmos.toolchain.cmake",
+			"/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/build-tools/cmake/share/cmake-3.28/Modules/CMakeDetermineSystem.cmake",
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 2180,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 2284,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 1079,
+				"parent" : 0
+			},
+			{
+				"file" : 3
+			},
+			{
+				"command" : 5,
+				"file" : 3,
+				"line" : 2,
+				"parent" : 4
+			},
+			{
+				"file" : 2,
+				"parent" : 5
+			},
+			{
+				"command" : 4,
+				"file" : 2,
+				"line" : 170,
+				"parent" : 6
+			},
+			{
+				"file" : 1,
+				"parent" : 7
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 25,
+				"parent" : 8
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 267,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 1060,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security  -D__MUSL__ -idirafter /Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/src/video/khronos -D_REENTRANT -Wshadow -Wdeclaration-after-statement -Werror=declaration-after-statement -fno-strict-aliasing -Wall  -O0 -g -fno-limit-debug-info  -fPIC"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 3,
+					"define" : "OHOS_PLATFORM"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 9,
+					"path" : "/Applications/DevEco-Studio.app/Contents/sdk/default/hms/native/sysroot/usr/include"
+				},
+				{
+					"backtrace" : 10,
+					"path" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/harmony-demo/entry/.cxx/default/ohosTest/debug/arm64-v8a/sdl2-test-build/include"
+				},
+				{
+					"backtrace" : 10,
+					"path" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/include"
+				},
+				{
+					"backtrace" : 11,
+					"path" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/third_party/cjson"
+				}
+			],
+			"language" : "C",
+			"sourceIndexes" : 
+			[
+				0
+			],
+			"sysroot" : 
+			{
+				"path" : "/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/sysroot"
+			}
+		}
+	],
+	"id" : "SDL2main::@fe58832402f4c4615b76",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 2,
+				"path" : "lib"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "/usr/local"
+		}
+	},
+	"name" : "SDL2main",
+	"nameOnDisk" : "libSDL2maind.a",
+	"paths" : 
+	{
+		"build" : "sdl2-test-build",
+		"source" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "/Users/guoyutong/MyWorkSpace/TestThirdParty/cases/sdl2/library/src/main/dummy/SDL_dummy_main.c",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}

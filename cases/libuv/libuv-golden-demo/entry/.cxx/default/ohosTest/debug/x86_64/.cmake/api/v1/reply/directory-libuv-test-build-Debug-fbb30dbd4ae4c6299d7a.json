@@ -1,0 +1,136 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"D:/HW/UTDesign/cases/libuv/libuv-golden-demo/library/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 779,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 780,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 781,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 782,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 784,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 786,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "include",
+			"paths" : 
+			[
+				{
+					"from" : "D:/HW/UTDesign/cases/libuv/libuv-golden-demo/library/include",
+					"to" : "."
+				}
+			],
+			"type" : "directory"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "share/doc/libuv",
+			"paths" : 
+			[
+				"D:/HW/UTDesign/cases/libuv/libuv-golden-demo/library/LICENSE"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "share/doc/libuv",
+			"paths" : 
+			[
+				"D:/HW/UTDesign/cases/libuv/libuv-golden-demo/library/LICENSE-extra"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "Unspecified",
+			"destination" : "lib/pkgconfig",
+			"paths" : 
+			[
+				"D:/HW/UTDesign/cases/libuv/libuv-golden-demo/entry/.cxx/default/ohosTest/debug/x86_64/libuv-test-build/libuv-static.pc"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 5,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"libuv-test-build/libuv.a"
+			],
+			"targetId" : "uv_a::@6fb286bca93c69aced1f",
+			"targetIndex" : 1,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 6,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/libuv",
+			"exportName" : "libuvConfig",
+			"exportTargets" : 
+			[
+				{
+					"id" : "uv_a::@6fb286bca93c69aced1f",
+					"index" : 1
+				}
+			],
+			"paths" : 
+			[
+				"libuv-test-build/CMakeFiles/Export/71716f0ef7cdce382c73ee7afe0d26d3/libuvConfig.cmake"
+			],
+			"type" : "export"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "libuv-test-build",
+		"source" : "D:/HW/UTDesign/cases/libuv/libuv-golden-demo/library"
+	}
+}

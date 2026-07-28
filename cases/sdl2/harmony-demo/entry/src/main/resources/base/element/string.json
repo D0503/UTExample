@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "SDL2 GUI validation module"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "SDL2 GUI validation ability"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "SDL2 GUI validation"
+    }
+  ]
+}

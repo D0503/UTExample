@@ -1,0 +1,1 @@
+D:\HW\UTDesign\cases\libuv\libuv-golden-demo\entry\.cxx\default\ohosTest\debug\x86_64
