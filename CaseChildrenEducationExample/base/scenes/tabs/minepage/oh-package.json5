@@ -1,0 +1,18 @@
+{
+  "name": "@ohos_agcit/children_education_minepage",
+  "version": "1.0.0",
+  "description": "Please describe the basic information.",
+  "main": "Index.ets",
+  "author": "",
+  "license": "Apache-2.0",
+  "packageType": "InterfaceHar",
+  "dependencies": {
+    "@ohos_agcit/children_education_utils": "../../../commons/utils",
+    "@ohos_agcit/children_education_datasource": "../../../commons/datasource",
+    "feed_back": "../../../components/feed_back",
+    "collect_personal_info": "../../../components/collect_personal_info",
+    "app_setting": "../../../components/app_setting",
+    "membership": "../../../components/membership",
+    "dial_panel": "../../../components/dial_panel"
+  }
+}

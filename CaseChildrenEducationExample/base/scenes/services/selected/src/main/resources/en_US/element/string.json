@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "shared_desc",
+      "value": "description"
+    },
+    {
+      "name": "interactive_section",
+      "value": "interactive_section"
+    },
+    {
+      "name": "agcit_huawei_children_education",
+      "value": "1.0.3"
+    }
+  ]
+}

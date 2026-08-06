@@ -1,0 +1,15 @@
+{
+  "name": "@ohos_agcit/children_education_utils",
+  "version": "1.0.0",
+  "description": "Please describe the basic information.",
+  "main": "Index.ets",
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@ohos/axios": "2.2.4",
+    "@ohos_agcit/children_education_datasource": "../datasource",
+    "recorded_player": "../../components/recorded_player",
+    "aggregated_share": "../../components/aggregated_share",
+    "membership": "../../components/membership"
+  }
+}

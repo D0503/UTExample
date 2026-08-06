@@ -1,0 +1,2395 @@
+diff --git a/product/phone/src/ohosTest/ets/test/00_common_pass_to_pass/CommonAllDevicePassToPass.test.ets b/product/phone/src/ohosTest/ets/test/00_common_pass_to_pass/CommonAllDevicePassToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..784c0e71b0739070d6a16d467be1554c6aaf222c
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/00_common_pass_to_pass/CommonAllDevicePassToPass.test.ets
+@@ -0,0 +1,84 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { insideWindow, noOverlap, visible } from '../common/EducationAssertions';
++import { openPlayerPage, switchTab, tapContentCard } from '../common/EducationActionHelper';
++
++// 方法说明：注册并执行 commonAllDevicePassToPassTest 测试套件。
++export default function commonAllDevicePassToPassTest() {
++  describe('AllDevicePassToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：启动被测 Ability，验证应用能够成功进入前台且无启动异常。
++    it('should_start_ability_successfully', Level.LEVEL1, async (done: Function) => {
++      try {
++        await visible(driver, 'education-home-root');
++      } catch (error) {
++        console.error('should_start_ability_successfully error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：启动应用后检查首页根容器，验证首页内容能够正常显示。
++    it('should_show_home_page_visible', Level.LEVEL1, async (done: Function) => {
++      try {
++        await visible(driver, 'education-home-content');
++        await insideWindow(driver, bundleName, 'education-home-content');
++        await insideWindow(driver, bundleName, 'premium-video-item-0');
++      } catch (error) {
++        console.error('should_show_home_page_visible error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：依次点击主导航标签，验证各主页面能够正常切换并显示。
++    it('should_switch_main_tabs_successfully', Level.LEVEL1, async (done: Function) => {
++      try {
++        await switchTab(driver, 'mine');
++        await visible(driver, 'education-mine-root');
++        await switchTab(driver, 'home');
++      } catch (error) {
++        console.error('should_switch_main_tabs_successfully error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在各尺寸窗口下检查首页根容器，验证页面不存在横向溢出或被裁切。
++    it('should_keep_no_horizontal_overflow', Level.LEVEL1, async (done: Function) => {
++      try {
++        await noOverlap(driver, 'home-category-0', 'home-category-1');
++      } catch (error) {
++        console.error('should_keep_no_horizontal_overflow error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：点击首页内容卡片，验证能够正常进入内容详情页或播放器页。
++    it('should_open_detail_or_player_from_content_card', Level.LEVEL1, async (done: Function) => {
++      try {
++        await tapContentCard(driver);
++        await visible(driver, 'content-detail-root');
++      } catch (error) {
++        console.error('should_open_detail_or_player_from_content_card error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/01_main_navigation/MainNavigationLgXlFailToPass.test.ets b/product/phone/src/ohosTest/ets/test/01_main_navigation/MainNavigationLgXlFailToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..bcc05dac512ea536b23391bd7f26097dd6070449
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/01_main_navigation/MainNavigationLgXlFailToPass.test.ets
+@@ -0,0 +1,81 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { leftVerticalTabs, notAtWindowBottom, rightOf, visible, width } from '../common/EducationAssertions';
++import { switchTab } from '../common/EducationActionHelper';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 mainNavigationLgXlFailToPassTest 测试套件。
++export default function mainNavigationLgXlFailToPassTest() {
++  describe('MainNavigationLgXlFailToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await driver.delayMs(1500);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 lg/xl 断点下验证 TabBar 可见，“首页”和“我的”两个 Tab 在窗口左侧上下排列且宽度均为 96vp。
++    it('should_show_side_tabs_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await expectBreakpointIn(driver, bundleName, ['lg', 'xl']);
++        await visible(driver, 'tab-bar');
++        await visible(driver, 'main-tab-home');
++        await visible(driver, 'main-tab-mine');
++        await leftVerticalTabs(driver, bundleName, 'main-tab-home', 'main-tab-mine');
++        await width(driver, 'main-tab-home', 96);
++        await width(driver, 'main-tab-mine', 96);
++      } catch (error) {
++        console.error('should_show_side_tabs_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下检查页面位置，验证主内容区排列在侧边标签栏右侧且互不重叠。
++    it('should_place_content_right_of_side_tabs_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await rightOf(driver, 'main-tab-home', 'education-home-content');
++        await rightOf(driver, 'main-tab-mine', 'education-home-content');
++      } catch (error) {
++        console.error('should_place_content_right_of_side_tabs_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下检查两个真实 Tab，验证其底部与窗口底边至少相隔一个 Tab 高度，不处于底部导航位置。
++    it('should_not_show_bottom_tabs_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await visible(driver, 'main-tab-home');
++        await visible(driver, 'main-tab-mine');
++        await notAtWindowBottom(driver, bundleName, 'main-tab-home');
++        await notAtWindowBottom(driver, bundleName, 'main-tab-mine');
++      } catch (error) {
++        console.error('should_not_show_bottom_tabs_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下点击侧边标签，验证对应主页面能够正常切换。
++    it('should_switch_side_tabs_successfully', Level.LEVEL1, async (done: Function) => {
++      try {
++        await switchTab(driver, 'mine');
++        await visible(driver, 'education-mine-root');
++      } catch (error) {
++        console.error('should_switch_side_tabs_successfully error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/01_main_navigation/MainNavigationSmMdPassToPass.test.ets b/product/phone/src/ohosTest/ets/test/01_main_navigation/MainNavigationSmMdPassToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..46b8f79e2b0710c53ed9a0770a908be1b234eee2
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/01_main_navigation/MainNavigationSmMdPassToPass.test.ets
+@@ -0,0 +1,41 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { atWindowBottom, visible } from '../common/EducationAssertions';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 mainNavigationSmMdPassToPassTest 测试套件。
++export default function mainNavigationSmMdPassToPassTest() {
++  describe('MainNavigationSmMdPassToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 sm/md 断点下检查主导航，验证“首页”和“我的”两个 Tab 均显示在窗口底部。
++    it('should_keep_bottom_tabs_on_sm_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await expectBreakpointIn(driver, bundleName, ['sm', 'md']);
++        await visible(driver, 'tab-bar');
++        await visible(driver, 'main-tab-home');
++        await visible(driver, 'main-tab-mine');
++        await atWindowBottom(driver, bundleName, 'tab-bar', 31);
++        await atWindowBottom(driver, bundleName, 'main-tab-home', 31);
++        await atWindowBottom(driver, bundleName, 'main-tab-mine', 31);
++      } catch (error) {
++        console.error('should_keep_bottom_tabs_on_sm_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/02_page_spacing/PageSpacingLgXlFailToPass.test.ets b/product/phone/src/ohosTest/ets/test/02_page_spacing/PageSpacingLgXlFailToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..5e95270a8a2168619b13a1bda3ac06a3a0eb8a78
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/02_page_spacing/PageSpacingLgXlFailToPass.test.ets
+@@ -0,0 +1,75 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { margin, marginFromNavigation } from '../common/EducationAssertions';
++import { openMinePage, openViewHistoryPage, tapById } from '../common/EducationActionHelper';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 pageSpacingLgXlFailToPassTest 测试套件。
++export default function pageSpacingLgXlFailToPassTest() {
++  describe('PageSpacingLgXlFailToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['lg', 'xl']);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 lg/xl 断点下检查首页内容区，验证其距左侧导航栏和窗口右边界均为 32vp。
++    it('should_set_home_margin_32vp_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await marginFromNavigation(driver, bundleName, 'main-tab-home', 'hobby-section', 32);
++      } catch (error) {
++        console.error('should_set_home_margin_32vp_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下检查首页内容区，验证页面外边距适配为 32vp。
++    it('should_set_home_sub_page_margin_32vp_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await tapById(driver, 'hobby-card-0');
++        await margin(driver, bundleName, 'video-card', 32);
++        await driver.pressBack();
++        await driver.delayMs(300);
++      } catch (error) {
++        console.error('should_set_home_sub_page_margin_32vp_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下进入“我的”页面，验证内容区距左侧导航栏和窗口右边界均为 32vp。
++    it('should_set_mine_margin_32vp_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await openMinePage(driver);
++        await marginFromNavigation(driver, bundleName, 'main-tab-mine', 'education-mine-content', 32);
++      } catch (error) {
++        console.error('should_set_mine_margin_32vp_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下进入浏览历史子页面，验证内容区外边距适配为 32vp。
++    it('should_set_sub_page_margin_32vp_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await openViewHistoryPage(driver);
++        await margin(driver, bundleName, 'view-history-content', 32);
++      } catch (error) {
++        console.error('should_set_sub_page_margin_32vp_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/02_page_spacing/PageSpacingMdFailToPass.test.ets b/product/phone/src/ohosTest/ets/test/02_page_spacing/PageSpacingMdFailToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..36d4f8cb125d157867eabb6db2c0e465aa7d4c1c
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/02_page_spacing/PageSpacingMdFailToPass.test.ets
+@@ -0,0 +1,75 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { margin } from '../common/EducationAssertions';
++import { openMinePage, openViewHistoryPage, tapById } from '../common/EducationActionHelper';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 pageSpacingMdFailToPassTest 测试套件。
++export default function pageSpacingMdFailToPassTest() {
++  describe('PageSpacingMdFailToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['md']);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 md 断点下检查首页内容区，验证页面外边距保持为 24vp。
++    it('should_set_home_margin_24vp_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await margin(driver, bundleName, 'hobby-section', 24);
++      } catch (error) {
++        console.error('should_set_home_margin_16vp_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 md 断点下检查兴趣页，验证页面外边距适配为 24vp。
++    it('should_set_home_sub_page_margin_24vp_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await tapById(driver, 'hobby-card-0');
++        await margin(driver, bundleName, 'video-card', 24);
++        await driver.pressBack();
++        await driver.delayMs(300);
++      } catch (error) {
++        console.error('should_set_home_sub_page_margin_24vp_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 md 断点下进入“我的”页面，验证内容区外边距适配为 24vp。
++    it('should_set_mine_margin_24vp_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await openMinePage(driver);
++        await margin(driver, bundleName, 'education-mine-content', 24);
++      } catch (error) {
++        console.error('should_set_mine_margin_24vp_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 md 断点下进入浏览历史子页面，验证内容区外边距适配为 24vp。
++    it('should_set_mine_sub_page_margin_24vp_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await openViewHistoryPage(driver);
++        await margin(driver, bundleName, 'view-history-content', 24);
++      } catch (error) {
++        console.error('should_set_mine_sub_page_margin_24vp_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/02_page_spacing/PageSpacingSmPassToPass.test.ets b/product/phone/src/ohosTest/ets/test/02_page_spacing/PageSpacingSmPassToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..c744702006ca78f2e9a4d53fbc111bb67cd03e27
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/02_page_spacing/PageSpacingSmPassToPass.test.ets
+@@ -0,0 +1,49 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { margin } from '../common/EducationAssertions';
++import { openMinePage } from '../common/EducationActionHelper';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 pageSpacingSmPassToPassTest 测试套件。
++export default function pageSpacingSmPassToPassTest() {
++  describe('PageSpacingSmPassToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['sm']);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 sm 断点下检查首页内容区，验证页面外边距保持为 16vp。
++    it('should_keep_home_margin_16vp_on_sm', Level.LEVEL1, async (done: Function) => {
++      try {
++        await margin(driver, bundleName, 'hobby-section', 16);
++      } catch (error) {
++        console.error('should_keep_home_margin_16vp_on_sm error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 sm 断点下进入“我的”页面，验证内容区外边距保持为 16vp。
++    it('should_keep_mine_margin_16vp_on_sm', Level.LEVEL1, async (done: Function) => {
++      try {
++        await openMinePage(driver);
++        await margin(driver, bundleName, 'education-mine-content', 16);
++      } catch (error) {
++        console.error('should_keep_mine_margin_16vp_on_sm error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/03_home_category/HomeCategoryLgXlFailToPass.test.ets b/product/phone/src/ohosTest/ets/test/03_home_category/HomeCategoryLgXlFailToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..3b97044a8a5155f2fcc8f8d379ee4eadc93c3579
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/03_home_category/HomeCategoryLgXlFailToPass.test.ets
+@@ -0,0 +1,47 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { gap, height } from '../common/EducationAssertions';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 homeCategoryLgXlFailToPassTest 测试套件。
++export default function homeCategoryLgXlFailToPassTest() {
++  describe('TabletLgXlCategoryFailToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['lg', 'xl']);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 lg/xl 断点下检查首页分类项，验证相邻分类间距适配为 32vp。
++    it('should_set_home_category_gap_32vp_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await gap(driver, 'home-category-0', 'home-category-1', 32);
++      } catch (error) {
++        console.error('should_set_home_category_gap_32vp_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下检查兴趣分类卡片，验证卡片高度适配为 96vp。
++    it('should_set_hobby_card_height_96vp_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await height(driver, 'hobby-card-0', 96);
++      } catch (error) {
++        console.error('should_set_hobby_card_height_96vp_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/03_home_category/HomeCategoryMdFailToPass.test.ets b/product/phone/src/ohosTest/ets/test/03_home_category/HomeCategoryMdFailToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..805f3389d7330e187096e5a6b92c3318716c51a1
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/03_home_category/HomeCategoryMdFailToPass.test.ets
+@@ -0,0 +1,36 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { height } from '../common/EducationAssertions';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 homeCategoryMdFailToPassTest 测试套件。
++export default function homeCategoryMdFailToPassTest() {
++  describe('HomeCategoryMdFailToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['md']);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 md 断点下检查兴趣分类卡片，验证卡片高度适配为 80vp。
++    it('should_set_hobby_card_height_80vp_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await height(driver, 'hobby-card-0', 80);
++      } catch (error) {
++        console.error('should_set_hobby_card_height_80vp_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/03_home_category/HomeCategoryMdPassToPass.test.ets b/product/phone/src/ohosTest/ets/test/03_home_category/HomeCategoryMdPassToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..fc2c4ce25970dc46dfba6ab38b221229fefa12e6
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/03_home_category/HomeCategoryMdPassToPass.test.ets
+@@ -0,0 +1,36 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { gap } from '../common/EducationAssertions';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 homeCategoryMdPassToPassTest 测试套件。
++export default function homeCategoryMdPassToPassTest() {
++  describe('HomeCategoryMdPassToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['md']);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 md 断点下检查首页分类项，验证相邻分类间距保持为 24vp。
++    it('should_keep_home_category_gap_24vp_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await gap(driver, 'home-category-0', 'home-category-1', 24);
++      } catch (error) {
++        console.error('should_keep_home_category_gap_24vp_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/03_home_category/HomeCategorySmPassToPass.test.ets b/product/phone/src/ohosTest/ets/test/03_home_category/HomeCategorySmPassToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..2cc880309185504ee29e8880f6baa896742f6f8f
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/03_home_category/HomeCategorySmPassToPass.test.ets
+@@ -0,0 +1,47 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { gap, height } from '../common/EducationAssertions';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 homeCategorySmPassToPassTest 测试套件。
++export default function homeCategorySmPassToPassTest() {
++  describe('HomeCategorySmPassToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['sm']);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 sm 断点下检查首页分类项，验证相邻分类间距保持为 24vp。
++    it('should_keep_home_category_gap_24vp_on_sm', Level.LEVEL1, async (done: Function) => {
++      try {
++        await gap(driver, 'home-category-0', 'home-category-1', 24);
++      } catch (error) {
++        console.error('should_keep_home_category_gap_24vp_on_sm error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 sm 断点下检查兴趣分类卡片，验证卡片高度保持为 64vp。
++    it('should_keep_hobby_card_height_64vp_on_sm', Level.LEVEL1, async (done: Function) => {
++      try {
++        await height(driver, 'hobby-card-0', 64);
++      } catch (error) {
++        console.error('should_keep_hobby_card_height_64vp_on_sm error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/04_banner/BannerLgXlFailToPass.test.ets b/product/phone/src/ohosTest/ets/test/04_banner/BannerLgXlFailToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..5d909ca1d86401bb550216ea51b8e0611878187e
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/04_banner/BannerLgXlFailToPass.test.ets
+@@ -0,0 +1,69 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { gap, inset, insideWindow, marginFromNavigation, visibleCountInContainer } from '../common/EducationAssertions';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 bannerLgXlFailToPassTest 测试套件。
++export default function bannerLgXlFailToPassTest() {
++  describe('TabletLgXlBannerFailToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['lg', 'xl']);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 lg/xl 断点下检查首页轮播，验证同屏显示 3 个轮播项。
++    it('should_show_banner_three_items_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await visibleCountInContainer(driver, 'banner-container', 'banner-item', 3, 3);
++      } catch (error) {
++        console.error('should_show_banner_three_items_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下检查 Banner，验证其左边界紧邻左侧导航栏且右边界贴合窗口。
++    it('should_set_banner_margin_0vp_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await marginFromNavigation(driver, bundleName, 'main-tab-home', 'banner-container', 0);
++      } catch (error) {
++        console.error('should_set_banner_margin_24vp_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下检查轮播项，验证相邻轮播卡片间距为 16vp。
++    it('should_keep_banner_gap_16vp_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await gap(driver, 'banner-item-0', 'banner-item-1', 16);
++      } catch (error) {
++        console.error('should_keep_banner_gap_16vp_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下检查轮播预览区域，验证两侧预览留白为 36vp。
++    it('should_keep_banner_preview_margin_36vp_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await inset(driver, 'banner-container', 'banner-item-0', 36 + 16);
++      } catch (error) {
++        console.error('should_keep_banner_preview_margin_36vp_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/04_banner/BannerMdFailToPass.test.ets b/product/phone/src/ohosTest/ets/test/04_banner/BannerMdFailToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..bd8ec2dc8c98be65ade06bbe0be6ec29b9c98db4
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/04_banner/BannerMdFailToPass.test.ets
+@@ -0,0 +1,69 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { gap, inset, margin, visibleCountInContainer } from '../common/EducationAssertions';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 bannerMdFailToPassTest 测试套件。
++export default function bannerMdFailToPassTest() {
++  describe('BannerMdFailToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['md']);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 md 断点下排除边缘滑入项，验证自动轮播稳定后有 2 个 Banner 完全位于容器内。
++    it('should_show_banner_two_items_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await visibleCountInContainer(driver, 'banner-container', 'banner-item', 3, 2);
++      } catch (error) {
++        console.error('should_show_banner_two_items_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 md 断点下检查首页，验证 Banner 外边距适配为 0vp。
++    it('should_set_banner_margin_0vp_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await margin(driver, bundleName, 'banner-container', 0);
++      } catch (error) {
++        console.error('should_set_banner_margin_16vp_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 md 断点下检查轮播项，验证相邻轮播卡片间距为 12vp。
++    it('should_keep_banner_gap_12vp_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await gap(driver, 'banner-item-0', 'banner-item-1', 12);
++      } catch (error) {
++        console.error('should_keep_banner_gap_12vp_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 md 断点下检查轮播预览区域，验证两侧预览留白为 24vp。
++    it('should_keep_banner_preview_margin_24vp_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await inset(driver, 'banner-container', 'banner-item-0', 24 + 12);
++      } catch (error) {
++        console.error('should_keep_banner_preview_margin_24vp_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/04_banner/BannerSmPassToPass.test.ets b/product/phone/src/ohosTest/ets/test/04_banner/BannerSmPassToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..00355e7879bf5590ac9a383b5765b92433f7c9d5
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/04_banner/BannerSmPassToPass.test.ets
+@@ -0,0 +1,58 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { gap, inset, margin, visibleCountInContainer } from '../common/EducationAssertions';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 bannerSmPassToPassTest 测试套件。
++export default function bannerSmPassToPassTest() {
++  describe('BannerSmPassToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['sm']);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 sm 断点下检查首页轮播，验证同屏仅显示 1 个轮播项。
++    it('should_show_banner_one_item_on_sm', Level.LEVEL1, async (done: Function) => {
++      try {
++        await visibleCountInContainer(driver, 'banner-container', 'banner-item', 3, 1);
++      } catch (error) {
++        console.error('should_show_banner_one_item_on_sm error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 sm 断点下检查首页内容区，验证 Banner 外边距保持为 16vp。
++    it('should_keep_banner_margin_16vp_on_sm', Level.LEVEL1, async (done: Function) => {
++      try {
++        await margin(driver, bundleName, 'banner-container', 16);
++      } catch (error) {
++        console.error('should_keep_banner_margin_16vp_on_sm error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 sm 断点下检查轮播区域，验证两侧不显示相邻卡片预览留白。
++    it('should_keep_banner_preview_margin_zero_on_sm', Level.LEVEL1, async (done: Function) => {
++      try {
++        await inset(driver, 'banner-container', 'banner-item-0', 0);
++      } catch (error) {
++        console.error('should_keep_banner_preview_margin_zero_on_sm error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/05_content_columns/ContentColumnsLgXlFailToPass.test.ets b/product/phone/src/ohosTest/ets/test/05_content_columns/ContentColumnsLgXlFailToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..50ced8e37100790bd623f39bf3f10a5be691ca6d
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/05_content_columns/ContentColumnsLgXlFailToPass.test.ets
+@@ -0,0 +1,186 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { columns, columnsInContainer, gridGap, visible, visibleCount } from '../common/EducationAssertions';
++import {
++  openMorePage,
++  openViewHistoryPage,
++  scrollToComponent,
++  switchHomeCategory,
++  switchTab,
++  tapContentCard
++} from '../common/EducationActionHelper';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 contentColumnsLgXlFailToPassTest 测试套件。
++export default function contentColumnsLgXlFailToPassTest() {
++  describe('ContentColumnsLgXlFailToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['lg', 'xl']);
++      await switchHomeCategory(driver, 0);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 lg/xl 断点下验证精品互动视频按 3 列展示 9 项，且相邻网格项间距为 16vp。
++    it('should_show_premium_video_three_columns_nine_items_and_16vp_gap_on_lg_xl', Level.LEVEL1,
++      async (done: Function) => {
++        try {
++          await columns(driver, 'premium-video-item', 9, 3);
++          await visibleCount(driver, 'premium-video-item', 9, 9);
++          await gridGap(driver, 'premium-video-item-0', 'premium-video-item-1', 16);
++        } catch (error) {
++          console.error('should_show_premium_video_three_columns_nine_items_and_16vp_gap_on_lg_xl error: ' +
++            JSON.stringify(error));
++          expect(false).assertTrue();
++        }
++        done();
++      })
++
++    // 用例说明：在 lg/xl 断点下点击第一个精品互动视频，验证详情页视频推荐列表按 4 列展示。
++    it('should_show_four_recommend_columns_after_opening_first_premium_video_on_lg_xl', Level.LEVEL1,
++      async (done: Function) => {
++        try {
++          await tapContentCard(driver, 0);
++          await visible(driver, 'content-detail-root');
++          await columns(driver, 'detail-recommend-item', 8, 4);
++        } catch (error) {
++          console.error('should_show_four_recommend_columns_after_opening_first_premium_video_on_lg_xl error: ' +
++            JSON.stringify(error));
++          expect(false).assertTrue();
++        } finally {
++          await driver.pressBack();
++          await driver.delayMs(400);
++        }
++        done();
++      })
++
++
++    // 用例说明：在 lg/xl 断点下进入精品互动视频更多页，验证更多内容按 3 列展示。
++    it('should_show_premium_more_page_three_columns_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await switchHomeCategory(driver, 0);
++        await openMorePage(driver, 'premium-video-section', 'premium-more-content');
++        await columnsInContainer(driver, 'premium-more-content', 3);
++      } catch (error) {
++        console.error('should_show_premium_more_page_three_columns_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      } finally {
++        await driver.pressBack();
++        await driver.delayMs(400);
++      }
++      done();
++    })
++
++
++    // 用例说明：在 lg/xl 断点下进入热门动画榜更多页，验证更多内容按 3 列展示。
++    it('should_show_hot_animation_more_page_three_columns_on_lg_xl', Level.LEVEL1,
++      async (done: Function) => {
++        try {
++          await switchHomeCategory(driver, 0);
++          await openMorePage(driver, 'hot-animation-section', 'hot-animation-more-content');
++          await columnsInContainer(driver, 'hot-animation-more-content', 3);
++        } catch (error) {
++          console.error('should_show_hot_animation_more_page_three_columns_on_lg_xl error: ' +
++            JSON.stringify(error));
++          expect(false).assertTrue();
++        } finally {
++          await driver.pressBack();
++          await driver.delayMs(400);
++        }
++        done();
++      })
++
++    // 用例说明：在 lg/xl 断点下将精选页滚动到底部音频故事专区，验证音频内容按 5 列展示。
++    it('should_show_audio_story_five_columns_after_scrolling_to_bottom_on_lg_xl', Level.LEVEL1,
++      async (done: Function) => {
++        try {
++          await switchHomeCategory(driver, 0);
++          await scrollToComponent(driver, 'audio-story-item-0');
++          await columns(driver, 'audio-story-item', 5, 5);
++        } catch (error) {
++          console.error('should_show_audio_story_five_columns_after_scrolling_to_bottom_on_lg_xl error: ' +
++            JSON.stringify(error));
++          expect(false).assertTrue();
++        }
++        done();
++      })
++
++    // 用例说明：在 lg/xl 断点下切换到“看动画”并滚动到趣味大百科，验证内容按 4 列展示。
++    it('should_show_cartoon_encyclopedia_four_columns_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await switchHomeCategory(driver, 1);
++        await scrollToComponent(driver, 'cartoon-encyclopedia-section');
++        await columnsInContainer(driver, 'cartoon-encyclopedia-section', 4);
++      } catch (error) {
++        console.error('should_show_cartoon_encyclopedia_four_columns_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下切换到“英语乐园”Tab，验证英文儿歌列表按 4 列展示。
++    it('should_show_english_song_four_columns_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await switchHomeCategory(driver, 2);
++        await scrollToComponent(driver, 'english-song-section');
++        await columnsInContainer(driver, 'english-song-section', 4);
++      } catch (error) {
++        console.error('should_show_english_song_four_columns_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下切换到“儿歌”Tab，验证律动儿歌列表按 4 列展示。
++    it('should_show_rhythm_song_four_columns_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await switchHomeCategory(driver, 3);
++        await scrollToComponent(driver, 'rhythm-song-section');
++        await columnsInContainer(driver, 'rhythm-song-section', 4);
++      } catch (error) {
++        console.error('should_show_rhythm_song_four_columns_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下切换到“学汉语”并滚动到三字经，验证内容按 4 列展示。
++    it('should_show_three_character_classic_four_columns_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await switchHomeCategory(driver, 4);
++        await scrollToComponent(driver, 'three-character-section');
++        await columnsInContainer(driver, 'three-character-section', 4);
++      } catch (error) {
++        console.error('should_show_three_character_classic_four_columns_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下进入“我的-观看历史”，验证固定历史记录按 3 列展示。
++    it('should_show_view_history_three_columns_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await openViewHistoryPage(driver);
++        await columns(driver, 'view-history-item', 6, 3);
++      } catch (error) {
++        console.error('should_show_view_history_three_columns_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      } finally {
++        await driver.pressBack();
++        await driver.delayMs(400);
++        await switchTab(driver, 'home');
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/05_content_columns/ContentColumnsMdFailToPass.test.ets b/product/phone/src/ohosTest/ets/test/05_content_columns/ContentColumnsMdFailToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..1464e07d910c7f48a08c6b7e46b0c0bb8e93793a
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/05_content_columns/ContentColumnsMdFailToPass.test.ets
+@@ -0,0 +1,167 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { columns, columnsInContainer, gridGap, visible, visibleCount } from '../common/EducationAssertions';
++import {
++  openMorePage,
++  openViewHistoryPage,
++  scrollToComponent,
++  switchHomeCategory,
++  switchTab,
++  tapContentCard
++} from '../common/EducationActionHelper';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 contentColumnsMdFailToPassTest 测试套件。
++export default function contentColumnsMdFailToPassTest() {
++  describe('ContentColumnsMdFailToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['md']);
++      await switchHomeCategory(driver, 0);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 md 断点下验证精品互动视频按 2 列展示 6 项，且相邻网格项间距为 12vp。
++    it('should_show_premium_video_two_columns_six_items_and_12vp_gap_on_md', Level.LEVEL1,
++      async (done: Function) => {
++        try {
++          await columns(driver, 'premium-video-item', 9, 2);
++          await visibleCount(driver, 'premium-video-item', 9, 6);
++          await gridGap(driver, 'premium-video-item-0', 'premium-video-item-1', 12);
++        } catch (error) {
++          console.error('should_show_premium_video_two_columns_six_items_and_12vp_gap_on_md error: ' +
++            JSON.stringify(error));
++          expect(false).assertTrue();
++        }
++        done();
++      })
++
++    // 用例说明：在 md 断点下进入精品互动视频更多页，验证更多内容按 2 列展示。
++    it('should_show_premium_more_page_two_columns_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await switchHomeCategory(driver, 0);
++        await openMorePage(driver, 'premium-video-section', 'premium-more-content');
++        await columnsInContainer(driver, 'premium-more-content', 2);
++      } catch (error) {
++        console.error('should_show_premium_more_page_two_columns_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      } finally {
++        await driver.pressBack();
++        await driver.delayMs(400);
++      }
++      done();
++    })
++
++    // 用例说明：在 md 断点下点击第一个精品互动视频，验证详情页视频推荐列表按 3 列展示。
++    it('should_show_three_recommend_columns_after_opening_first_premium_video_on_md', Level.LEVEL1,
++      async (done: Function) => {
++        try {
++          await tapContentCard(driver, 0);
++          await visible(driver, 'content-detail-root');
++          await columns(driver, 'detail-recommend-item', 8, 3);
++        } catch (error) {
++          console.error('should_show_three_recommend_columns_after_opening_first_premium_video_on_md error: ' +
++            JSON.stringify(error));
++          expect(false).assertTrue();
++        } finally {
++          await driver.pressBack();
++          await driver.delayMs(400);
++        }
++        done();
++      })
++
++    // 用例说明：在 md 断点下滚动到精选页热门动画榜，验证榜单内容按 3 列展示。
++    it('should_show_hot_animation_three_columns_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await switchHomeCategory(driver, 0);
++        await scrollToComponent(driver, 'hot-animation-section');
++        await columnsInContainer(driver, 'hot-animation-section', 3);
++      } catch (error) {
++        console.error('should_show_hot_animation_three_columns_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 md 断点下进入热门动画榜更多页，验证更多内容按 2 列展示。
++    it('should_show_hot_animation_more_page_two_columns_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await switchHomeCategory(driver, 0);
++        await openMorePage(driver, 'hot-animation-section', 'hot-animation-more-content');
++        await columnsInContainer(driver, 'hot-animation-more-content', 2);
++      } catch (error) {
++        console.error('should_show_hot_animation_more_page_two_columns_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      } finally {
++        await driver.pressBack();
++        await driver.delayMs(400);
++      }
++      done();
++    })
++
++    // 用例说明：在 md 断点下切换到“看动画”并滚动到趣味大百科，验证内容按 3 列展示。
++    it('should_show_cartoon_encyclopedia_three_columns_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await switchHomeCategory(driver, 1);
++        await scrollToComponent(driver, 'cartoon-encyclopedia-section');
++        await columnsInContainer(driver, 'cartoon-encyclopedia-section', 3);
++      } catch (error) {
++        console.error('should_show_cartoon_encyclopedia_three_columns_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 md 断点下切换到“儿歌”Tab，验证律动儿歌列表按 3 列展示。
++    it('should_show_rhythm_song_three_columns_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await switchHomeCategory(driver, 3);
++        await scrollToComponent(driver, 'rhythm-song-section');
++        await columnsInContainer(driver, 'rhythm-song-section', 3);
++      } catch (error) {
++        console.error('should_show_rhythm_song_three_columns_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 md 断点下切换到“学汉语”并滚动到三字经，验证内容按 3 列展示。
++    it('should_show_three_character_classic_three_columns_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await switchHomeCategory(driver, 4);
++        await scrollToComponent(driver, 'three-character-section');
++        await columnsInContainer(driver, 'three-character-section', 3);
++      } catch (error) {
++        console.error('should_show_three_character_classic_three_columns_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 md 断点下进入“我的-观看历史”，验证固定历史记录按 2 列展示。
++    it('should_show_view_history_two_columns_on_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await openViewHistoryPage(driver);
++        await columns(driver, 'view-history-item', 6, 2);
++      } catch (error) {
++        console.error('should_show_view_history_two_columns_on_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      } finally {
++        await driver.pressBack();
++        await driver.delayMs(400);
++        await switchTab(driver, 'home');
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/05_content_columns/ContentColumnsSmPassToPass.test.ets b/product/phone/src/ohosTest/ets/test/05_content_columns/ContentColumnsSmPassToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..09318f03d8c94ccb2d1efdff4a2883f7aa365874
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/05_content_columns/ContentColumnsSmPassToPass.test.ets
+@@ -0,0 +1,72 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { columns, columnsInContainer, gridGap, visible, visibleCount } from '../common/EducationAssertions';
++import { scrollToComponent, switchHomeCategory, tapById, tapContentCard } from '../common/EducationActionHelper';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 contentColumnsSmPassToPassTest 测试套件。
++export default function contentColumnsSmPassToPassTest() {
++  describe('ContentColumnsSmPassToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['sm']);
++      await switchHomeCategory(driver, 0);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 sm 断点下验证精品互动视频按 1 列展示 3 项，且相邻网格项间距为 8vp。
++    it('should_show_premium_video_one_column_three_items_and_8vp_gap_on_sm', Level.LEVEL1,
++      async (done: Function) => {
++        try {
++          await columns(driver, 'premium-video-item', 9, 1);
++          await visibleCount(driver, 'premium-video-item', 9, 3);
++        } catch (error) {
++          console.error('should_show_premium_video_one_column_three_items_and_8vp_gap_on_sm error: ' +
++            JSON.stringify(error));
++          expect(false).assertTrue();
++        }
++        done();
++      })
++
++    // 用例说明：在 sm 断点下点击第一个精品互动视频，验证详情页视频推荐列表按 2 列展示。
++    it('should_show_two_recommend_columns_after_opening_first_premium_video_on_sm', Level.LEVEL1,
++      async (done: Function) => {
++        try {
++          await tapContentCard(driver, 0);
++          await visible(driver, 'content-detail-root');
++          await columns(driver, 'detail-recommend-item', 8, 2);
++        } catch (error) {
++          console.error('should_show_two_recommend_columns_after_opening_first_premium_video_on_sm error: ' +
++            JSON.stringify(error));
++          expect(false).assertTrue();
++        } finally {
++          await driver.pressBack();
++          await driver.delayMs(400);
++        }
++        done();
++      })
++
++    // 用例说明：在 sm 断点下滚动到精选页热门动画榜，验证榜单内容按 2 列展示。
++    it('should_show_hot_animation_two_columns_on_sm', Level.LEVEL1, async (done: Function) => {
++      try {
++        await switchHomeCategory(driver, 0);
++        await scrollToComponent(driver, 'hot-animation-section');
++        await columnsInContainer(driver, 'hot-animation-section', 2);
++      } catch (error) {
++        console.error('should_show_hot_animation_two_columns_on_sm error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/06_mine_common_services/MineCommonServicesLgXlFailToPass.test.ets b/product/phone/src/ohosTest/ets/test/06_mine_common_services/MineCommonServicesLgXlFailToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..ea1503a1f5b1f1fc6b74df35e6e0a27a84b64031
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/06_mine_common_services/MineCommonServicesLgXlFailToPass.test.ets
+@@ -0,0 +1,51 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { absentInContainer, columns, noOverlap } from '../common/EducationAssertions';
++import { openMinePage } from '../common/EducationActionHelper';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 mineCommonServicesLgXlFailToPassTest 测试套件。
++export default function mineCommonServicesLgXlFailToPassTest() {
++  describe('MineCommonServicesLgXlFailToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['lg', 'xl']);
++      await openMinePage(driver);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 lg/xl 断点下进入“我的”页面，验证 4 个常用服务按 2 列排列。
++    it('should_show_common_services_two_columns_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await columns(driver, 'common-service-item', 4, 2);
++      } catch (error) {
++        console.error('should_show_common_services_two_columns_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 两列布局下，验证最后一行的第 3、4 个常用服务下方均不显示分割线。
++    it('should_not_show_dividers_on_last_common_service_row_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await absentInContainer(driver, 'common-services-divider', 'common-service-item-2');
++        await absentInContainer(driver, 'common-services-divider', 'common-service-item-3');
++      } catch (error) {
++        console.error('should_not_show_dividers_on_last_common_service_row_on_lg_xl error: ' +
++          JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/06_mine_common_services/MineCommonServicesSmMdPassToPass.test.ets b/product/phone/src/ohosTest/ets/test/06_mine_common_services/MineCommonServicesSmMdPassToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..61670dd64ceb42f0d1cd3898e85a0211e0d14903
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/06_mine_common_services/MineCommonServicesSmMdPassToPass.test.ets
+@@ -0,0 +1,49 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { columns, insideWindow, visible } from '../common/EducationAssertions';
++import { openMinePage, openViewHistoryPage } from '../common/EducationActionHelper';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 mineCommonServicesSmMdPassToPassTest 测试套件。
++export default function mineCommonServicesSmMdPassToPassTest() {
++  describe('MineCommonServicesSmMdPassToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['sm', 'md']);
++      await openMinePage(driver);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 sm/md 断点下进入“我的”页面，验证 4 个常用服务保持单列排列。
++    it('should_keep_common_services_one_column_on_sm_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await columns(driver, 'common-service-item', 4, 1);
++      } catch (error) {
++        console.error('should_keep_common_services_one_column_on_sm_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 sm/md 断点下检查常用服务根容器，验证其完整位于窗口可视范围内。
++    it('should_keep_common_services_inside_window_on_sm_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await insideWindow(driver, bundleName, 'common-services-root');
++      } catch (error) {
++        console.error('should_keep_common_services_inside_window_on_sm_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/07_audio_player_layout/AudioPlayerMdLgXlFailToPass.test.ets b/product/phone/src/ohosTest/ets/test/07_audio_player_layout/AudioPlayerMdLgXlFailToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..e5dc80f745bb74ddb597c2a1df952062f876f537
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/07_audio_player_layout/AudioPlayerMdLgXlFailToPass.test.ets
+@@ -0,0 +1,40 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver, ON } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { height, insideWindow, noOverlap, width } from '../common/EducationAssertions';
++import { openAudioPlayerPage, scrollToComponent } from '../common/EducationActionHelper';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 audioPlayerMdFailToPassTest 测试套件。
++export default function audioPlayerMdLgXlFailToPassTest() {
++  describe('AudioPlayerMdLgXlFailToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['md', 'lg', 'xl']);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 md\lg\xl 断点下检查音频播放器，验证封面宽高均适配为 240vp。
++    it('should_set_audio_cover_240vp_on_md_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await scrollToComponent(driver, 'audio-story-section');
++        await openAudioPlayerPage(driver);
++        await width(driver, 'audio-cover', 240);
++        await height(driver, 'audio-cover', 240);
++      } catch (error) {
++        console.error('should_set_audio_cover_240vp_on_md_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/07_audio_player_layout/AudioPlayerSmPassToPass.test.ets b/product/phone/src/ohosTest/ets/test/07_audio_player_layout/AudioPlayerSmPassToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..c95aae3f3fd0d4501ec46049bb58c53d645b5658
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/07_audio_player_layout/AudioPlayerSmPassToPass.test.ets
+@@ -0,0 +1,67 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { columnsInContainer, height, insideWindow, visible, width } from '../common/EducationAssertions';
++import { scrollToComponent, tapById } from '../common/EducationActionHelper';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 audioPlayerSmPassToPassTest 测试套件。
++export default function audioPlayerSmPassToPassTest() {
++  describe('AudioPlayerSmPassToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['sm']);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 sm 断点下验证播放器列表内容按 1 列展示。
++    it('should_show_audio_list_one_columns_on_sm', Level.LEVEL1, async (done: Function) => {
++      try {
++        await scrollToComponent(driver, 'audio-story-section');
++        await tapById(driver, 'audio-story-item-0');
++        await columnsInContainer(driver, 'audio-list', 1);
++      } catch (error) {
++        console.error('should_show_audio_list_one_columns_on_sm error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 sm 断点下检查音频播放器，验证封面宽高保持为 160vp。
++    it('should_keep_audio_cover_160vp_on_sm', Level.LEVEL1, async (done: Function) => {
++      try {
++        await tapById(driver, 'audio-detail-item-0');
++        await width(driver, 'audio-cover', 160);
++        await height(driver, 'audio-cover', 160);
++      } catch (error) {
++        console.error('should_keep_audio_cover_160vp_on_sm error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 sm 断点下检查音频播放器，验证控制区位于窗口内且播放按钮可点击。
++    it('should_keep_audio_controls_available_on_sm', Level.LEVEL1, async (done: Function) => {
++      try {
++        await visible(driver, 'audio-title');
++        await visible(driver, 'audio-progress');
++        await visible(driver, 'audio-control-area');
++        await insideWindow(driver, bundleName, 'audio-control-area');
++        await tapById(driver, 'audio-play-pause');
++      } catch (error) {
++        console.error('should_keep_audio_controls_available_on_sm error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/08_video_player_layout/VideoPlayerBreakpointRecoverFailToPass.test.ets b/product/phone/src/ohosTest/ets/test/08_video_player_layout/VideoPlayerBreakpointRecoverFailToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..cdd966138e67c16c2d88b9c187865689e2b02616
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/08_video_player_layout/VideoPlayerBreakpointRecoverFailToPass.test.ets
+@@ -0,0 +1,54 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { below, rightSpace, textRightOf, visibleText } from '../common/EducationAssertions';
++import { expectBreakpointIn, rotateToLandscape, rotateToPortrait } from '../common/DeviceHelper';
++import { openPlayerPage } from '../common/EducationActionHelper';
++
++// 方法说明：注册并执行 videoPlayerBreakpointRecoverFailToPassTest 测试套件。
++export default function videoPlayerBreakpointRecoverFailToPassTest() {
++  describe('VideoPlayerBreakpointRecoverFailToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await openPlayerPage(driver);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：播放器由横屏切换回竖屏后，验证“选集”播放列表恢复到播放器下方。
++    it('should_recover_player_playlist_after_portrait_rotation', Level.LEVEL1, async (done: Function) => {
++      try {
++        await rotateToPortrait(driver);
++        await expectBreakpointIn(driver, bundleName, ['md']);
++        await below(driver, 'player-root', 'player-playlist');
++        await visibleText(driver, '选集');
++      } catch (error) {
++        console.error('should_recover_player_playlist_after_portrait_rotation error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：播放器窗口恢复至 lg/xl 断点后，验证“选集”播放列表位于播放器右侧且占用 400vp。
++    it('should_restore_player_sidebar_after_large_breakpoint', Level.LEVEL1, async (done: Function) => {
++      try {
++        await rotateToLandscape(driver);
++        await expectBreakpointIn(driver, bundleName, ['lg', 'xl']);
++        await textRightOf(driver, 'player-root', '选集');
++        await rightSpace(driver, bundleName, 'player-root', 400);
++      } catch (error) {
++        console.error('should_restore_player_sidebar_after_large_breakpoint error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/08_video_player_layout/VideoPlayerLgXlFailToPass.test.ets b/product/phone/src/ohosTest/ets/test/08_video_player_layout/VideoPlayerLgXlFailToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..964272414edf55f61a10d7554c8fd3c5394b0e38
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/08_video_player_layout/VideoPlayerLgXlFailToPass.test.ets
+@@ -0,0 +1,86 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver, ON } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import {
++  absentText,
++  fillsWindow,
++  rightSpace,
++  textRightOf,
++  visibleText
++} from '../common/EducationAssertions';
++import { openPlayerPage, tapById } from '../common/EducationActionHelper';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 videoPlayerLgXlFailToPassTest 测试套件。
++export default function videoPlayerLgXlFailToPassTest() {
++  describe('VideoPlayerLgXlFailToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['lg', 'xl']);
++      await openPlayerPage(driver);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 lg/xl 断点下进入播放器页，通过“选集”文本验证播放列表正常显示。
++    it('should_show_player_sidebar_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await visibleText(driver, '选集');
++      } catch (error) {
++        console.error('should_show_player_sidebar_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下验证播放器右侧为播放列表预留 400vp 宽度。
++    it('should_keep_player_sidebar_width_400vp_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await rightSpace(driver, bundleName, 'player-root', 400);
++      } catch (error) {
++        console.error('should_keep_player_sidebar_width_400vp_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下验证可见的“选集”文本位于播放器右侧，确认二者互不重叠。
++    it('should_not_overlap_player_and_sidebar_on_lg_xl', Level.LEVEL1, async (done: Function) => {
++      try {
++        await textRightOf(driver, 'player-root', '选集');
++      } catch (error) {
++        console.error('should_not_overlap_player_and_sidebar_on_lg_xl error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 lg/xl 断点下点击全屏按钮，验证播放器填满窗口且播放列表不再可见。
++    it('should_fill_window_and_hide_playlist_after_entering_fullscreen_on_lg_xl', Level.LEVEL1,
++      async (done: Function) => {
++        try {
++          const component = await driver.findComponent(ON.id('player-root'));
++          await component.click();
++          await tapById(driver, 'player-fullscreen-button');
++          await fillsWindow(driver, bundleName, 'player-root');
++          await absentText(driver, '选集');
++        } catch (error) {
++          console.error('should_fill_window_and_hide_playlist_after_entering_fullscreen_on_lg_xl error: ' +
++            JSON.stringify(error));
++          expect(false).assertTrue();
++        } finally {
++          await driver.pressBack();
++          await driver.delayMs(400);
++        }
++        done();
++      })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/08_video_player_layout/VideoPlayerSmMdPassToPass.test.ets b/product/phone/src/ohosTest/ets/test/08_video_player_layout/VideoPlayerSmMdPassToPass.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..ab71ece97d769eca08548da3fc569c068d321363
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/08_video_player_layout/VideoPlayerSmMdPassToPass.test.ets
+@@ -0,0 +1,63 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { JSON } from '@kit.ArkTS';
++import { startAbility } from '../common/TestHelper';
++import { below, insideWindow, visible } from '../common/EducationAssertions';
++import { getComponent } from '../common/TestHelper';
++import { openPlayerPage, tapById } from '../common/EducationActionHelper';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++
++// 方法说明：注册并执行 videoPlayerSmMdPassToPassTest 测试套件。
++export default function videoPlayerSmMdPassToPassTest() {
++  describe('VideoPlayerSmMdPassToPassTest', () => {
++    let driver: Driver;
++    let bundleName: string;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++      await startAbility(driver, bundleName);
++      await expectBreakpointIn(driver, bundleName, ['sm', 'md']);
++      await openPlayerPage(driver);
++    })
++
++    afterAll(async () => {
++      await driver.waitForIdle(2000, 3000);
++    })
++
++    // 用例说明：在 sm/md 断点下进入播放器页，验证播放列表排列在播放区域下方且互不重叠。
++    it('should_place_playlist_below_player_on_sm_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await below(driver, 'player-root', 'player-playlist');
++      } catch (error) {
++        console.error('should_place_playlist_below_player_on_sm_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 sm/md 断点下进入播放器页，验证基础播放控制区域正常显示且未越界。
++    it('should_show_player_basic_controls_on_sm_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await visible(driver, 'player-control-bar');
++        await insideWindow(driver, bundleName, 'player-control-bar');
++      } catch (error) {
++        console.error('should_show_player_basic_controls_on_sm_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++
++    // 用例说明：在 sm/md 断点下进入播放器页，验证返回按钮位于窗口内且可正常点击。
++    it('should_keep_player_back_button_clickable_on_sm_md', Level.LEVEL1, async (done: Function) => {
++      try {
++        await tapById(driver, 'player-root');
++        await (await getComponent(driver, 'player-back-button')).click();
++      } catch (error) {
++        console.error('should_keep_player_back_button_clickable_on_sm_md error: ' + JSON.stringify(error));
++        expect(false).assertTrue();
++      }
++      done();
++    })
++  })
++}
+diff --git a/product/phone/src/ohosTest/ets/test/List.test.ets b/product/phone/src/ohosTest/ets/test/List.test.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..1dafa1ffafbb6b0b83db74a8cde78aa6cb42d843
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/List.test.ets
+@@ -0,0 +1,51 @@
++import allDevicePassToPassTest from './00_common_pass_to_pass/CommonAllDevicePassToPass.test';
++import phoneSmMdNavigationPassToPassTest from './01_main_navigation/MainNavigationSmMdPassToPass.test';
++import tabletLgXlNavigationFailToPassTest from './01_main_navigation/MainNavigationLgXlFailToPass.test';
++import phoneSmSpacingPassToPassTest from './02_page_spacing/PageSpacingSmPassToPass.test';
++import tabletMdSpacingFailToPassTest from './02_page_spacing/PageSpacingMdFailToPass.test';
++import tabletLgXlSpacingFailToPassTest from './02_page_spacing/PageSpacingLgXlFailToPass.test';
++import phoneSmCategoryPassToPassTest from './03_home_category/HomeCategorySmPassToPass.test';
++import foldableMdCategoryPassToPassTest from './03_home_category/HomeCategoryMdPassToPass.test';
++import foldableMdCategoryFailToPassTest from './03_home_category/HomeCategoryMdFailToPass.test';
++import tabletLgXlCategoryFailToPassTest from './03_home_category/HomeCategoryLgXlFailToPass.test';
++import phoneSmBannerPassToPassTest from './04_banner/BannerSmPassToPass.test';
++import foldableMdBannerFailToPassTest from './04_banner/BannerMdFailToPass.test';
++import tabletLgXlBannerFailToPassTest from './04_banner/BannerLgXlFailToPass.test';
++import contentColumnsSmPassToPassTest from './05_content_columns/ContentColumnsSmPassToPass.test';
++import contentColumnsMdFailToPassTest from './05_content_columns/ContentColumnsMdFailToPass.test';
++import contentColumnsLgXlFailToPassTest from './05_content_columns/ContentColumnsLgXlFailToPass.test';
++import phoneSmMdMinePassToPassTest from './06_mine_common_services/MineCommonServicesSmMdPassToPass.test';
++import tabletLgXlMineFailToPassTest from './06_mine_common_services/MineCommonServicesLgXlFailToPass.test';
++import audioPlayerSmPassToPassTest from './07_audio_player_layout/AudioPlayerSmPassToPass.test';
++import audioPlayerMdLgXlFailToPassTest from './07_audio_player_layout/AudioPlayerMdLgXlFailToPass.test';
++import videoPlayerSmMdPassToPassTest from './08_video_player_layout/VideoPlayerSmMdPassToPass.test';
++import videoPlayerLgXlFailToPassTest from './08_video_player_layout/VideoPlayerLgXlFailToPass.test';
++import videoPlayerBreakpointRecoverFailToPassTest from
++  './08_video_player_layout/VideoPlayerBreakpointRecoverFailToPass.test';
++
++// 方法说明：注册并执行 listTest 测试套件。
++export default function listTest() {
++  allDevicePassToPassTest();
++  phoneSmMdNavigationPassToPassTest();
++  tabletLgXlNavigationFailToPassTest();
++  phoneSmSpacingPassToPassTest();
++  tabletMdSpacingFailToPassTest();
++  tabletLgXlSpacingFailToPassTest();
++  phoneSmCategoryPassToPassTest();
++  foldableMdCategoryPassToPassTest();
++  foldableMdCategoryFailToPassTest();
++  tabletLgXlCategoryFailToPassTest();
++  phoneSmBannerPassToPassTest();
++  foldableMdBannerFailToPassTest();
++  tabletLgXlBannerFailToPassTest();
++  contentColumnsSmPassToPassTest();
++  contentColumnsMdFailToPassTest();
++  contentColumnsLgXlFailToPassTest();
++  phoneSmMdMinePassToPassTest();
++  tabletLgXlMineFailToPassTest();
++  audioPlayerSmPassToPassTest();
++  audioPlayerMdLgXlFailToPassTest();
++  videoPlayerSmMdPassToPassTest();
++  videoPlayerLgXlFailToPassTest();
++  videoPlayerBreakpointRecoverFailToPassTest();
++}
+diff --git a/product/phone/src/ohosTest/ets/test/common/DeviceHelper.ets b/product/phone/src/ohosTest/ets/test/common/DeviceHelper.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..b13ee7e9676a67e9d1245067deea0a3f8cc9a0cb
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/common/DeviceHelper.ets
+@@ -0,0 +1,48 @@
++import { DisplayRotation, Driver } from '@kit.TestKit';
++import { expect } from '@ohos/hypium';
++import { Rect } from './TestHelper';
++
++// 方法说明：查找应用当前激活窗口并返回窗口在屏幕中的上下左右像素边界。
++export async function getWindowBounds(driver: Driver, bundleName: string): Promise<Rect> {
++  const win = await driver.findWindow({ bundleName: bundleName, active: true })
++  const bounds = await win.getBounds();
++  return {
++    left: bounds.left as number,
++    top: bounds.top as number,
++    right: bounds.right as number,
++    bottom: bounds.bottom as number,
++  };
++}
++
++// 方法说明：读取应用激活窗口的像素宽度，并将其转换为 vp 宽度。
++export async function getWindowVpWidth(driver: Driver, bundleName: string): Promise<number> {
++  const rect = await getWindowBounds(driver, bundleName);
++  return px2vp(rect.right - rect.left);
++}
++
++// 方法说明：根据窗口 vp 宽度按照 600、840、1440 三个阈值计算当前断点名称。
++export function getBreakpointName(widthVp: number): string {
++  if (widthVp < 600) return 'sm';
++  if (widthVp < 840) return 'md';
++  if (widthVp < 1440) return 'lg';
++  return 'xl';
++}
++
++// 方法说明：计算当前窗口断点，断言其属于预期断点集合并返回断点名称。
++export async function expectBreakpointIn(driver: Driver, bundleName: string, expected: string[]): Promise<string> {
++  const breakpoint = getBreakpointName(await getWindowVpWidth(driver, bundleName));
++  expect(expected.includes(breakpoint)).assertTrue();
++  return breakpoint;
++}
++
++// 方法说明：将测试设备旋转到横屏方向，并等待旋转后的布局完成刷新。
++export async function rotateToLandscape(driver: Driver): Promise<void> {
++  await driver.setDisplayRotation(DisplayRotation.ROTATION_0);
++  await driver.delayMs(600);
++}
++
++// 方法说明：将测试设备旋转到竖屏方向，并等待旋转后的布局完成刷新。
++export async function rotateToPortrait(driver: Driver): Promise<void> {
++  await driver.setDisplayRotation(DisplayRotation.ROTATION_90);
++  await driver.delayMs(600);
++}
+diff --git a/product/phone/src/ohosTest/ets/test/common/EducationActionHelper.ets b/product/phone/src/ohosTest/ets/test/common/EducationActionHelper.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..3e8ebd214070cd2299ca202a7c57f174927b4fa6
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/common/EducationActionHelper.ets
+@@ -0,0 +1,68 @@
++import { Driver, ON } from '@kit.TestKit';
++import { getComponent } from './TestHelper';
++
++// 方法说明：查找指定可观测 ID 的组件，执行点击操作并等待界面进入空闲状态。
++export async function tapById(driver: Driver, id: string): Promise<void> {
++  await (await getComponent(driver, id)).click();
++  await driver.delayMs(400);
++}
++
++// 方法说明：点击首页或“我的”主 Tab，并等待对应页面完成切换。
++export async function switchTab(driver: Driver, tab: 'home' | 'mine'): Promise<void> {
++  await tapById(driver, tab === 'home' ? 'main-tab-home' : 'main-tab-mine');
++}
++
++// 方法说明：点击指定序号的精品内容卡片，用于进入对应的内容详情页。
++export async function tapContentCard(driver: Driver, index: number = 0): Promise<void> {
++  await tapById(driver, `premium-video-item-${index}`);
++}
++
++// 方法说明：在播放器尚未打开时点击首个内容卡片，并等待视频播放器根组件出现。
++export async function openPlayerPage(driver: Driver): Promise<void> {
++  const player = await driver.findComponent(ON.id('player-root'));
++  if (player === null) {
++    await tapContentCard(driver);
++  }
++  await tapById(driver, 'detail-recommend-item-0')
++}
++
++// 方法说明：在音频播放器尚未打开时依次进入音频详情并点击首集内容进行播放。
++export async function openAudioPlayerPage(driver: Driver): Promise<void> {
++  await tapById(driver, 'audio-story-item-0');
++  await tapById(driver, 'audio-detail-item-0');
++}
++
++// 方法说明：切换到“我的”主 Tab，并等待“我的”页面根组件稳定显示。
++export async function openMinePage(driver: Driver): Promise<void> {
++  await switchTab(driver, 'mine');
++}
++
++// 方法说明：进入“我的”页面后点击观看历史入口，并等待历史内容区显示。
++export async function openViewHistoryPage(driver: Driver): Promise<void> {
++  await openMinePage(driver);
++  await tapById(driver, 'common-service-history');
++}
++
++// 方法说明：切换到指定首页内容 Tab，并等待对应页面完成布局刷新。
++export async function switchHomeCategory(driver: Driver, index: number): Promise<void> {
++  await tapById(driver, `home-category-${index}`);
++  await driver.delayMs(500);
++}
++
++// 方法说明：滚动查找指定组件。
++export async function scrollToComponent(driver: Driver, componentId: string, ): Promise<void> {
++  const scrollableComponent = await driver.findComponent(ON.type('List'));
++  if (scrollableComponent) {
++    await scrollableComponent.scrollSearch(ON.id(componentId));
++    await driver.delayMs(500);
++  }
++}
++
++// 方法说明：滚动到指定内容分组，点击分组内的“更多”，并等待目标更多页内容容器出现。
++export async function openMorePage(driver: Driver, sectionId: string, pageContentId: string): Promise<void> {
++  await scrollToComponent(driver, sectionId);
++  const more = await driver.findComponent(ON.text('更多').within(ON.id(sectionId)));
++  await more.click();
++  await driver.delayMs(500);
++  await getComponent(driver, pageContentId);
++}
+diff --git a/product/phone/src/ohosTest/ets/test/common/EducationAssertions.ets b/product/phone/src/ohosTest/ets/test/common/EducationAssertions.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..81ebe3359e14358c519f29d82efb20a8385b3f36
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/common/EducationAssertions.ets
+@@ -0,0 +1,193 @@
++import { Driver } from '@kit.TestKit';
++import { expect } from '@ohos/hypium';
++import { getWindowBounds } from './DeviceHelper';
++import {
++  getBounds,
++  getVisibleBounds,
++  getVisibleBoundsByText,
++  getVisibleIdsInContainer,
++  ids,
++  Rect,
++  tryGetComponent,
++  tryGetComponentInContainer
++} from './TestHelper';
++import {
++  expectColumnCount,
++  expectColumnCountInContainer,
++  expectGapNear,
++  expectGridGapNear,
++  expectHeightNear,
++  expectHorizontalMargin,
++  expectHorizontalMarginFromNavigation,
++  expectInWindow,
++  expectLeftInsetNear,
++  expectNoOverlap,
++  expectWidthNear,
++} from './LayoutAssertHelper';
++
++// 方法说明：获取指定组件边界，并断言组件具有有效宽度和高度以确认其可见。
++export async function visible(driver: Driver, id: string): Promise<void> {
++  const rect = await getBounds(driver, id);
++  expect(rect.right > rect.left && rect.bottom > rect.top).assertTrue();
++}
++
++// 方法说明：按业务文本查找至少一个具有有效宽高的组件，并断言该文本当前可见。
++export async function visibleText(driver: Driver, text: string): Promise<void> {
++  expect((await getVisibleBoundsByText(driver, text)).length > 0).assertTrue();
++}
++
++// 方法说明：断言指定业务文本不存在具有有效宽高的组件，用于验证相关区域已从可见布局中移除。
++export async function absentText(driver: Driver, text: string): Promise<void> {
++  const components = await driver.findComponents(ON.text(text));
++  expect(components === null).assertTrue();
++}
++
++// 方法说明：尝试查找指定可观测 ID，并断言该组件不存在于当前页面中。
++export async function absent(driver: Driver, id: string): Promise<void> {
++  expect((await tryGetComponent(driver, id)) === null).assertTrue();
++}
++
++// 方法说明：断言指定父容器内不存在目标子组件，用于区分重复 ID 在不同列表项中的显示状态。
++export async function absentInContainer(driver: Driver, componentId: string, containerId: string): Promise<void> {
++  expect((await tryGetComponentInContainer(driver, componentId, containerId)) === null).assertTrue();
++}
++
++// 方法说明：按 ID 前缀收集指定数量的列表项，并断言首行列数符合预期。
++export async function columns(driver: Driver, prefix: string, total: number, expected: number): Promise<void> {
++  await expectColumnCount(driver, ids(prefix, total), expected);
++}
++
++// 方法说明：查找指定页面容器内的 GridItem，并断言首行列数符合预期。
++export async function columnsInContainer(driver: Driver, containerId: string, expected: number): Promise<void> {
++  await expectColumnCountInContainer(driver, containerId, expected);
++}
++
++// 方法说明：获取应用窗口和内容区边界，并断言内容区左右页边距符合预期。
++export async function margin(driver: Driver, bundleName: string, contentId: string, expectedVp: number): Promise<void> {
++  expectHorizontalMargin(await getWindowBounds(driver, bundleName), await getBounds(driver, contentId), expectedVp);
++}
++
++// 方法说明：获取导航栏、内容区和窗口边界，并验证大屏主页面两侧间距符合预期。
++export async function marginFromNavigation(driver: Driver, bundleName: string, navigationId: string,
++  contentId: string, expectedVp: number): Promise<void> {
++  expectHorizontalMarginFromNavigation(await getWindowBounds(driver, bundleName), await getBounds(driver, navigationId),
++    await getBounds(driver, contentId), expectedVp);
++}
++
++// 方法说明：获取两个相邻组件的边界，并断言二者之间的水平间距符合预期。
++export async function gap(driver: Driver, firstId: string, secondId: string, expectedVp: number): Promise<void> {
++  expectGapNear(await getBounds(driver, firstId), await getBounds(driver, secondId), expectedVp);
++}
++
++// 方法说明：识别两个相邻网格项的排列方向，并验证对应的行间距或列间距符合预期。
++export async function gridGap(driver: Driver, firstId: string, secondId: string, expectedVp: number): Promise<void> {
++  expectGridGapNear(await getBounds(driver, firstId), await getBounds(driver, secondId), expectedVp);
++}
++
++// 方法说明：获取容器和内容组件边界，并断言内容相对容器的左侧缩进符合预期。
++export async function inset(driver: Driver, containerId: string, contentId: string, expectedVp: number): Promise<void> {
++  expectLeftInsetNear(await getBounds(driver, containerId), await getBounds(driver, contentId), expectedVp);
++}
++
++// 方法说明：获取指定组件边界，并断言其实际 vp 高度接近预期值。
++export async function height(driver: Driver, id: string, expectedVp: number): Promise<void> {
++  expectHeightNear(await getBounds(driver, id), expectedVp);
++}
++
++// 方法说明：获取指定组件边界，并断言其实际 vp 宽度接近预期值。
++export async function width(driver: Driver, id: string, expectedVp: number): Promise<void> {
++  expectWidthNear(await getBounds(driver, id), expectedVp);
++}
++
++// 方法说明：获取窗口和组件边界，并断言组件完整处于应用窗口可视范围内。
++export async function insideWindow(driver: Driver, bundleName: string, id: string): Promise<void> {
++  expectInWindow(await getWindowBounds(driver, bundleName), await getBounds(driver, id));
++}
++
++// 方法说明：比较组件底边与窗口底边的距离，并断言其不超过允许的 vp 误差。
++export async function atWindowBottom(driver: Driver, bundleName: string, id: string, expectedVp: number ): Promise<void> {
++  const windowRect: Rect = await getWindowBounds(driver, bundleName);
++  const componentRect: Rect = await getBounds(driver, id);
++  expect(Math.abs(px2vp(windowRect.bottom - componentRect.bottom)) <= expectedVp).assertTrue();
++}
++
++// 方法说明：断言组件底边距窗口底边至少一个自身高度，以排除底部停靠布局。
++export async function notAtWindowBottom(driver: Driver, bundleName: string, id: string): Promise<void> {
++  const windowRect: Rect = await getWindowBounds(driver, bundleName);
++  const componentRect: Rect = await getBounds(driver, id);
++  const componentHeight: number = componentRect.bottom - componentRect.top;
++  expect(windowRect.bottom - componentRect.bottom >= componentHeight).assertTrue();
++}
++
++// 方法说明：获取两个组件边界，并断言它们在页面布局中没有发生面积重叠。
++export async function noOverlap(driver: Driver, firstId: string, secondId: string): Promise<void> {
++  expectNoOverlap(await getBounds(driver, firstId), await getBounds(driver, secondId));
++}
++
++// 方法说明：比较两个组件的水平边界，并断言第二个组件完全位于第一个组件右侧。
++export async function rightOf(driver: Driver, leftId: string, rightId: string): Promise<void> {
++  const left: Rect = await getBounds(driver, leftId);
++  const right: Rect = await getBounds(driver, rightId);
++  expect(right.left >= left.right).assertTrue();
++}
++
++// 方法说明：断言至少一个可见文本组件完整位于指定组件右侧，用于验证无专用 ID 的侧栏布局。
++export async function textRightOf(driver: Driver, leftId: string, text: string): Promise<void> {
++  const left: Rect = await getBounds(driver, leftId);
++  const candidates: Rect[] = await getVisibleBoundsByText(driver, text);
++  expect(candidates.some((candidate: Rect) => candidate.left >= left.right)).assertTrue();
++}
++
++// 方法说明：断言组件右边界与应用窗口右边界之间预留的宽度接近指定 vp 值。
++export async function rightSpace(driver: Driver, bundleName: string, id: string, expectedVp: number): Promise<void> {
++  const windowRect: Rect = await getWindowBounds(driver, bundleName);
++  const componentRect: Rect = await getBounds(driver, id);
++  expect(Math.abs(px2vp(windowRect.right - componentRect.right) - expectedVp) <= 5).assertTrue();
++}
++
++// 方法说明：断言组件实际宽度小于应用窗口宽度，以确认大屏下为侧栏主动收缩内容区。
++export async function narrowerThanWindow(driver: Driver, bundleName: string, id: string): Promise<void> {
++  const windowRect: Rect = await getWindowBounds(driver, bundleName);
++  const componentRect: Rect = await getBounds(driver, id);
++  expect(componentRect.right - componentRect.left < windowRect.right - windowRect.left).assertTrue();
++}
++
++// 方法说明：断言组件横向填满应用窗口，且纵向仅允许保留系统安全区高度。
++export async function fillsWindow(driver: Driver, bundleName: string, id: string): Promise<void> {
++  const windowRect: Rect = await getWindowBounds(driver, bundleName);
++  const componentRect: Rect = await getBounds(driver, id);
++  expect(Math.abs(px2vp(componentRect.left - windowRect.left)) <= 3).assertTrue();
++  expect(Math.abs(px2vp(windowRect.right - componentRect.right)) <= 3).assertTrue();
++}
++
++// 方法说明：断言两个 Tab 靠窗口左侧对齐且上下排列，用于确认左侧竖向导航形态。
++export async function leftVerticalTabs(driver: Driver, bundleName: string, firstTabId: string,
++  secondTabId: string): Promise<void> {
++  const windowRect: Rect = await getWindowBounds(driver, bundleName);
++  const firstTab: Rect = await getBounds(driver, firstTabId);
++  const secondTab: Rect = await getBounds(driver, secondTabId);
++  expect(Math.abs(px2vp(firstTab.left - windowRect.left)) <= 3).assertTrue();
++  expect(Math.abs(px2vp(secondTab.left - windowRect.left)) <= 3).assertTrue();
++  expect(Math.abs(px2vp(firstTab.left - secondTab.left)) <= 3).assertTrue();
++  expect(secondTab.top >= firstTab.bottom).assertTrue();
++}
++
++// 方法说明：比较两个组件的垂直边界，并断言第二个组件完全位于第一个组件下方。
++export async function below(driver: Driver, topId: string, bottomId: string): Promise<void> {
++  const top: Rect = await getBounds(driver, topId);
++  const bottom: Rect = await getBounds(driver, bottomId);
++  expect(bottom.top >= top.bottom).assertTrue();
++}
++
++// 方法说明：按 ID 前缀统计具有有效边界的可见组件，并断言数量等于预期值。
++export async function visibleCount(driver: Driver, prefix: string, total: number, expected: number): Promise<void> {
++  expect((await getVisibleBounds(driver, ids(prefix, total))).length).assertEqual(expected);
++}
++
++// 方法说明：重复计算滚动容器中完全可见的组件 ID，避开轮播动画后断言稳定可见项数量。
++export async function visibleCountInContainer(driver: Driver, containerId: string, prefix: string, total: number,
++  expected: number): Promise<void> {
++  const actual = (await getVisibleIdsInContainer(driver, containerId, ids(prefix, total))).length;
++  await driver.delayMs(100);
++  expect(actual).assertEqual(expected);
++}
+diff --git a/product/phone/src/ohosTest/ets/test/common/LayoutAssertHelper.ets b/product/phone/src/ohosTest/ets/test/common/LayoutAssertHelper.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..bdc2a0ae25e806433012fe18b10f717487c52382
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/common/LayoutAssertHelper.ets
+@@ -0,0 +1,84 @@
++import { Driver } from '@kit.TestKit';
++import { expect } from '@ohos/hypium';
++import { getBoundsInContainer, getVisibleBounds, Rect } from './TestHelper';
++
++const TOLERANCE_VP: number = 3;
++
++// 方法说明：断言组件的上下左右边界均未超出应用窗口的可视范围。
++export function expectInWindow(windowRect: Rect, rect: Rect): void {
++  expect(rect.left >= windowRect.left).assertTrue();
++  expect(rect.right <= windowRect.right).assertTrue();
++  expect(rect.top >= windowRect.top).assertTrue();
++  expect(rect.bottom <= windowRect.bottom).assertTrue();
++}
++
++// 方法说明：计算两个组件在水平和垂直方向的交集，并断言二者不存在面积重叠。
++export function expectNoOverlap(first: Rect, second: Rect): void {
++  const horizontal = Math.min(first.right, second.right) - Math.max(first.left, second.left);
++  const vertical = Math.min(first.bottom, second.bottom) - Math.max(first.top, second.top);
++  expect(horizontal <= 0 || vertical <= 0).assertTrue();
++}
++
++// 方法说明：断言内容区相对容器左右边界的间距均接近指定 vp 值。
++export function expectHorizontalMargin(container: Rect, content: Rect, expectedVp: number): void {
++  expect(Math.abs(px2vp(content.left - container.left) - expectedVp) <= TOLERANCE_VP).assertTrue();
++  expect(Math.abs(px2vp(container.right - content.right) - expectedVp) <= TOLERANCE_VP).assertTrue();
++}
++
++// 方法说明：断言大屏内容区距左侧导航栏右边界和窗口右边界的间距均接近指定值。
++export function expectHorizontalMarginFromNavigation(windowRect: Rect, navigationRect: Rect, contentRect: Rect,
++  expectedVp: number): void {
++  expect(Math.abs(px2vp(contentRect.left - navigationRect.right) - expectedVp) <= TOLERANCE_VP).assertTrue();
++  expect(Math.abs(px2vp(windowRect.right - contentRect.right) - expectedVp) <= TOLERANCE_VP).assertTrue();
++}
++
++// 方法说明：断言内容组件左边界相对容器左边界的缩进接近指定 vp 值。
++export function expectLeftInsetNear(container: Rect, content: Rect, expectedVp: number): void {
++  expect(Math.abs(px2vp(content.left - container.left) - expectedVp) <= TOLERANCE_VP).assertTrue();
++}
++
++// 方法说明：断言第二个组件左边界与第一个组件右边界之间的间距接近指定值。
++export function expectGapNear(first: Rect, second: Rect, expectedVp: number): void {
++  expect(Math.abs(px2vp(second.left - first.right) - expectedVp) <= TOLERANCE_VP).assertTrue();
++}
++
++// 方法说明：根据相邻网格项处于同一行或同一列，验证其水平或垂直间距接近指定值。
++export function expectGridGapNear(first: Rect, second: Rect, expectedVp: number): void {
++  const sameRow: boolean = Math.abs(px2vp(second.top - first.top)) <= TOLERANCE_VP;
++  const actualGapVp: number = sameRow ? px2vp(second.left - first.right) : px2vp(second.top - first.bottom);
++  expect(Math.abs(actualGapVp - expectedVp) <= TOLERANCE_VP).assertTrue();
++}
++
++// 方法说明：将组件像素高度转换为 vp，并断言其与预期高度的误差不超过 3vp。
++export function expectHeightNear(rect: Rect, expectedVp: number): void {
++  expect(Math.abs(px2vp(rect.bottom - rect.top) - expectedVp) <= TOLERANCE_VP).assertTrue();
++}
++
++// 方法说明：将组件像素宽度转换为 vp，并断言其与预期宽度的误差不超过 3vp。
++export function expectWidthNear(rect: Rect, expectedVp: number): void {
++  expect(Math.abs(px2vp(rect.right - rect.left) - expectedVp) <= TOLERANCE_VP).assertTrue();
++}
++
++// 方法说明：统计首行可见组件数量，并断言响应式列表的实际列数等于预期值。
++export async function expectColumnCount(driver: Driver, itemIds: string[], expected: number): Promise<void> {
++  const rects = await getVisibleBounds(driver, itemIds);
++  expectRectsColumnCount(rects, expected);
++}
++
++// 方法说明：查找指定容器内的 GridItem，并断言其首行实际列数等于预期值。
++export async function expectColumnCountInContainer(driver: Driver, containerId: string,
++  expected: number): Promise<void> {
++  const rects = await getBoundsInContainer(driver, containerId, 'GridItem');
++  expectRectsColumnCount(rects, expected);
++}
++
++// 方法说明：根据一组有效组件边界统计首行元素数量，用于统一执行列数断言。
++function expectRectsColumnCount(rects: Rect[], expected: number): void {
++  expect(rects.length >= expected).assertTrue();
++  const firstTop = rects[0].top;
++  let count = 0;
++  for (const rect of rects) {
++    if (Math.abs(px2vp(rect.top - firstTop)) <= TOLERANCE_VP) count++;
++  }
++  expect(count).assertEqual(expected);
++}
+diff --git a/product/phone/src/ohosTest/ets/test/common/TestHelper.ets b/product/phone/src/ohosTest/ets/test/common/TestHelper.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..162a22eefffac327aa3beae90ffb42df5b02d92f
+--- /dev/null
++++ b/product/phone/src/ohosTest/ets/test/common/TestHelper.ets
+@@ -0,0 +1,160 @@
++import { Want } from '@kit.AbilityKit';
++import { abilityDelegatorRegistry, Component, Driver, ON } from '@kit.TestKit';
++import { expect } from '@ohos/hypium';
++
++export interface Rect {
++  left: number;
++  top: number;
++  right: number;
++  bottom: number;
++}
++
++// 方法说明：根据应用包名启动 EntryAbility，并等待界面完成首轮加载。
++export async function startAbility(driver: Driver, bundleName: string): Promise<void> {
++  const want: Want = { bundleName: bundleName, abilityName: 'EntryAbility' };
++  await abilityDelegatorRegistry.getAbilityDelegator().startAbility(want);
++  await driver.delayMs(2000);
++}
++
++// 方法说明：按可观测 ID 查找组件，并在组件不存在时立即使测试失败。
++export async function getComponent(driver: Driver, id: string): Promise<Component> {
++  const component = await driver.findComponent(ON.id(id));
++  expect(component !== null).assertTrue();
++  return component;
++}
++
++// 方法说明：按可观测 ID 尝试查找组件，查找失败时返回 null 而不中断用例。
++export async function tryGetComponent(driver: Driver, id: string): Promise<Component | null> {
++  try {
++    return await driver.findComponent(ON.id(id));
++  } catch (error) {
++    return null;
++  }
++}
++
++// 方法说明：在指定父容器内按可观测 ID 查找子组件，未找到时返回 null 供局部缺失断言使用。
++export async function tryGetComponentInContainer(driver: Driver, componentId: string,
++  containerId: string): Promise<Component | null> {
++  try {
++    return await driver.findComponent(ON.id(componentId).within(ON.id(containerId)));
++  } catch (error) {
++    return null;
++  }
++}
++
++// 方法说明：获取指定 ID 组件的上下左右像素边界，并转换为统一的 Rect 结构。
++export async function getBounds(driver: Driver, id: string): Promise<Rect> {
++  const component = await getComponent(driver, id);
++  const bounds = await component.getBounds();
++  return {
++    left: bounds.left as number,
++    top: bounds.top as number,
++    right: bounds.right as number,
++    bottom: bounds.bottom as number,
++  };
++}
++
++// 方法说明：批量获取指定 ID 列表中实际存在且宽高均大于零的组件边界。
++export async function getVisibleBounds(driver: Driver, ids: string[]): Promise<Rect[]> {
++  const result: Rect[] = [];
++  for (const id of ids) {
++    const component = await tryGetComponent(driver, id);
++    if (component !== null) {
++      const bounds = await component.getBounds();
++      const rect: Rect = {
++        left: bounds.left as number,
++        top: bounds.top as number,
++        right: bounds.right as number,
++        bottom: bounds.bottom as number,
++      };
++      if (rect.right > rect.left && rect.bottom > rect.top) {
++        result.push(rect);
++      }
++    }
++  }
++  return result;
++}
++
++// 方法说明：查找指定容器内某一类型的组件，并返回所有具有有效宽高的组件边界。
++export async function getBoundsInContainer(driver: Driver, containerId: string,
++  componentType: string): Promise<Rect[]> {
++  const components: Component[] = await driver.findComponents(ON.type(componentType).within(ON.id(containerId)));
++  const result: Rect[] = [];
++  for (const component of components) {
++    const bounds = await component.getBounds();
++    const rect: Rect = {
++      left: bounds.left as number,
++      top: bounds.top as number,
++      right: bounds.right as number,
++      bottom: bounds.bottom as number,
++    };
++    if (rect.right > rect.left && rect.bottom > rect.top) {
++      result.push(rect);
++    }
++  }
++  return result;
++}
++
++// 方法说明：按显示文本查找组件，并返回所有具有有效宽高的文本组件边界。
++export async function getVisibleBoundsByText(driver: Driver, text: string): Promise<Rect[]> {
++  const components: Component[] = await driver.findComponents(ON.text(text));
++  const result: Rect[] = [];
++  for (const component of components) {
++    const bounds = await component.getBounds();
++    const rect: Rect = {
++      left: bounds.left as number,
++      top: bounds.top as number,
++      right: bounds.right as number,
++      bottom: bounds.bottom as number,
++    };
++    if (rect.right > rect.left && rect.bottom > rect.top) {
++      result.push(rect);
++    }
++  }
++  return result;
++}
++
++// 方法说明：仅返回四条边均位于容器内且宽度大于 50vp 的组件 ID，排除边缘滑入项和异常小组件。
++export async function getVisibleIdsInContainer(driver: Driver, containerId: string, componentIds: string[]): Promise<string[]> {
++  const containerRect: Rect = await getBounds(driver, containerId);
++  const visibleIds: string[] = [];
++  for (const id of componentIds) {
++    const component = await tryGetComponent(driver, id);
++    if (component === null) {
++      continue;
++    }
++    const bounds = await component.getBounds();
++    const rect: Rect = {
++      left: bounds.left as number,
++      top: bounds.top as number,
++      right: bounds.right as number,
++      bottom: bounds.bottom as number,
++    };
++    const widthVp: number = px2vp(rect.right - rect.left);
++    if (widthVp > 50 && rect.left >= containerRect.left && rect.right <= containerRect.right &&
++      rect.top >= containerRect.top && rect.bottom <= containerRect.bottom) {
++      visibleIds.push(id);
++    }
++  }
++  return visibleIds;
++}
++
++// 方法说明：通过断言组件边界的宽度和高度均大于零来确认组件可见。
++export function expectVisible(rect: Rect): void {
++  expect(rect.right - rect.left).assertLarger(0);
++  expect(rect.bottom - rect.top).assertLarger(0);
++}
++
++// 方法说明：断言指定可观测 ID 的组件不存在于当前页面组件树中。
++export async function expectAbsent(driver: Driver, id: string): Promise<void> {
++  expect((await tryGetComponent(driver, id)) === null).assertTrue();
++}
++
++// 方法说明：根据前缀和数量生成从零开始编号的一组组件可观测 ID。
++export function ids(prefix: string, count: number): string[] {
++  const values: string[] = [];
++  for (let index = 0; index < count; index++) {
++    values.push(`${prefix}-${index}`);
++  }
++  return values;
++}
+diff --git a/product/phone/src/ohosTest/module.json5 b/product/phone/src/ohosTest/module.json5
+new file mode 100644
+index 0000000000000000000000000000000000000000..bc4f9992d515c0d4b3ee73061cced0a6cf2633a6
+--- /dev/null
++++ b/product/phone/src/ohosTest/module.json5
+@@ -0,0 +1,9 @@
++{
++  "module": {
++    "name": "phone_test",
++    "type": "feature",
++    "deviceTypes": ["phone", "tablet"],
++    "deliveryWithInstall": true,
++    "installationFree": false
++  }
++}

@@ -1,0 +1,20 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "children education template"
+    },
+    {
+      "name": "agcit_huawei_children_education",
+      "value": "1.0.3"
+    },
+    {
+      "name": "agcittype_huawei_children_education",
+      "value": "industryTemplate"
+    },
+    {
+      "name": "agcitkid_huawei_children_education",
+      "value": "agcit_huawei_common_share/1.0.1,agcit_huawei_common_app_setting/1.0.0,agcit_huawei_common_collect_personal_info/1.0.0,agcit_huawei_common_dial_panel/1.0.0,agcit_huawei_exam_feed_back/1.0.2,agcit_huawei_common_membership/1.0.1,agcit_huawei_course_recorded_player/1.0.1"
+    }
+  ]
+}

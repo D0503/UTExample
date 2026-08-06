@@ -1,0 +1,48 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "children education template"
+    },
+    {
+      "name": "home_page",
+      "value": "homepage"
+    },
+    {
+      "name": "mine_page",
+      "value": "mine"
+    },
+    {
+      "name": "Used_Duration",
+      "value": "The usage time for today has reached the set time"
+    },
+    {
+      "name": "PhoneFormAbility_desc",
+      "value": "form_description"
+    },
+    {
+      "name": "PhoneFormAbility_label",
+      "value": "form_label"
+    },
+    {
+      "name": "widget_desc",
+      "value": "This is a service widget."
+    },
+    {
+      "name": "widget_display_name",
+      "value": "widget"
+    },
+    {
+      "name": "agcit_huawei_children_education",
+      "value": "1.0.3"
+    }
+  ]
+}

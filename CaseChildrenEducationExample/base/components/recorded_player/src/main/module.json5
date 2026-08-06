@@ -1,0 +1,14 @@
+{
+  "module": {
+    "name": "recorded_player",
+    "type": "har",
+    "deviceTypes": [
+      "phone"
+    ],
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.INTERNET",
+      }
+    ]
+  }
+}

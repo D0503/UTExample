@@ -1,0 +1,2642 @@
+diff --git a/AppScope/app.json5 b/AppScope/app.json5
+index 9e5afb6ace31a626b5df9a88a2ae6275e0541a84..df67682255f8abc2b68418f8e0e1c273db8fe22f 100644
+--- a/AppScope/app.json5
++++ b/AppScope/app.json5
+@@ -7,4 +7,4 @@
+     "icon": "$media:layered_image",
+     "label": "$string:app_name"
+   }
+-}
+\ No newline at end of file
++}
+diff --git a/AppScope/resources/base/element/string.json b/AppScope/resources/base/element/string.json
+index 6951b61248e3987a667be74708268a8a8da7a93b..bfc819166d6264e75a26ae9d7d9152fd3083cbe0 100644
+--- a/AppScope/resources/base/element/string.json
++++ b/AppScope/resources/base/element/string.json
+@@ -17,4 +17,4 @@
+       "value": "agcit_huawei_common_share/1.0.1,agcit_huawei_common_app_setting/1.0.0,agcit_huawei_common_collect_personal_info/1.0.0,agcit_huawei_common_dial_panel/1.0.0,agcit_huawei_exam_feed_back/1.0.2,agcit_huawei_common_membership/1.0.1,agcit_huawei_course_recorded_player/1.0.1"
+     }
+   ]
+-}
+\ No newline at end of file
++}
+diff --git a/build-profile.json5 b/build-profile.json5
+index ff7d3c840dcbc933599abfa3e6781d95f40061d4..d9e82e6e774e1058169c80866f72c7ee25bb4ce0 100644
+--- a/build-profile.json5
++++ b/build-profile.json5
+@@ -231,4 +231,4 @@
+       ]
+     }
+   ]
+-}
+\ No newline at end of file
++}
+diff --git a/commons/utils/Index.ets b/commons/utils/Index.ets
+index f9bbfe612f8e93cc10326da012fa1cc325396023..04149ccc4c38b88652c615ed7d503f5752266c0b 100644
+--- a/commons/utils/Index.ets
++++ b/commons/utils/Index.ets
+@@ -26,8 +26,10 @@ export { StringUtil } from './src/main/ets/utils/StringUtil'
+ export { DeviceUtil } from './src/main/ets/utils/DeviceUtil'
+ export { AuthUtil } from './src/main/ets/utils/AuthUtil'
+ export { ResourceUtil } from './src/main/ets/utils/ResourceUtil'
+-export { GlobalInfoModel } from './src/main/ets/model/GlobalInfoModel';
++export { BreakpointType } from './src/main/ets/utils/BreakpointSystem';
++export { GlobalInfoModel, BreakpointTypeEnum } from './src/main/ets/model/GlobalInfoModel';
+ export { AvoidArea } from './src/main/ets/model/AvoidArea';
++export { WindowUtil } from './src/main/ets/utils/WindowUtil';
+ export { CloudPrefetchUtils } from './src/main/ets/utils/CloudPrefetchUtils';
+ export { PreferencesUtil } from './src/main/ets/utils/PreferencesUtil'
+ export { RouterModule } from './src/main/ets/utils/RouterModule'
+diff --git a/commons/utils/src/main/ets/model/GlobalInfoModel.ets b/commons/utils/src/main/ets/model/GlobalInfoModel.ets
+index e57196abfe355fb3ddb280cc269202826d6620e3..2311682b42ae004f55cefad9c601f1fa1a536f35 100644
+--- a/commons/utils/src/main/ets/model/GlobalInfoModel.ets
++++ b/commons/utils/src/main/ets/model/GlobalInfoModel.ets
+@@ -17,6 +17,7 @@ import { RouterModule } from '../utils/RouterModule'
+ @ObservedV2
+ export class GlobalInfoModel {
+   private static _instance: GlobalInfoModel;
++  @Trace currentBreakpoint: BreakpointTypeEnum = BreakpointTypeEnum.MD;
+   @Trace navStack: NavPathStack = RouterModule.getStack();
+ 
+   public static get instance() {
+@@ -26,3 +27,10 @@ export class GlobalInfoModel {
+     return GlobalInfoModel._instance;
+   }
+ }
++
++
++export enum BreakpointTypeEnum {
++  SM = 'sm',
++  MD = 'md',
++  LG = 'lg',
++}
+\ No newline at end of file
+diff --git a/commons/utils/src/main/ets/player/AudioPlayPage.ets b/commons/utils/src/main/ets/player/AudioPlayPage.ets
+index 204f2dabcac679cf63a73902f2656223bc7ecd17..e17970529c897495eb5e3aca4c381307341b6fbf 100644
+--- a/commons/utils/src/main/ets/player/AudioPlayPage.ets
++++ b/commons/utils/src/main/ets/player/AudioPlayPage.ets
+@@ -10,7 +10,7 @@ import { historyRecord } from './PlayControl';
+ import { QuickLoginUtil } from '../quicklogin/QuickLoginUtil';
+ import { AvoidArea } from '../model/AvoidArea';
+ import { GlobalInfoModel } from '../model/GlobalInfoModel';
+-
++import { BreakpointType } from '../utils/BreakpointSystem';
+ 
+ @ComponentV2
+ export struct AudioPlayPage {
+@@ -79,9 +79,17 @@ export struct AudioPlayPage {
+               Blank().height(56)
+ 
+               Image(this.imageUrl)
++                .width(new BreakpointType<number>({
++                  sm: 160,
++                  md: 240,
++                  lg: 240,
++                }).getValue(this.globalInfo.currentBreakpoint))
++                .height(new BreakpointType<number>({
++                  sm: 160,
++                  md: 240,
++                  lg: 240,
++                }).getValue(this.globalInfo.currentBreakpoint))
+                 .id('audio-cover')
+-                .width(160)
+-                .height(160)
+                 .borderRadius(10)
+                 .padding({
+                   bottom: '5%'
+@@ -377,4 +385,4 @@ export struct AudioPlayPage {
+     }),
+     autoCancel: false
+   });
+-}
++}
+\ No newline at end of file
+diff --git a/commons/utils/src/main/ets/player/PlayControl.ets b/commons/utils/src/main/ets/player/PlayControl.ets
+index 2eff31ee1ea017600d6e757da036518a966c119a..4b9446fa60faf51c280029e36c64eeb14d15f9e1 100644
+--- a/commons/utils/src/main/ets/player/PlayControl.ets
++++ b/commons/utils/src/main/ets/player/PlayControl.ets
+@@ -115,4 +115,4 @@ async function loadFile(lastWatch:VideoCard, videoType:number): Promise<void> {
+ 
+   } catch (e) {
+   }
+-}
+\ No newline at end of file
++}
+diff --git a/commons/utils/src/main/ets/player/VideoPlayPage.ets b/commons/utils/src/main/ets/player/VideoPlayPage.ets
+index 541630c986a9ec214fd3fd8c34c69f5374e54b64..7c4d925538bc420bd63ec74fda17cb5a570f1868 100644
+--- a/commons/utils/src/main/ets/player/VideoPlayPage.ets
++++ b/commons/utils/src/main/ets/player/VideoPlayPage.ets
+@@ -2,11 +2,7 @@ import { Title } from '../uicomponents/Title';
+ import { GlobalContext } from '../utils/GlobalContext';
+ import {
+   DataGenerator,
+-  User,
+-  VideoCardDetail,
+-  VideoCollection,
+-  VipRecord
+-} from '@ohos_agcit/children_education_datasource';
++  User, VideoCardDetail, VideoCollection, VipRecord } from '@ohos_agcit/children_education_datasource';
+ import { AppStorageV2, display, window } from '@kit.ArkUI';
+ import { AbilityConstant, common } from '@kit.AbilityKit';
+ import { TimeControl } from './common/util/TimeControl';
+@@ -16,7 +12,7 @@ import { MovieItem, PlayerComponent } from 'recorded_player';
+ import { SharePicker } from 'aggregated_share';
+ import { AvoidArea } from '../model/AvoidArea';
+ import { GlobalInfoModel } from '../model/GlobalInfoModel';
+-
++import { BreakpointType } from '../utils/BreakpointSystem';
+ import { VideoPlaylist } from './VideoPlaylist';
+ import { emitter } from '@kit.BasicServicesKit';
+ import { DeviceUtil } from '../utils/DeviceUtil';
+@@ -59,6 +55,7 @@ export struct VideoPlayPage {
+   @Local avoidArea: AvoidArea = AppStorageV2.connect(AvoidArea, () => new AvoidArea(0, 0))!;
+   @Local globalInfo: GlobalInfoModel =
+     AppStorageV2.connect<GlobalInfoModel>(GlobalInfoModel, () => new GlobalInfoModel())!;
++  private sideBarWidth = 400
+   private videoInfo: VideoCardDetail = {
+     id: '',
+     cardId: '',
+@@ -89,6 +86,29 @@ export struct VideoPlayPage {
+       this.resizeScreen(viewWidth, viewHeight)
+     })
+ 
++    try {
++      display.on('foldStatusChange', (data: display.FoldStatus) => {
++        // 折叠屏展开态全屏状态下，进入折叠态，退出全屏
++        if (this.isLayoutFullScreen && data === FoldStatus.FOLD_STATUS_FOLDED) {
++          this.exitFullScreen()
++          return
++        }
++        if (this.isLayoutFullScreen && data === FoldStatus.FOLD_STATUS_EXPANDED)
++        // 折叠屏折叠态全屏状态下，进入展开态，需要解除横屏
++        {
++          window.getLastWindow(this.hostContext)
++            .then((win) => {
++              win.setPreferredOrientation(13)
++            })
++            .catch((err: BusinessError) => {
++              LogUtil.error(`getLastWindow failed: ${err.code}, ${err.message}`)
++            })
++        }
++      })
++    } catch (err) {
++      LogUtil.error(`display.on failed: ${err.code}, ${err.message}`)
++    }
++
+     // 打开迁移能力
+     const uiContext = (this.getUIContext().getHostContext() as common.UIAbilityContext);
+     uiContext.setMissionContinueState(AbilityConstant.ContinueState.ACTIVE, (result) => {
+@@ -108,7 +128,11 @@ export struct VideoPlayPage {
+     if (this.isLayoutFullScreen) {
+       if (DeviceUtil.isLandSpace()) {
+         this.playerWidth = viewWidth
+-        this.playerHeight = viewHeight
++        this.playerHeight =
++          DeviceUtil.isPhone() || (DeviceUtil.isFoldablePhone() &&
++            display.getFoldStatus() === FoldStatus.FOLD_STATUS_FOLDED) ? viewHeight :
++            viewHeight - this.getUIContext().px2vp(this.avoidArea.topRectHeight) -
++            this.getUIContext().px2vp(this.avoidArea.bottomRectHeight)
+       } else {
+         this.playerWidth = viewWidth
+         this.playerHeight = viewHeight - this.getUIContext().px2vp(this.avoidArea.topRectHeight) -
+@@ -122,6 +146,17 @@ export struct VideoPlayPage {
+       return
+     }
+ 
++    if (this.getShowSideBar()) {
++      this.playerWidth = viewWidth - this.sideBarWidth
++      this.playerHeight = viewHeight - this.getUIContext().px2vp(this.avoidArea.topRectHeight) -
++      this.getUIContext().px2vp(this.avoidArea.bottomRectHeight)
++      this.windowClass.setWindowSystemBarProperties({
++        statusBarColor: '#000000',
++        statusBarContentColor: '#FFFFFF',
++      })
++      return
++    }
++
+     this.playerWidth = viewWidth
+     this.playerHeight = this.playerWidth * this.aspect
+     this.windowClass.setWindowSystemBarProperties({
+@@ -134,18 +169,39 @@ export struct VideoPlayPage {
+     if (this.isLayoutFullScreen) {
+       return Visibility.None
+     }
+-    return Visibility.Visible;
++    return new BreakpointType<Visibility>({
++      sm: Visibility.Visible,
++      md: Visibility.Visible,
++      lg: Visibility.None,
++    }).getValue(this.globalInfo.currentBreakpoint);
++  }
++
++  getShowSideBar(): boolean {
++    if (this.isLayoutFullScreen) {
++      return false
++    }
++    return new BreakpointType<boolean>({
++      sm: false,
++      md: false,
++      lg: true,
++    }).getValue(this.globalInfo.currentBreakpoint);
+   }
+ 
+   getBackgroundColor(): Resource {
+     if (this.isLayoutFullScreen) {
+       return $r('sys.color.comp_foreground_primary')
+     }
+-    return $r('sys.color.background_primary');
++    return new BreakpointType<Resource>({
++      sm: $r('sys.color.background_primary'),
++      md: $r('sys.color.background_primary'),
++      lg: $r('sys.color.comp_foreground_primary'),
++    }).getValue(this.globalInfo.currentBreakpoint);
+   }
+ 
+   private needRotationToLandSpace(): boolean {
+-    let isDeviceComplies = DeviceUtil.isPhone();
++    let isDeviceComplies = DeviceUtil.isPhone() || (DeviceUtil.isFoldablePhone() &&
++      display.getFoldStatus() === FoldStatus.FOLD_STATUS_FOLDED);
++
+     let isStatusComplies = DeviceUtil.isPortrait()
+     if (isDeviceComplies && isStatusComplies) {
+       return true
+@@ -161,7 +217,9 @@ export struct VideoPlayPage {
+   }
+ 
+   private needRotationToPortrait(): boolean {
+-    let isDeviceComplies = DeviceUtil.isPhone();
++    let isDeviceComplies = DeviceUtil.isPhone() || (DeviceUtil.isFoldablePhone() &&
++      display.getFoldStatus() === FoldStatus.FOLD_STATUS_FOLDED);
++
+     let isStatusComplies = DeviceUtil.isLandSpace()
+     if (isDeviceComplies && isStatusComplies) {
+       return true
+@@ -284,81 +342,105 @@ export struct VideoPlayPage {
+ 
+   build() {
+     NavDestination() {
+-      Column() {
+-        Scroll() {
++        SideBarContainer() {
++          // sidebar area
+           Column() {
+-            PlayerComponent({
+-              movieItems: [new MovieItem('01', this.videoInfo.title, 0, this.videoInfo.videoUrl)],
+-              playerIndex: 0,
+-              showMaskLayer: !this.hasAuth(),
+-              stateChange:(state:string) => {
+-                if (state === AVPlayerState.PREPARED && this.currentTime) {
+-                  PipManager.getInstance().player.changeSeek(this.currentTime, 2)
+-                }
+-              },
+-              customBuilderParam: () => {
+-                this.vipPrompt()
+-              },
+-              fullScreenEvent: (isLayoutFullScreen: boolean) => {
+-                this.isLayoutFullScreen = isLayoutFullScreen
+-                let viewWidth = this.getUIContext().px2vp(display.getDefaultDisplaySync().width)
+-                let viewHeight = this.getUIContext().px2vp(display.getDefaultDisplaySync().height)
+-
+-                // 开启全屏事件
+-                if (isLayoutFullScreen) {
+-                  // 开启强制横屏，通过windowSizeChange回调修改尺寸
+-                  if (this.needRotationToLandSpace()) {
+-                    window.getLastWindow(this.hostContext).then((win) => {
+-                      win.setPreferredOrientation(2)
+-                    })
+-                      .catch((err: BusinessError) => {
+-                        LogUtil.error(`getLastWindow failed: ${err.code}, ${err.message}`)
+-                      })
+-                    return
+-                  }
+-                  // 直接修改尺寸
+-                  this.resizeScreen(viewWidth, viewHeight)
+-                  return;
+-                }
+-
+-                // 关闭全屏事件
+-                if (this.needRotationToPortrait()) {
+-                  // 关闭强制横屏，通过windowSizeChange回调修改尺寸
+-                  window.getLastWindow(this.hostContext)
+-                    .then((win) => {
+-                      win.setPreferredOrientation(1)
+-                    })
+-                    .catch((err: BusinessError) => {
+-                      LogUtil.error(`getLastWindow failed: ${err.code}, ${err.message}`)
+-                    })
+-                  return
+-                }
+-                // 直接修改尺寸
+-                this.resizeScreen(viewWidth, viewHeight)
+-              },
+-              exitEvent: () => {
+-                this.globalInfo.navStack.pop()
+-              },
+-              shareEvent: this.shareEvent,
+-            })
+-              .id('player-root')
+-              .width(this.playerWidth)
+-              .height(this.playerHeight)
+-              .backgroundColor(Color.Black)
+-
+-            VideoPlaylist({
+-              title: this.videoInfo.title,
+-              globalVideoList: DataGenerator.getVideoDetail(this.getUIContext()).videoCardDetailList,
+-              testId: 'player-playlist-instance-0',
+-            })
+-              .id('player-playlist')
+-              .visibility(this.showPlaylistVisibility())
++            Scroll() {
++              VideoPlaylist({
++                title: this.videoInfo.title,
++                globalVideoList: DataGenerator.getVideoDetail(this.getUIContext()).videoCardDetailList,
++                testId: 'player-side-playlist',
++              })
++            }
++          }
++          .height('100%')
++          .width('100%')
++
++          // content area
++          Column() {
++            Scroll() {
++              Column() {
++                PlayerComponent({
++                  movieItems: [new MovieItem('01', this.videoInfo.title, 0, this.videoInfo.videoUrl)],
++                  playerIndex: 0,
++                  showMaskLayer: !this.hasAuth(),
++                  stateChange:(state:string) => {
++                    if (state === AVPlayerState.PREPARED && this.currentTime) {
++                      PipManager.getInstance().player.changeSeek(this.currentTime, 2)
++                    }
++                  },
++                  customBuilderParam: () => {
++                    this.vipPrompt()
++                  },
++                  fullScreenEvent: (isLayoutFullScreen: boolean) => {
++                    this.isLayoutFullScreen = isLayoutFullScreen
++                    let viewWidth = this.getUIContext().px2vp(display.getDefaultDisplaySync().width)
++                    let viewHeight = this.getUIContext().px2vp(display.getDefaultDisplaySync().height)
++
++                    // 开启全屏事件
++                    if (isLayoutFullScreen) {
++                      // 开启强制横屏，通过windowSizeChange回调修改尺寸
++                      if (this.needRotationToLandSpace()) {
++                        window.getLastWindow(this.hostContext).then((win) => {
++                          win.setPreferredOrientation(2)
++                        })
++                          .catch((err: BusinessError) => {
++                            LogUtil.error(`getLastWindow failed: ${err.code}, ${err.message}`)
++                          })
++                        return
++                      }
++                      // 直接修改尺寸
++                      this.resizeScreen(viewWidth, viewHeight)
++                      return;
++                    }
++
++                    // 关闭全屏事件
++                    if (this.needRotationToPortrait()) {
++                      // 关闭强制横屏，通过windowSizeChange回调修改尺寸
++                      window.getLastWindow(this.hostContext)
++                        .then((win) => {
++                          win.setPreferredOrientation(1)
++                        })
++                        .catch((err: BusinessError) => {
++                          LogUtil.error(`getLastWindow failed: ${err.code}, ${err.message}`)
++                        })
++                      return
++                    }
++                    // 直接修改尺寸
++                    this.resizeScreen(viewWidth, viewHeight)
++                  },
++                  exitEvent: () => {
++                    this.globalInfo.navStack.pop()
++                  },
++                  shareEvent: this.shareEvent,
++                })
++                  .id('player-root')
++                  .width(this.playerWidth)
++                  .height(this.playerHeight)
++                  .backgroundColor(Color.Black)
++
++                VideoPlaylist({
++                  title: this.videoInfo.title,
++                  globalVideoList: DataGenerator.getVideoDetail(this.getUIContext()).videoCardDetailList,
++                  testId: 'player-playlist-instance-0',
++                })
++                  .id('player-playlist')
++                  .visibility(this.showPlaylistVisibility())
++              }
++
++            }
++
+           }
++          .backgroundColor(this.getBackgroundColor())
++          .height('100%')
++          .width('100%')
+         }
+-      }
+-      .backgroundColor(this.getBackgroundColor())
+-      .height('100%')
+-      .width('100%')
++        .sideBarWidth(this.sideBarWidth)
++        .sideBarPosition(SideBarPosition.End)
++        .autoHide(false)
++        .showControlButton(false)
++        .showSideBar(this.getShowSideBar())
++
+     }
+     .padding({
+       top: this.getUIContext().px2vp(this.avoidArea.topRectHeight),
+@@ -400,4 +482,3 @@ export struct VideoPlayPage {
+     })
+   }
+ }
+-
+diff --git a/commons/utils/src/main/ets/player/VideoPlaylist.ets b/commons/utils/src/main/ets/player/VideoPlaylist.ets
+index 61273deaa7e1445ba33f496d7f2a7d5291e493ec..1c4dd171ed5b5ec6ad66b0564444802a0a44c856 100644
+--- a/commons/utils/src/main/ets/player/VideoPlaylist.ets
++++ b/commons/utils/src/main/ets/player/VideoPlaylist.ets
+@@ -2,7 +2,7 @@ import { User, VideoCardDetail, VipRecord } from '@ohos_agcit/children_education
+ import { CommonConstants } from '../constants/CommonConstants';
+ import { GlobalInfoModel } from '../model/GlobalInfoModel';
+ import { AppStorageV2 } from '@kit.ArkUI';
+-
++import { BreakpointType } from '../utils/BreakpointSystem';
+ 
+ @ComponentV2
+ export struct VideoPlaylist {
+@@ -15,6 +15,18 @@ export struct VideoPlaylist {
+     AppStorageV2.connect<GlobalInfoModel>(GlobalInfoModel, () => new GlobalInfoModel())!;
+   @Local paddingNum: number = 16
+ 
++  /**
++   * 监听断点变化
++   */
++  @Monitor('globalInfo.currentBreakpoint')
++  onBreakPointChange() {
++    this.paddingNum = new BreakpointType<number>({
++      sm: 16,
++      md: 24,
++      lg: 16,
++    }).getValue(this.globalInfo.currentBreakpoint)
++  }
++
+   build() {
+     Column() {
+       // title
+@@ -30,7 +42,11 @@ export struct VideoPlaylist {
+         left: this.paddingNum,
+         right: this.paddingNum
+       })
+-      .margin({top: 0})
++      .margin({top: new BreakpointType<number>({
++        sm: 0,
++        md: 0,
++        lg: 16,
++      }).getValue(this.globalInfo.currentBreakpoint)})
+ 
+       Blank()
+         .height(8)
+@@ -72,9 +88,21 @@ export struct VideoPlaylist {
+       .scrollBar(BarState.Off)
+       .width(CommonConstants.FULL_PERCENT)
+       .padding({ left: this.paddingNum, right: this.paddingNum })
+-      .rowsGap(12)
+-      .columnsGap(12)
+-      .columnsTemplate('1fr '.repeat(2))
++      .rowsGap(new BreakpointType<number>({
++        sm: 12,
++        md: 12,
++        lg: 16,
++      }).getValue(this.globalInfo.currentBreakpoint))
++      .columnsGap(new BreakpointType<number>({
++        sm: 12,
++        md: 12,
++        lg: 16,
++      }).getValue(this.globalInfo.currentBreakpoint))
++      .columnsTemplate('1fr '.repeat(new BreakpointType<number>({
++        sm: 2,
++        md: 3,
++        lg: 2,
++      }).getValue(this.globalInfo.currentBreakpoint)))
+       .padding({ left: this.paddingNum, right: this.paddingNum })
+     }
+     .id(this.testId)
+@@ -104,4 +132,4 @@ struct VideoCardDetailItem {
+     }
+     .alignItems(HorizontalAlign.Start);
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/commons/utils/src/main/ets/uicomponents/GridLine.ets b/commons/utils/src/main/ets/uicomponents/GridLine.ets
+index b976e0aee3aba1d83e8fc31386c06f26ca3c5123..53438c3637aec63d3ae8688626d03505ab6a1f85 100644
+--- a/commons/utils/src/main/ets/uicomponents/GridLine.ets
++++ b/commons/utils/src/main/ets/uicomponents/GridLine.ets
+@@ -2,7 +2,7 @@ import { DataGenerator, VideoCard, VideoCollection } from '@ohos_agcit/children_
+ import { CommonConstants } from '../constants/CommonConstants';
+ import { GlobalInfoModel } from '../model/GlobalInfoModel';
+ import { AppStorageV2 } from '@kit.ArkUI';
+-
++import { BreakpointType } from '../utils/BreakpointSystem';
+ import { TagLabelCard } from './TagLabelCard';
+ 
+ 
+@@ -68,9 +68,21 @@ export struct CompactCardComponent {
+         });
+       }, (item: VideoCard) => JSON.stringify(item));
+     }
+-    .rowsGap(8)
+-    .columnsGap(8)
+-    .columnsTemplate('1fr '.repeat(2))
++    .rowsGap(new BreakpointType<number>({
++      sm: 8,
++      md: 12,
++      lg: 16,
++    }).getValue(this.globalInfo.currentBreakpoint))
++    .columnsGap(new BreakpointType<number>({
++      sm: 8,
++      md: 12,
++      lg: 16,
++    }).getValue(this.globalInfo.currentBreakpoint))
++    .columnsTemplate('1fr '.repeat(new BreakpointType<number>({
++      sm: 2,
++      md: 3,
++      lg: 4,
++    }).getValue(this.globalInfo.currentBreakpoint)))
+     .width(CommonConstants.FULL_PERCENT)
+   }
+ }
+@@ -126,9 +138,21 @@ export struct StandardCardComponent {
+       }, (item: VideoCard, index) => JSON.stringify(item) + index)
+     }
+     .width('100%')
+-    .rowsGap(8)
+-    .columnsGap(8)
+-    .columnsTemplate('1fr '.repeat(1))
++    .rowsGap(new BreakpointType<number>({
++      sm: 8,
++      md: 12,
++      lg: 16,
++    }).getValue(this.globalInfo.currentBreakpoint))
++    .columnsGap(new BreakpointType<number>({
++      sm: 8,
++      md: 12,
++      lg: 16,
++    }).getValue(this.globalInfo.currentBreakpoint))
++    .columnsTemplate('1fr '.repeat(new BreakpointType<number>({
++      sm: 1,
++      md: 2,
++      lg: 3,
++    }).getValue(this.globalInfo.currentBreakpoint)))
+     .scrollBar(BarState.Off)
+   }
+ }
+diff --git a/commons/utils/src/main/ets/utils/BreakpointSystem.ets b/commons/utils/src/main/ets/utils/BreakpointSystem.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..f9665ff05995a1740dc802e138403e9a7cd2672c
+--- /dev/null
++++ b/commons/utils/src/main/ets/utils/BreakpointSystem.ets
+@@ -0,0 +1,97 @@
++/*
++ * Copyright (c) 2024 Huawei Device Co., Ltd.
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++import { AppStorageV2, window } from '@kit.ArkUI';
++import { BusinessError } from '@kit.BasicServicesKit';
++import { BreakpointTypeEnum, GlobalInfoModel } from '../model/GlobalInfoModel';
++import { LogUtil } from './LogUtil';
++
++const TAG: string = '[BreakpointSystem]';
++
++export interface BreakpointTypes<T> {
++  sm: T;
++  md: T;
++  lg: T;
++}
++
++export class BreakpointType<T> {
++  private sm: T;
++  private md: T;
++  private lg: T;
++
++  public constructor(param: BreakpointTypes<T>) {
++    this.sm = param.sm;
++    this.md = param.md;
++    this.lg = param.lg;
++  }
++
++  public getValue(currentBreakpoint: string): T {
++    if (currentBreakpoint === BreakpointTypeEnum.SM) {
++      return this.sm;
++    }
++    if (currentBreakpoint === BreakpointTypeEnum.MD) {
++      return this.md;
++    }
++    return this.lg;
++  }
++}
++
++export class BreakpointSystem {
++  private static instance: BreakpointSystem;
++  private currentBreakpoint: BreakpointTypeEnum = BreakpointTypeEnum.MD;
++
++  private constructor() {
++  }
++
++  public static getInstance(): BreakpointSystem {
++    if (!BreakpointSystem.instance) {
++      BreakpointSystem.instance = new BreakpointSystem();
++    }
++    return BreakpointSystem.instance;
++  }
++
++  public onWindowSizeChange(windowStage: window.WindowStage, window: window.Window): void {
++    this.updateWidthBp(windowStage, window);
++  }
++
++  public updateWidthBp(windowStage: window.WindowStage, window: window.Window): void {
++    try {
++      const mainWindow: window.WindowProperties = window.getWindowProperties();
++      const windowWidth: number = mainWindow.windowRect.width;
++      const windowWidthVp = windowStage.getMainWindowSync().getUIContext().px2vp(windowWidth);
++      let widthBp: BreakpointTypeEnum = BreakpointTypeEnum.MD;
++      if (windowWidthVp >= 320 && windowWidthVp < 600) {
++        widthBp = BreakpointTypeEnum.SM;
++      } else if (windowWidthVp >= 600 && windowWidthVp < 840) {
++        widthBp = BreakpointTypeEnum.MD;
++      } else if (windowWidthVp >= 840 && windowWidthVp < 1440) {
++        widthBp = BreakpointTypeEnum.LG;
++      }
++      this.updateCurrentBreakpoint(widthBp);
++    } catch (error) {
++      const err: BusinessError = error as BusinessError;
++      LogUtil.error(TAG, `Failed to getWindowProperties. Cause: ${err.code}, ${err.message}`);
++    }
++  }
++
++  public updateCurrentBreakpoint(breakpoint: BreakpointTypeEnum): void {
++    if (this.currentBreakpoint !== breakpoint) {
++      this.currentBreakpoint = breakpoint;
++      let globalInfo: GlobalInfoModel =
++        AppStorageV2.connect<GlobalInfoModel>(GlobalInfoModel, () => new GlobalInfoModel())!;
++      globalInfo.currentBreakpoint = this.currentBreakpoint;
++    }
++  }
++}
+\ No newline at end of file
+diff --git a/commons/utils/src/main/ets/utils/DeviceUtil.ets b/commons/utils/src/main/ets/utils/DeviceUtil.ets
+index 469a71b54c622628a43fafda91c00e98d759b46a..76e9fe2eeb501ff06583b25d513b937116c7ddd7 100644
+--- a/commons/utils/src/main/ets/utils/DeviceUtil.ets
++++ b/commons/utils/src/main/ets/utils/DeviceUtil.ets
+@@ -2,8 +2,12 @@ import { deviceInfo } from '@kit.BasicServicesKit';
+ import { display } from '@kit.ArkUI';
+ 
+ export class DeviceUtil {
++  public static isFoldablePhone(): boolean {
++    return deviceInfo.deviceType === 'phone' && display.isFoldable()
++  }
++
+   public static isPhone(): boolean {
+-    return deviceInfo.deviceType === 'phone'
++    return deviceInfo.deviceType === 'phone' && !display.isFoldable()
+   }
+ 
+   public static isPortrait(): boolean {
+@@ -15,4 +19,4 @@ export class DeviceUtil {
+     let orientation = display.getDefaultDisplaySync().orientation
+     return orientation === 1 || orientation === 3
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/commons/utils/src/main/ets/utils/WindowUtil.ets b/commons/utils/src/main/ets/utils/WindowUtil.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..6503df0070929c14d4b688c560a93499fc848be2
+--- /dev/null
++++ b/commons/utils/src/main/ets/utils/WindowUtil.ets
+@@ -0,0 +1,43 @@
++/*
++ * Copyright (c) 2024 Huawei Device Co., Ltd.
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++import { window } from '@kit.ArkUI';
++import { BusinessError } from '@kit.BasicServicesKit';
++import { BreakpointSystem } from './BreakpointSystem';
++import { LogUtil } from './LogUtil';
++
++const TAG: string = '[WindowUtil]';
++
++export class WindowUtil {
++  public static registerBreakPoint(windowStage: window.WindowStage) {
++    windowStage.getMainWindow((err: BusinessError, data: window.Window) => {
++      if (err.code) {
++        LogUtil.error(TAG, `Failed to get main window: ${err.message}`);
++        return;
++      }
++      try {
++        BreakpointSystem.getInstance().updateWidthBp(windowStage, data);
++        data.on('windowSizeChange', () => WindowUtil.onWindowSizeChange(windowStage, data));
++      } catch (e) {
++        const error = e as BusinessError;
++        LogUtil.error(TAG, `getWindowAvoidArea failed. code: ${error.code}, message: ${error.message}`);
++      }
++    });
++  }
++
++  public static onWindowSizeChange(windowStage: window.WindowStage, window: window.Window) {
++    BreakpointSystem.getInstance().onWindowSizeChange(windowStage, window);
++  }
++}
+\ No newline at end of file
+diff --git a/components/app_setting/src/main/ets/common/GridRowColSetting.ets b/components/app_setting/src/main/ets/common/GridRowColSetting.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..51a4cb2bad45841f550fd4f293b191e068af915b
+--- /dev/null
++++ b/components/app_setting/src/main/ets/common/GridRowColSetting.ets
+@@ -0,0 +1,109 @@
++/**
++ * 断点名称
++ */
++export enum BreakpointNameEnum {
++  SM = 'sm',
++  MD = 'md',
++  LG = 'lg',
++  XL = 'xl',
++}
++
++/**
++ * 栅格通用设置
++ */
++export class GridRowColSetting {
++  /**
++   * 栅格布局-断点数列
++   */
++  public static readonly BREAK_POINT_VALUE: string[] = ['0', '600vp', '840vp', '1440vp'];
++  /**
++   * 栅格布局-列数
++   */
++  public static readonly GRID_ROW_OPTIONS_COLUMNS: GridRowColumnOption = {
++    sm: 4,
++    md: 8,
++    lg: 12,
++    xl: 12,
++  }
++  /**
++   * 栅格布局-x间距
++   */
++  public static readonly GRID_ROW_OPTIONS_GUTTER_X: GridRowSizeOption = {
++    sm: 8,
++    md: 12,
++    lg: 16,
++    xl: 20,
++  }
++  /**
++   * 栅格布局-margin
++   */
++  public static readonly GRID_ROW_OPTIONS_MARGIN: GridRowColumnOption = {
++    sm: 16,
++    md: 24,
++    lg: 32,
++    xl: 32,
++  };
++  /**
++   * 栅格行布局容器-默认参数
++   */
++  public static readonly DEFAULT_GRID_ROW_OPTIONS: GridRowOptions = {
++    gutter: {
++      x: GridRowColSetting.GRID_ROW_OPTIONS_GUTTER_X,
++    },
++    columns: GridRowColSetting.GRID_ROW_OPTIONS_COLUMNS,
++    breakpoints: {
++      value: GridRowColSetting.BREAK_POINT_VALUE,
++      reference: BreakpointsReference.WindowSize,
++    },
++    direction: GridRowDirection.Row,
++  };
++  /**
++   * 居中8栅格列span
++   */
++  public static readonly DEFAULT_CENTER_COL_SPAN: GridColColumnOption = {
++    sm: 4,
++    md: 8,
++    lg: 8,
++    xl: 8,
++  };
++  /**
++   * 居中8栅格列offset
++   */
++  public static readonly DEFAULT_CENTER_COL_OFFSET: GridColColumnOption = {
++    sm: 0,
++    md: 0,
++    lg: 2,
++    xl: 2,
++  };
++  /**
++   * 居中6栅格列span
++   */
++  public static readonly SMALL_CENTER_COL_SPAN: GridColColumnOption = {
++    sm: 4,
++    md: 8,
++    lg: 6,
++    xl: 6,
++  };
++  /**
++   * 居中6栅格列offset
++   */
++  public static readonly SMALL_CENTER_COL_OFFSET: GridColColumnOption = {
++    sm: 0,
++    md: 0,
++    lg: 3,
++    xl: 3,
++  };
++  /**
++   * 弹窗最大宽度
++   */
++  public static readonly DIALOG_MAX_WIDTH: number = 480;
++
++  /**
++   * 获取页面margin
++   * @param bp
++   * @returns
++   */
++  public static getPageMargin(bp: BreakpointNameEnum | string): number {
++    return Reflect.get(GridRowColSetting.GRID_ROW_OPTIONS_MARGIN, bp) || GridRowColSetting.GRID_ROW_OPTIONS_MARGIN.sm;
++  }
++}
+diff --git a/components/app_setting/src/main/ets/components/CommonConfirmDialog.ets b/components/app_setting/src/main/ets/components/CommonConfirmDialog.ets
+index 0b7dbff188d4c93c5bff6e4ff20e504386947f2c..8dac6544f7901f2edac3e4f0e44a02ce6a0e1e10 100644
+--- a/components/app_setting/src/main/ets/components/CommonConfirmDialog.ets
++++ b/components/app_setting/src/main/ets/components/CommonConfirmDialog.ets
+@@ -1,11 +1,10 @@
+ import { AppStorageV2 } from '@kit.ArkUI';
+ import { CommonConstants } from '../constants/CommonConstants';
+ import { CustomConfigModel } from '../models/CustomConfigModel';
++import { GridRowColSetting } from '../common/GridRowColSetting';
+ import { PopViewUtils } from '../common/PopViewUtils';
+ import { FontModel } from '../models/FontModel';
+ 
+-const DIALOG_MAX_WIDTH = 480;
+-
+ /**
+  * 通用确认弹窗
+  */
+@@ -172,7 +171,7 @@ struct ConfirmDialog {
+       .width(CommonConstants.FULL_PERCENT)
+       .borderRadius($r('app.float.xxl_radius'))
+       .backgroundColor($r('sys.color.comp_background_primary'))
+-      .constraintSize({ maxWidth: DIALOG_MAX_WIDTH })
++      .constraintSize({ maxWidth: GridRowColSetting.DIALOG_MAX_WIDTH })
+       .clip(true)
+     }
+     .width(CommonConstants.FULL_PERCENT)
+diff --git a/components/app_setting/src/main/ets/components/SettingCard.ets b/components/app_setting/src/main/ets/components/SettingCard.ets
+index 457b98ed58cfb10104ed7bf50bb4070ff29f6873..8bc7e007c11b8605728f9c1986e2b4b91f63ea5f 100644
+--- a/components/app_setting/src/main/ets/components/SettingCard.ets
++++ b/components/app_setting/src/main/ets/components/SettingCard.ets
+@@ -1,5 +1,7 @@
+ import { AppStorageV2 } from '@kit.ArkUI';
+ import { CommonConstants } from '../constants/CommonConstants';
++import { BreakpointNameEnum } from '../common/GridRowColSetting';
++import { BreakpointModel } from '../models/BreakpointModel';
+ import { CustomConfigModel } from '../models/CustomConfigModel';
+ import { FontModel } from '../models/FontModel';
+ import { SettingItem } from '../types/SettingItem';
+@@ -18,6 +20,7 @@ export struct SettingCard {
+   @Param enableLaneSetting: boolean = false;
+   @Local configInfo: CustomConfigModel = AppStorageV2.connect(CustomConfigModel, () => new CustomConfigModel())!
+   @Local fontModel: FontModel = AppStorageV2.connect(FontModel, () => new FontModel())!;
++  @Local breakPointModel: BreakpointModel = AppStorageV2.connect(BreakpointModel, () => new BreakpointModel())!;
+   @Local touchItem: CustomTouchItem = new CustomTouchItem();
+ 
+   build() {
+@@ -105,6 +108,7 @@ export struct SettingCard {
+       }
+       .width(CommonConstants.FULL_PERCENT)
+       .height('auto')
++      .lanes(this.listLanes)
+       .borderRadius($r('app.float.xl_radius'))
+       .backgroundColor($r('sys.color.comp_background_list_card'))
+       .padding(CommonConstants.PADDING_XS)
+@@ -189,4 +193,16 @@ export struct SettingCard {
+     }
+     return '';
+   }
++
++  @Computed
++  get listLanes() {
++    if (!this.enableLaneSetting) {
++      return 1;
++    }
++    if ([BreakpointNameEnum.SM,
++      BreakpointNameEnum.MD].includes(this.breakPointModel.currentBreakpoint as BreakpointNameEnum)) {
++      return 1;
++    }
++    return 2;
++  }
+ }
+diff --git a/components/app_setting/src/main/ets/models/BaseViewModel.ets b/components/app_setting/src/main/ets/models/BaseViewModel.ets
+index b80de6baedad5b043a81d3361860248447274445..55da7f6f929af3448edbdd35c48887ba20c2a4c6 100644
+--- a/components/app_setting/src/main/ets/models/BaseViewModel.ets
++++ b/components/app_setting/src/main/ets/models/BaseViewModel.ets
+@@ -1,6 +1,7 @@
+ import { AppStorageV2 } from '@kit.ArkUI';
+ import { CustomWindowModel } from './WindowModel';
+ import { FontModel } from './FontModel';
++import { BreakpointModel } from './BreakpointModel';
+ import { CustomConfigModel } from './CustomConfigModel';
+ import { CustomPageModifier, CustomScrollModifier } from '../common/CustomModifier';
+ 
+@@ -12,6 +13,7 @@ export abstract class BaseViewModel {
+   @Trace configInfo: CustomConfigModel = AppStorageV2.connect(CustomConfigModel, () => new CustomConfigModel())!
+   @Trace windowModel: CustomWindowModel = AppStorageV2.connect(CustomWindowModel, () => new CustomWindowModel())!;
+   @Trace fontModel: FontModel = AppStorageV2.connect(FontModel, () => new FontModel())!;
++  @Trace breakPointModel: BreakpointModel = AppStorageV2.connect(BreakpointModel, () => new BreakpointModel())!;
+   @Trace scrollModifier: CustomScrollModifier = new CustomScrollModifier();
+   @Trace pageModifier: CustomPageModifier = new CustomPageModifier();
+-}
++}
+\ No newline at end of file
+diff --git a/components/app_setting/src/main/ets/models/BreakpointModel.ets b/components/app_setting/src/main/ets/models/BreakpointModel.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..f03bf95371c9e824d0300612daf24451e3ff418a
+--- /dev/null
++++ b/components/app_setting/src/main/ets/models/BreakpointModel.ets
+@@ -0,0 +1,9 @@
++import { BreakpointNameEnum } from '../common/GridRowColSetting';
++
++/**
++ * 栅格断点
++ */
++@ObservedV2
++export class BreakpointModel {
++  @Trace currentBreakpoint: BreakpointNameEnum | string = BreakpointNameEnum.SM;
++}
+\ No newline at end of file
+diff --git a/components/app_setting/src/main/ets/models/WindowModel.ets b/components/app_setting/src/main/ets/models/WindowModel.ets
+index c67f70c9d43f3703ef436e3a39972a0425c55f26..603334ac3de863073342a20871bc19c2ca12df70 100644
+--- a/components/app_setting/src/main/ets/models/WindowModel.ets
++++ b/components/app_setting/src/main/ets/models/WindowModel.ets
+@@ -1,4 +1,6 @@
+-import { window } from '@kit.ArkUI';
++import { AppStorageV2, window } from '@kit.ArkUI';
++import { GridRowColSetting } from '../common/GridRowColSetting';
++import { BreakpointModel } from './BreakpointModel';
+ import { hilog } from '@kit.PerformanceAnalysisKit';
+ 
+ /**
+@@ -8,6 +10,7 @@ import { hilog } from '@kit.PerformanceAnalysisKit';
+ export class CustomWindowModel {
+   logTag: string = 'CustomWindowModel';
+   domainId: number = 0x0000;
++  @Trace breakPointModel: BreakpointModel = AppStorageV2.connect(BreakpointModel, () => new BreakpointModel())!;
+   @Trace windowTopPadding: Length | undefined = undefined;
+   @Trace windowBottomPadding: Length | undefined = undefined;
+   @Trace windowLeftPadding: Length | undefined = undefined;
+@@ -23,7 +26,7 @@ export class CustomWindowModel {
+     if (this.windowLeftPadding !== undefined) {
+       return this.windowLeftPadding;
+     }
+-    return 16;
++    return GridRowColSetting.getPageMargin(this.breakPointModel.currentBreakpoint);
+   }
+ 
+   /**
+@@ -35,7 +38,7 @@ export class CustomWindowModel {
+     if (this.windowRightPadding !== undefined) {
+       return this.windowRightPadding;
+     }
+-    return 16;
++    return GridRowColSetting.getPageMargin(this.breakPointModel.currentBreakpoint);
+   }
+ 
+   /**
+@@ -90,4 +93,4 @@ export class CustomWindowModel {
+         `Error occurred. errCode is ${error.code}, errMessage is ${error.message}`);
+     })
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/components/app_setting/src/main/ets/pages/SettingAbout.ets b/components/app_setting/src/main/ets/pages/SettingAbout.ets
+index 3c04a627987b59cdb4673891149505ef9a33c9ea..0422b31e2d52e844d0d9cfa278745169daca2977 100644
+--- a/components/app_setting/src/main/ets/pages/SettingAbout.ets
++++ b/components/app_setting/src/main/ets/pages/SettingAbout.ets
+@@ -1,4 +1,5 @@
+ import { CommonConstants } from '../constants/CommonConstants';
++import { GridRowColSetting } from '../common/GridRowColSetting';
+ import { NavHeaderBar } from '../components/NavHeaderBar';
+ import { SettingAboutVM } from '../viewmodels/SettingAboutVM';
+ import { window } from '@kit.ArkUI';
+@@ -27,7 +28,15 @@ struct SettingAbout {
+     NavDestination() {
+       NavHeaderBar({ title: '关于', customPadding: { top: this.getUIContext().px2vp(this.topAvoidArea) } })
+       if (!this.vm.configInfo.isSheet) {
+-        this.coreTheView()
++        GridRow(GridRowColSetting.DEFAULT_GRID_ROW_OPTIONS) {
++          GridCol({
++            span: GridRowColSetting.DEFAULT_CENTER_COL_SPAN,
++            offset: GridRowColSetting.DEFAULT_CENTER_COL_OFFSET,
++          }) {
++            this.coreTheView()
++          }
++        }
++        .layoutWeight(1)
+       } else {
+         this.coreTheView()
+       }
+@@ -188,4 +197,4 @@ struct SettingAbout {
+     }
+     .width(CommonConstants.FULL_PERCENT)
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/components/app_setting/src/main/ets/pages/SettingFont.ets b/components/app_setting/src/main/ets/pages/SettingFont.ets
+index 3766aa999807df45fe53f824ccc9069953eedeae..b6c6bf025d8f2a14d1d140fd869c72a4520ae466 100644
+--- a/components/app_setting/src/main/ets/pages/SettingFont.ets
++++ b/components/app_setting/src/main/ets/pages/SettingFont.ets
+@@ -1,3 +1,4 @@
++import { GridRowColSetting } from '../common/GridRowColSetting';
+ import { FontSizeSlider } from '../components/FontSizeSlider';
+ import { NavHeaderBar } from '../components/NavHeaderBar';
+ import { CommonConstants } from '../constants/CommonConstants';
+@@ -23,7 +24,14 @@ struct SettingFont {
+       if (this.vm.configInfo.isSheet) {
+         this.coreView()
+       } else {
+-        this.coreView()
++        GridRow(GridRowColSetting.DEFAULT_GRID_ROW_OPTIONS) {
++          GridCol({
++            span: GridRowColSetting.DEFAULT_CENTER_COL_SPAN,
++            offset: GridRowColSetting.DEFAULT_CENTER_COL_OFFSET,
++          }) {
++            this.coreView()
++          }
++        }
+       }
+     }
+     .attributeModifier(this.vm.pageModifier)
+@@ -103,4 +111,4 @@ struct SettingFont {
+       },
+     })
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/components/app_setting/src/main/ets/pages/SettingH5.ets b/components/app_setting/src/main/ets/pages/SettingH5.ets
+index 1e291d7b8e48caa443455e1d71ca8f327fb3e07a..495d1eac6231a52498145fde47c59262d2353c03 100644
+--- a/components/app_setting/src/main/ets/pages/SettingH5.ets
++++ b/components/app_setting/src/main/ets/pages/SettingH5.ets
+@@ -1,3 +1,4 @@
++import { GridRowColSetting } from '../common/GridRowColSetting';
+ import { NavHeaderBar } from '../components/NavHeaderBar';
+ import { SettingH5VM } from '../viewmodels/SettingH5VM';
+ 
+@@ -20,7 +21,15 @@ struct SettingH5 {
+       if (this.vm.configInfo.isSheet) {
+         this.webBuilder()
+       } else {
+-        this.webBuilder()
++        GridRow(GridRowColSetting.DEFAULT_GRID_ROW_OPTIONS) {
++          GridCol({
++            span: GridRowColSetting.DEFAULT_CENTER_COL_SPAN,
++            offset: GridRowColSetting.DEFAULT_CENTER_COL_OFFSET,
++          }) {
++            this.webBuilder()
++          }
++        }
++        .layoutWeight(1)
+       }
+     }
+     .attributeModifier(this.vm.pageModifier)
+@@ -55,4 +64,4 @@ struct SettingH5 {
+   get pageBg() {
+     return this.vm.configInfo.isSheet ? $r('app.color.page_bg') : $r('sys.color.background_secondary')
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/components/app_setting/src/main/ets/pages/SettingPrivacy.ets b/components/app_setting/src/main/ets/pages/SettingPrivacy.ets
+index 29a31c753ae19ec42ab0170271c0b4e50d316b98..acced13c41192e79b388d9cf279bebd50d8d00ad 100644
+--- a/components/app_setting/src/main/ets/pages/SettingPrivacy.ets
++++ b/components/app_setting/src/main/ets/pages/SettingPrivacy.ets
+@@ -1,4 +1,5 @@
+ import { CommonConstants } from '../constants/CommonConstants';
++import { GridRowColSetting } from '../common/GridRowColSetting';
+ import { NavHeaderBar } from '../components/NavHeaderBar';
+ import { SettingCard } from '../components/SettingCard';
+ import { SettingPrivacyVM } from '../viewmodels/SettingPrivacyVM'
+@@ -18,7 +19,15 @@ struct SettingPrivacy {
+       if (this.vm.configInfo.isSheet) {
+         this.coreView()
+       } else {
+-        this.coreView()
++        GridRow(GridRowColSetting.DEFAULT_GRID_ROW_OPTIONS) {
++          GridCol({
++            span: GridRowColSetting.DEFAULT_CENTER_COL_SPAN,
++            offset: GridRowColSetting.DEFAULT_CENTER_COL_OFFSET,
++          }) {
++            this.coreView()
++          }
++        }
++        .layoutWeight(1)
+       }
+     }
+     .attributeModifier(this.vm.pageModifier)
+@@ -38,4 +47,4 @@ struct SettingPrivacy {
+     }
+     .attributeModifier(this.vm.scrollModifier)
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/components/app_setting/src/main/ets/views/SettingView.ets b/components/app_setting/src/main/ets/views/SettingView.ets
+index 4b6bd798ef73ae3803dc0f1d0a72745ed82ba92f..b6aab6ca7f584d8df362d457c4edceca88e2fc7d 100644
+--- a/components/app_setting/src/main/ets/views/SettingView.ets
++++ b/components/app_setting/src/main/ets/views/SettingView.ets
+@@ -1,5 +1,6 @@
+ import { common } from '@kit.AbilityKit';
+ import { CommonConstants } from '../constants/CommonConstants';
++import { GridRowColSetting } from '../common/GridRowColSetting';
+ import { LogoutBtn } from '../components/LogoutBtn';
+ import { SettingCard } from '../components/SettingCard';
+ import { SettingGroup } from '../types/SettingItem';
+@@ -41,7 +42,18 @@ export struct SettingView {
+       if (this.vm.configInfo.isSheet) {
+         this.coreView()
+       } else {
+-        this.coreView()
++        GridRow(GridRowColSetting.DEFAULT_GRID_ROW_OPTIONS) {
++          GridCol({
++            span: GridRowColSetting.DEFAULT_CENTER_COL_SPAN,
++            offset: GridRowColSetting.DEFAULT_CENTER_COL_OFFSET,
++          }) {
++            this.coreView()
++          }
++        }
++        .layoutWeight(1)
++        .onBreakpointChange((breakpoints: string) => {
++          this.vm.breakPointModel.currentBreakpoint = breakpoints;
++        })
+       }
+     }
+     .width(CommonConstants.FULL_PERCENT)
+diff --git a/components/collect_personal_info/src/main/ets/common/GridRowColSetting.ets b/components/collect_personal_info/src/main/ets/common/GridRowColSetting.ets
+new file mode 100644
+index 0000000000000000000000000000000000000000..f68282e81240414fcaa0573a37d7df261feeb3c6
+--- /dev/null
++++ b/components/collect_personal_info/src/main/ets/common/GridRowColSetting.ets
+@@ -0,0 +1,83 @@
++/**
++ * 栅格通用设置
++ */
++export class GridRowColSetting {
++  /**
++   * 栅格布局-断点数列
++   */
++  public static readonly BREAK_POINT_VALUE: string[] = ['0', '600vp', '840vp', '1440vp'];
++  
++  /**
++   * 栅格布局-列数
++   */
++  public static readonly GRID_ROW_OPTIONS_COLUMNS: GridRowColumnOption = {
++    xl: 12,
++    lg: 12,
++    md: 8,
++    sm: 4,
++  }
++
++  /**
++   * 栅格布局-margin
++   */
++  public static readonly GRID_ROW_OPTIONS_MARGIN: GridRowColumnOption = {
++    xl: 32,
++    lg: 32,
++    md: 24,
++    sm: 16,
++  };
++
++  /**
++   * 栅格布局-x间距
++   */
++  public static readonly GRID_ROW_OPTIONS_GUTTER_X: GridRowSizeOption = {
++    xl: 20,
++    lg: 16,
++    md: 12,
++    sm: 8,
++  }
++
++  /**
++   * 居中8栅格列span
++   */
++  public static readonly DEFAULT_CENTER_COL_SPAN: GridColColumnOption = {
++    xl: 8,
++    lg: 8,
++    md: 8,
++    sm: 4,
++  };
++  
++  /**
++   * 居中8栅格列offset
++   */
++  public static readonly DEFAULT_CENTER_COL_OFFSET: GridColColumnOption = {
++    md: 0,
++    lg: 2,
++    xl: 2,
++    sm: 0,
++  };
++
++  /**
++   * 获取页面margin
++   * @param bp
++   * @returns
++   */
++  public static getPageMargin(bp: string): number {
++    return Reflect.get(GridRowColSetting.GRID_ROW_OPTIONS_MARGIN, bp);
++  }
++
++  /**
++   * 栅格行布局容器-默认参数
++   */
++  public static readonly DEFAULT_GRID_ROW_OPTIONS: GridRowOptions = {
++    gutter: {
++      x: GridRowColSetting.GRID_ROW_OPTIONS_GUTTER_X,
++    },
++    columns: GridRowColSetting.GRID_ROW_OPTIONS_COLUMNS,
++    breakpoints: {
++      value: GridRowColSetting.BREAK_POINT_VALUE,
++      reference: BreakpointsReference.WindowSize,
++    },
++    direction: GridRowDirection.Row,
++  };
++}
+diff --git a/components/collect_personal_info/src/main/ets/views/ListCard.ets b/components/collect_personal_info/src/main/ets/views/ListCard.ets
+index c7c50a00d8d8e63532198d37acb6b3ed02154950..149cefacd5d4eff740146d4a7411bbcc61fab44f 100644
+--- a/components/collect_personal_info/src/main/ets/views/ListCard.ets
++++ b/components/collect_personal_info/src/main/ets/views/ListCard.ets
+@@ -16,6 +16,7 @@ export struct ListCard {
+   @Param labelFg: Length = 16;
+   @Param subLabelFg: Length = 12;
+   @Param valueFg: Length = 14;
++  @Param lanes: number = 1;
+   @Local configInfo: ConfigInfo = AppStorageV2.connect(ConfigInfo, () => new ConfigInfo())!;
+   private readonly DEFAULT_MESSAGE = '内容不能为空'
+ 
+@@ -93,6 +94,7 @@ export struct ListCard {
+     }
+     .width(Constants.FULL_PERCENT)
+     .height('auto')
++    .lanes(this.lanes)
+     .borderRadius($r('app.float.large_radius'))
+     .backgroundColor($r('sys.color.comp_background_primary'))
+     .visibility(this.list.length > 0 ? Visibility.Visible : Visibility.None)
+diff --git a/components/collect_personal_info/src/main/ets/views/PersonalInfoView.ets b/components/collect_personal_info/src/main/ets/views/PersonalInfoView.ets
+index 6d8a5a350bc28302a7a730a4de405a9d4385dff7..98bf0ca056e05eaf341fd3097169a1c8326aad66 100644
+--- a/components/collect_personal_info/src/main/ets/views/PersonalInfoView.ets
++++ b/components/collect_personal_info/src/main/ets/views/PersonalInfoView.ets
+@@ -3,6 +3,7 @@ import { Constants } from '../common/Constant';
+ import { PersonalInfo, DataType, SwitchInfo, ApiHandler } from '../common/DataModel';
+ import { PersonalInfoViewVM } from '../viewmodels/PersonalInfoViewVM';
+ import { FormGroup } from '../common/FormModel';
++import { GridRowColSetting } from '../common/GridRowColSetting';
+ 
+ @ComponentV2
+ export struct PersonalInfoView {
+@@ -36,18 +37,25 @@ export struct PersonalInfoView {
+ 
+   build() {
+     Column() {
+-      Scroll() {
+-        Column({ space: Constants.SPACE_M }) {
+-          ForEach(this.listData, (v: FormGroup) => {
+-            ListCard({ list: v.list })
+-          }, (v: FormGroup) => JSON.stringify(v))
++      GridRow(GridRowColSetting.DEFAULT_GRID_ROW_OPTIONS) {
++        GridCol({
++          span: GridRowColSetting.DEFAULT_CENTER_COL_SPAN,
++          offset: GridRowColSetting.DEFAULT_CENTER_COL_OFFSET,
++        }) {
++          Scroll() {
++            Column({ space: Constants.SPACE_M }) {
++              ForEach(this.listData, (v: FormGroup) => {
++                ListCard({ list: v.list })
++              }, (v: FormGroup) => JSON.stringify(v))
++            }
++          }
++          .width(Constants.FULL_PERCENT)
++          .height(Constants.FULL_PERCENT)
++          .scrollBar(BarState.Off)
++          .align(Alignment.Top)
++          .edgeEffect(EdgeEffect.Spring)
+         }
+       }
+-      .width(Constants.FULL_PERCENT)
+-      .height(Constants.FULL_PERCENT)
+-      .scrollBar(BarState.Off)
+-      .align(Alignment.Top)
+-      .edgeEffect(EdgeEffect.Spring)
+       .layoutWeight(1)
+     }
+     .width(Constants.FULL_PERCENT)
+@@ -74,4 +82,4 @@ export struct PersonalInfoView {
+       },
+     ] as FormGroup[];
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/components/membership/src/main/ets/viewmodel/MemberShipVM.ets b/components/membership/src/main/ets/viewmodel/MemberShipVM.ets
+index b95dab5b371eafdae05a68b571757f811bcd7f10..db11e4854ced130d1b14df1f731aaf5a8691dcbb 100644
+--- a/components/membership/src/main/ets/viewmodel/MemberShipVM.ets
++++ b/components/membership/src/main/ets/viewmodel/MemberShipVM.ets
+@@ -367,4 +367,4 @@ export class MemberShipVM {
+         `Failed to show subscription page. Code is ${err.code}, message is ${err.message}`);
+     });
+   }
+-}
+\ No newline at end of file
++}
+diff --git a/components/recorded_player/src/main/ets/components/FullScreenReport.ets b/components/recorded_player/src/main/ets/components/FullScreenReport.ets
+index e447e43ddc8d5328b774c42e043f30ac4cb17a70..40a82d1dba5d49ca1a5ee311854ef6e1986a5b8b 100644
+--- a/components/recorded_player/src/main/ets/components/FullScreenReport.ets
++++ b/components/recorded_player/src/main/ets/components/FullScreenReport.ets
+@@ -13,9 +13,11 @@
+  * limitations under the License.
+  */
+ 
++import { display } from '@kit.ArkUI'
+ import { image } from '@kit.ImageKit'
+ import { ReportItem } from '../models/Type'
+ import { PlayerVM } from '../viewModels/PlayerVM'
++import { hilog } from '@kit.PerformanceAnalysisKit'
+ 
+ @ComponentV2
+ export struct FullScreenReport {
+@@ -30,9 +32,53 @@ export struct FullScreenReport {
+   @Local reasons: Array<string> = []
+   @Local inputLength: number = 0
+   @Local playerVM: PlayerVM = PlayerVM.instance;
+-  @Local reportHeight: number = 300
++  @Local curFoldHeight: number = 200
++  // 当前屏幕折叠态（仅折叠屏设备下有效）
++  curFoldStatus: display.FoldStatus = display.FoldStatus.FOLD_STATUS_UNKNOWN;
+   private reason: string = ''
+ 
++  /**
++   * 注册屏幕状态监听 (仅限折叠屏)
++   * @returns {void}
++   */
++  regDisplayListener(): void {
++    try {
++      display.on('foldStatusChange', async (curFoldStatus: display.FoldStatus) => {
++        // 同一个状态重复触发不做处理
++        if (this.curFoldStatus === curFoldStatus) {
++          return;
++        }
++        this.curFoldStatus = curFoldStatus;
++        this.setCurFoldHeight()
++      })
++    } catch (error) {
++      hilog.error(this.domainId, this.logTag,
++        `Error occurred. errCode is ${error.code}, errMessage is ${error.message}`);
++    }
++  }
++
++  setCurFoldHeight() {
++    this.curFoldHeight = 300
++  }
++
++  aboutToAppear(): void {
++    try {
++      if (display.isFoldable()) {
++        this.regDisplayListener();
++      }
++    } catch (error) {
++      hilog.error(this.domainId, this.logTag,
++        `Error occurred. errCode is ${error.code}, errMessage is ${error.message}`);
++    }
++    try {
++      this.curFoldStatus = display.getFoldStatus()
++    } catch (error) {
++      hilog.error(this.domainId, this.logTag,
++        `Error occurred. errCode is ${error.code}, errMessage is ${error.message}`);
++    }
++    this.setCurFoldHeight()
++  }
++
+   build() {
+     Column() {
+       Row() {
+@@ -118,9 +164,9 @@ export struct FullScreenReport {
+           }
+           .width('100%')
+           .height(72)
+-          .margin({ top: 4, bottom: 0 })
++          .margin({ top: 4, bottom: this.curFoldHeight === 300 ? 0 : (this.isEditing ? 75 : 0) })
+         }
+-        .height(this.reportHeight)
++        .height(this.curFoldHeight)
+       }
+       .layoutWeight(1)
+       .width('100%')
+@@ -153,4 +199,4 @@ export struct FullScreenReport {
+     .alignItems(HorizontalAlign.Start)
+     .padding({ left: 24, right: 24 })
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/components/recorded_player/src/main/ets/components/PlayerControl.ets b/components/recorded_player/src/main/ets/components/PlayerControl.ets
+index 515cb6f7ca5eff6a3cae10a463c339aa01f73fa1..6de292e6ac28e1d4c6271af159c6a54e38dc5125 100644
+--- a/components/recorded_player/src/main/ets/components/PlayerControl.ets
++++ b/components/recorded_player/src/main/ets/components/PlayerControl.ets
+@@ -459,4 +459,4 @@ export struct MoreSetControl {
+     .width('100%')
+     .height('100%')
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/components/recorded_player/src/main/ets/pages/PlayerComponent.ets b/components/recorded_player/src/main/ets/pages/PlayerComponent.ets
+index 94e6985a5df9c8e226656e864edd02092393474e..0610ca5f5702b3c315e35ba4dee48cd8a8e883cc 100644
+--- a/components/recorded_player/src/main/ets/pages/PlayerComponent.ets
++++ b/components/recorded_player/src/main/ets/pages/PlayerComponent.ets
+@@ -14,7 +14,7 @@
+  */
+ 
+ import { emitter } from '@kit.BasicServicesKit';
+-import { uiObserver, window } from '@kit.ArkUI';
++import { display, uiObserver, window } from '@kit.ArkUI';
+ import { PipManager } from '../tools/PipManager';
+ import { PlayerControl } from '../components/PlayerControl';
+ import { PlayerView } from '../components/PlayerView';
+@@ -58,7 +58,9 @@ export struct PlayerComponent {
+   @Local playerVM: PlayerVM = PlayerVM.instance;
+   @Local player: AVPlayer = PipManager.getInstance().player;
+   @Local windowStatusType: number = 0;
++  @Local isFoldable: boolean = false;
+   @Local componentHeight: string = '100%';
++  curFoldStatus: display.FoldStatus = display.FoldStatus.FOLD_STATUS_UNKNOWN;
+   mWindow?: window.Window;
+   private timer: number = -1;
+   private uiContext: UIContext = this.getUIContext() as UIContext;
+@@ -91,6 +93,21 @@ export struct PlayerComponent {
+     // })
+   }
+ 
++  regDisplayListener(): void {
++    try {
++      display.on('foldStatusChange', async (curFoldStatus: display.FoldStatus) => {
++        // 同一个状态重复触发不做处理
++        if (this.curFoldStatus === curFoldStatus) {
++          return;
++        }
++        this.curFoldStatus = curFoldStatus;
++      })
++    } catch (error) {
++      hilog.error(this.domainId, this.logTag,
++        `Error occurred. errCode is ${error.code}, errMessage is ${error.message}`);
++    }
++  }
++
+   async aboutToAppear() {
+     if (this.movieItems && this.movieItems.length > 0) {
+       this.playerVM.movieItemList = this.movieItems
+@@ -158,6 +175,16 @@ export struct PlayerComponent {
+         PipManager.getInstance().player.release();
+       }
+     })
++
++    try {
++      if (display.isFoldable()) {
++        this.regDisplayListener();
++      }
++      this.curFoldStatus = display.getFoldStatus()
++    } catch (error) {
++      hilog.error(this.domainId, this.logTag,
++        `Error occurred. errCode is ${error.code}, errMessage is ${error.message}`);
++    }
+     this.getUIContext().getUIObserver().on('navDestinationSwitch', this.releaseResource);
+   }
+ 
+@@ -259,3 +286,4 @@ export struct PlayerComponent {
+     .width('100%')
+   }
+ }
++
+diff --git a/oh-package.json5 b/oh-package.json5
+index 15e9983550d0d34cdb4b217eab0629ae73b3dd38..e003cb1ad2871a529bf2948a0dcd9348fcaea3ab 100644
+--- a/oh-package.json5
++++ b/oh-package.json5
+@@ -7,4 +7,4 @@
+     "@ohos/hypium": "1.0.25",
+     "@ohos/hamock": "1.0.0"
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/product/phone/oh-package.json5 b/product/phone/oh-package.json5
+index 1cbe01b2bf396070e74791102412d46fd0cdff5b..54646f38bbd6a004c3ac864b5b7a4639dae90eb1 100644
+--- a/product/phone/oh-package.json5
++++ b/product/phone/oh-package.json5
+@@ -12,4 +12,4 @@
+     "@ohos_agcit/children_education_minepage": "../../scenes/tabs/minepage",
+     "recorded_player": "file:../../components/recorded_player"
+   }
+-}
+\ No newline at end of file
++}
+diff --git a/product/phone/src/main/ets/entryability/EntryAbility.ets b/product/phone/src/main/ets/entryability/EntryAbility.ets
+index 7724d46f5890885007a79fc060acdbfd80d14b0a..d06ccdf8dd11e09ca5b0dbeb24060231a2f3b4c6 100644
+--- a/product/phone/src/main/ets/entryability/EntryAbility.ets
++++ b/product/phone/src/main/ets/entryability/EntryAbility.ets
+@@ -1,12 +1,9 @@
+ import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
+ import { hilog } from '@kit.PerformanceAnalysisKit';
+ import { AppStorageV2, promptAction, window } from '@kit.ArkUI';
+-import {
+-  AvoidArea,
+-  CloudPrefetchUtils,
++import { AvoidArea, CloudPrefetchUtils,
+   CommonConstants,
+-  GlobalContext
+-} from '@ohos_agcit/children_education_utils';
++  GlobalContext, WindowUtil } from '@ohos_agcit/children_education_utils';
+ import { webview } from '@kit.ArkWeb';
+ import { GlobalInfoModel } from '@ohos_agcit/children_education_utils'
+ import { url } from '@kit.ArkTS';
+@@ -135,6 +132,10 @@ export default class EntryAbility extends UIAbility {
+   onWindowStageCreate(windowStage: window.WindowStage): void {
+     // Main window is created, set main page for this ability
+     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
++
++    // 一多适配
++    WindowUtil.registerBreakPoint(windowStage);
++
+     windowStage.loadContent('pages/Index', (err) => {
+       if (err.code) {
+         hilog.error(DOMAIN, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err));
+diff --git a/product/phone/src/main/ets/pages/Index.ets b/product/phone/src/main/ets/pages/Index.ets
+index 56c1843e996f2aa7c82b8c89641d018aee0b7c1a..666751ad0d00fd6790317d0f6a75fa994bd7b536 100644
+--- a/product/phone/src/main/ets/pages/Index.ets
++++ b/product/phone/src/main/ets/pages/Index.ets
+@@ -4,9 +4,11 @@ import {
+   AudioPlayPage,
+   AuthUtil,
+   AvoidArea,
++  BreakpointType,
+   CommonConstants,
+   DateConstants,
+   DateUtil,
++  DeviceUtil,
+   GlobalContext,
+   GlobalInfoModel,
+   ObjectUtil,
+@@ -16,9 +18,10 @@ import {
+ } from '@ohos_agcit/children_education_utils';
+ import { emitter } from '@kit.BasicServicesKit';
+ import { UsedLimit, User, VipRecord } from '@ohos_agcit/children_education_datasource';
+-import { AppStorageV2, CustomContentDialog, PersistenceV2 } from '@kit.ArkUI';
++import { AppStorageV2, CustomContentDialog, display, PersistenceV2, window } from '@kit.ArkUI';
+ import { userAuth } from '@kit.UserAuthenticationKit';
+ import { AuthOptions } from '@ohos_agcit/children_education_utils/src/main/ets/model/AuthOptions';
++import { common } from '@kit.AbilityKit';
+ import { harmonyShare, systemShare } from '@kit.ShareKit';
+ import { uniformTypeDescriptor as utd } from '@kit.ArkData';
+ import { PipManager } from 'recorded_player';
+@@ -30,6 +33,8 @@ struct Index {
+   private tabsController: TabsController = new TabsController();
+   private timerID: number = -1;
+   private uiContext: UIContext = this.getUIContext() as UIContext;
++  private hostContext: common.UIAbilityContext = this.uiContext.getHostContext() as common.UIAbilityContext;
++
+   @Provider(CommonConstants.USER_INFO) user: User = PersistenceV2.connect(User, () => new User())!;
+   @Provider(CommonConstants.VIP_RECORD) vipRecord: VipRecord = PersistenceV2.connect(VipRecord, () => new VipRecord())!;
+   @Local avoidArea: AvoidArea = AppStorageV2.connect(AvoidArea, () => new AvoidArea(0, 0))!;
+@@ -38,6 +43,23 @@ struct Index {
+   @Local dialogOpen: boolean = false;
+   @Local globalInfo: GlobalInfoModel =
+     AppStorageV2.connect<GlobalInfoModel>(GlobalInfoModel, () => new GlobalInfoModel())!;
++  @Local isVertical: boolean = new BreakpointType<boolean>({
++    sm: false,
++    md: false,
++    lg: true,
++  }).getValue(this.globalInfo.currentBreakpoint)
++
++  /**
++   * 监听断点变化
++   */
++  @Monitor('globalInfo.currentBreakpoint')
++  onBreakPointChange() {
++    this.isVertical = new BreakpointType<boolean>({
++      sm: false,
++      md: false,
++      lg: true,
++    }).getValue(this.globalInfo.currentBreakpoint)
++  }
+ 
+   aboutToAppear(): void {
+     emitter.on(CommonConstants.VIP_RECORD, (eventData: emitter.EventData) => {
+@@ -84,15 +106,42 @@ struct Index {
+       }
+       PersistenceV2.save(User);
+     })
++
++    
++    if (DeviceUtil.isFoldablePhone() && DeviceUtil.isPortrait()) {
++      window.getLastWindow(this.hostContext).then((win) => {
++        win.setPreferredOrientation(13)
++      })
++    }
++    if (DeviceUtil.isFoldablePhone() && DeviceUtil.isLandSpace()) {
++      window.getLastWindow(this.hostContext).then((win) => {
++        win.setPreferredOrientation(14)
++      })
++    }
++    display.on('foldStatusChange', (data: display.FoldStatus) => {
++      if (data === FoldStatus.FOLD_STATUS_FOLDED) {
++        window.getLastWindow(this.hostContext).then((win) => {
++          win.setPreferredOrientation(1)
++        })
++        return
++      }
++      if (data === FoldStatus.FOLD_STATUS_EXPANDED) {
++        let orientation = DeviceUtil.isPortrait() ? 13 : 14
++        window.getLastWindow(this.hostContext).then((win) => {
++          win.setPreferredOrientation(orientation)
++        })
++      }
++    });
++
+     // 添加路由拦截器
+     RouterModule.registerInterception();
+-    harmonyShare.on('gesturesShare', this.gesturesShareCallback)
++    harmonyShare.on('gesturesShare',this.gesturesShareCallback)
+     harmonyShare.on('knockShare', this.nockShareCallback);
+ 
+   }
+ 
+   aboutToDisappear(): void {
+-    harmonyShare.off('gesturesShare', this.gesturesShareCallback)
++    harmonyShare.off('gesturesShare',this.gesturesShareCallback)
+     harmonyShare.off('knockShare', this.nockShareCallback);
+   }
+ 
+@@ -108,12 +157,13 @@ struct Index {
+ 
+     sharableTarget.share(shareData);
+   }
++
+   gesturesShareCallback = (sharableTarget: harmonyShare.SharableTarget) => {
+     const currentTime = PipManager.getInstance().player.currentTime || 0;
+     let shareData: systemShare.SharedData = new systemShare.SharedData({
+       utd: utd.UniformDataType.HYPERLINK,
+       content: `https://linking.xiaobingtang.cn?name=${RouterModule.routerName}&param=${JSON.stringify(RouterModule.param)}&currentTime=${currentTime}`,
+-      // thumbnailUri: fileUri.getUriFromPath(filePath),
++    // thumbnailUri: fileUri.getUriFromPath(filePath),
+       title: '隔空传送分享卡片标题',
+       description: '隔空传送分享卡片描述'
+     });
+@@ -228,7 +278,7 @@ struct Index {
+     Navigation(this.globalInfo.navStack) {
+       Column() {
+         Tabs({
+-          barPosition: BarPosition.End,
++          barPosition: this.isVertical ? BarPosition.Start : BarPosition.End,
+           controller: this.tabsController,
+         }) {
+           TabContent() {
+@@ -248,13 +298,13 @@ struct Index {
+         .layoutWeight(1)
+         .scrollable(false)
+         .width(CommonConstants.FULL_PERCENT)
+-        .barHeight(52)
+-        .barWidth('100%')
++        .barHeight(this.isVertical ? '50%' : 52)
++        .barWidth(this.isVertical ? 96 : '100%')
+         .barMode(BarMode.Fixed)
+         .onAnimationStart((index: number, targetIndex: number) => {
+           this.currentIndex = targetIndex;
+         })
+-        .vertical(false)
++        .vertical(this.isVertical)
+       }
+       .padding({
+         bottom: this.getUIContext().px2vp(this.avoidArea.bottomRectHeight),
+diff --git a/scenes/services/cartoon/src/main/ets/views/CartoonPage.ets b/scenes/services/cartoon/src/main/ets/views/CartoonPage.ets
+index 299f8dad36ebbfd1d4ae516b14b552042d4141e2..7a2ad8aac539d4667cd7f02ad349a4e7be4d7667 100644
+--- a/scenes/services/cartoon/src/main/ets/views/CartoonPage.ets
++++ b/scenes/services/cartoon/src/main/ets/views/CartoonPage.ets
+@@ -1,5 +1,6 @@
+ import { DataGenerator } from '@ohos_agcit/children_education_datasource';
+ import {
++  BreakpointType,
+   CommonConstants,
+   CompactCardComponent,
+   FeedTitle,
+@@ -68,8 +69,16 @@ export struct CartoonPage {
+       .height(CommonConstants.FULL_PERCENT)
+       .width(CommonConstants.FULL_PERCENT)
+       .padding({
+-        left: 16,
+-        right: 16
++        left: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint),
++        right: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint)
+       })
+     }
+   }
+diff --git a/scenes/services/chinese/src/main/ets/components/SingStory.ets b/scenes/services/chinese/src/main/ets/components/SingStory.ets
+index edb36d82b795b0d38880d857d822b4604098dbb8..06105542e2741d7282862423be9b4951c82b0b70 100644
+--- a/scenes/services/chinese/src/main/ets/components/SingStory.ets
++++ b/scenes/services/chinese/src/main/ets/components/SingStory.ets
+@@ -1,5 +1,5 @@
+ import { DataGenerator, VideoCard, VideoCollection } from '@ohos_agcit/children_education_datasource';
+-import { CommonConstants, GlobalInfoModel, TagLabelCard } from '@ohos_agcit/children_education_utils';
++import { BreakpointType, CommonConstants, GlobalInfoModel, TagLabelCard } from '@ohos_agcit/children_education_utils';
+ import { AppStorageV2 } from '@kit.ArkUI';
+ 
+ @ComponentV2
+@@ -68,8 +68,20 @@ export struct SingStory {
+       }, (item: VideoCollection) => JSON.stringify(item));
+     }
+     .width('100%')
+-    .rowsGap(8)
+-    .columnsGap(8)
+-    .columnsTemplate('1fr '.repeat(1))
++    .rowsGap(new BreakpointType<number>({
++      sm: 8,
++      md: 12,
++      lg: 16,
++    }).getValue(this.globalInfo.currentBreakpoint))
++    .columnsGap(new BreakpointType<number>({
++      sm: 8,
++      md: 12,
++      lg: 16,
++    }).getValue(this.globalInfo.currentBreakpoint))
++    .columnsTemplate('1fr '.repeat(new BreakpointType<number>({
++      sm: 1,
++      md: 2,
++      lg: 3,
++    }).getValue(this.globalInfo.currentBreakpoint)))
+   }
+ }
+\ No newline at end of file
+diff --git a/scenes/services/chinese/src/main/ets/views/ChinesePage.ets b/scenes/services/chinese/src/main/ets/views/ChinesePage.ets
+index e21a33a44471a71433832477e82d75c761143851..f09cbc246dda431406906dd56e94456ea4e8f494 100644
+--- a/scenes/services/chinese/src/main/ets/views/ChinesePage.ets
++++ b/scenes/services/chinese/src/main/ets/views/ChinesePage.ets
+@@ -1,5 +1,6 @@
+ import { DataGenerator } from '@ohos_agcit/children_education_datasource';
+ import {
++  BreakpointType,
+   CommonConstants,
+   CompactCardComponent,
+   FeedTitle,
+@@ -49,8 +50,16 @@ export struct ChinesePage {
+     .width(CommonConstants.FULL_PERCENT)
+     .height(CommonConstants.FULL_PERCENT)
+     .padding({
+-      left: 16,
+-      right: 16
++      left: new BreakpointType<number>({
++        sm: 16,
++        md: 24,
++        lg: 32,
++      }).getValue(this.globalInfo.currentBreakpoint),
++      right: new BreakpointType<number>({
++        sm: 16,
++        md: 24,
++        lg: 32,
++      }).getValue(this.globalInfo.currentBreakpoint)
+     })
+   }
+ }
+diff --git a/scenes/services/englishZone/src/main/ets/views/EnglishZonePage.ets b/scenes/services/englishZone/src/main/ets/views/EnglishZonePage.ets
+index dbf1e0cdad0e27c51b325dc4ce8ec45b970bc1c6..6a29605282afbe00ec3fa80b2fb1c50392bcd79d 100644
+--- a/scenes/services/englishZone/src/main/ets/views/EnglishZonePage.ets
++++ b/scenes/services/englishZone/src/main/ets/views/EnglishZonePage.ets
+@@ -1,5 +1,5 @@
+ import { DataGenerator } from '@ohos_agcit/children_education_datasource';
+-import { CommonConstants, FeedTitle, NoMoreTab, CompactCardComponent, GlobalInfoModel } from '@ohos_agcit/children_education_utils';
++import { CommonConstants, FeedTitle, NoMoreTab, CompactCardComponent, GlobalInfoModel, BreakpointType } from '@ohos_agcit/children_education_utils';
+ import { AppStorageV2 } from '@kit.ArkUI';
+ 
+ @ComponentV2
+@@ -31,8 +31,16 @@ export struct EnglishZonePage {
+       .height(CommonConstants.FULL_PERCENT)
+       .width(CommonConstants.FULL_PERCENT)
+       .padding({
+-        left: 16,
+-        right: 16
++        left: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint),
++        right: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint)
+       })
+     }
+   }
+diff --git a/scenes/services/selected/src/main/ets/components/AudioStoryZone.ets b/scenes/services/selected/src/main/ets/components/AudioStoryZone.ets
+index d3e0f7555c2c53ea23b80c94dccab5638eb52df9..1e04534698a0032b233c9aaf855eb8c6d53bacf3 100644
+--- a/scenes/services/selected/src/main/ets/components/AudioStoryZone.ets
++++ b/scenes/services/selected/src/main/ets/components/AudioStoryZone.ets
+@@ -1,5 +1,6 @@
+ import { DataGenerator, VideoCard, VideoCollection } from '@ohos_agcit/children_education_datasource';
+ import {
++  BreakpointType,
+   CommonConstants,
+   GlobalInfoModel,
+   VideoCover
+@@ -33,9 +34,21 @@ export struct AudioStoryZone {
+         });
+       }, (item: VideoCard) => JSON.stringify(item));
+     }
+-    .rowsGap(8)
+-    .columnsGap(8)
+-    .columnsTemplate('1fr '.repeat(3))
++    .rowsGap(new BreakpointType<number>({
++      sm: 8,
++      md: 12,
++      lg: 16,
++    }).getValue(this.globalInfo.currentBreakpoint))
++    .columnsGap(new BreakpointType<number>({
++      sm: 8,
++      md: 12,
++      lg: 16,
++    }).getValue(this.globalInfo.currentBreakpoint))
++    .columnsTemplate('1fr '.repeat(new BreakpointType<number>({
++      sm: 3,
++      md: 4,
++      lg: 5,
++    }).getValue(this.globalInfo.currentBreakpoint)))
+     .width(CommonConstants.FULL_PERCENT)
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/scenes/services/selected/src/main/ets/components/Banner.ets b/scenes/services/selected/src/main/ets/components/Banner.ets
+index a1171fb87bdd5c9b77d2825bd331c6e219919d8d..58da185500c58e26977dddfdabf36501aafaf6bd 100644
+--- a/scenes/services/selected/src/main/ets/components/Banner.ets
++++ b/scenes/services/selected/src/main/ets/components/Banner.ets
+@@ -1,4 +1,4 @@
+-import { GlobalInfoModel } from '@ohos_agcit/children_education_utils';
++import { BreakpointType, GlobalInfoModel } from '@ohos_agcit/children_education_utils';
+ import { AppStorageV2 } from '@kit.ArkUI';
+ 
+ @ComponentV2
+@@ -18,7 +18,29 @@ export struct Banner {
+             .width('100%')
+         }, (item: string) => item)
+       }
++      .itemSpace(
++        new BreakpointType<number>({
++          sm: 0,
++          md: 12,
++          lg: 16,
++        }).getValue(this.globalInfo.currentBreakpoint)
++      )
+       .interval(10000)
++      .nextMargin(new BreakpointType<number>({
++        sm: 0,
++        md: 24,
++        lg: 36,
++      }).getValue(this.globalInfo.currentBreakpoint))
++      .prevMargin(new BreakpointType<number>({
++        sm: 0,
++        md: 24,
++        lg: 36,
++      }).getValue(this.globalInfo.currentBreakpoint))
++      .displayCount(new BreakpointType<number>({
++        sm: 1,
++        md: 2,
++        lg: 3,
++      }).getValue(this.globalInfo.currentBreakpoint))
+       .loop(true)
+       .indicator(false)
+       .autoPlay(true)
+diff --git a/scenes/services/selected/src/main/ets/components/HobbyCategory.ets b/scenes/services/selected/src/main/ets/components/HobbyCategory.ets
+index 05e05af7c44804322988298190173fc1799f6ce0..6f33d2230ff6c167fd8ef1aae7ac3dc5a8559e59 100644
+--- a/scenes/services/selected/src/main/ets/components/HobbyCategory.ets
++++ b/scenes/services/selected/src/main/ets/components/HobbyCategory.ets
+@@ -1,5 +1,5 @@
+ import { DataGenerator, VideoCard, VideoCollection } from '@ohos_agcit/children_education_datasource';
+-import { CommonConstants, GlobalInfoModel } from '@ohos_agcit/children_education_utils';
++import { BreakpointType, CommonConstants, GlobalInfoModel } from '@ohos_agcit/children_education_utils';
+ import { AppStorageV2 } from '@kit.ArkUI';
+ 
+ @ComponentV2
+@@ -15,7 +15,11 @@ export struct HobbyCategory {
+           this.hobbyCardBuilder(item, index, $r('app.media.hobby_icon_1'), $r('app.media.hobby_background_1'))
+         }
+         if (index !== this.hobbyCategory.length - 1) {
+-          Blank().width(12)
++          Blank().width(new BreakpointType<number>({
++            sm: 12,
++            md: 12,
++            lg: 16,
++          }).getValue(this.globalInfo.currentBreakpoint))
+         }
+         if (index === 1) {
+           this.hobbyCardBuilder(item, index, $r('app.media.hobby_icon_2'), $r('app.media.hobby_background_2'))
+@@ -23,7 +27,11 @@ export struct HobbyCategory {
+       }, (item: VideoCard) => JSON.stringify(item))
+     }
+     .id('hobby-section')
+-    .height(64)
++    .height(new BreakpointType<number>({
++      sm: 64,
++      md: 80,
++      lg: 96,
++    }).getValue(this.globalInfo.currentBreakpoint))
+   }
+ 
+   @Builder
+@@ -45,8 +53,16 @@ export struct HobbyCategory {
+     .justifyContent(FlexAlign.SpaceBetween)
+     .height('100%')
+     .padding({
+-      left: 16,
+-      right: 16
++      left: new BreakpointType<number>({
++        sm: 16,
++        md: 24,
++        lg: 32,
++      }).getValue(this.globalInfo.currentBreakpoint),
++      right: new BreakpointType<number>({
++        sm: 16,
++        md: 24,
++        lg: 32,
++      }).getValue(this.globalInfo.currentBreakpoint)
+     })
+     .onClick(() => {
+       let detail: VideoCollection = DataGenerator.getVideoDetail(this.getUIContext());
+@@ -54,4 +70,4 @@ export struct HobbyCategory {
+       this.globalInfo.navStack.pushPathByName('VideoDetailListView', detail);
+     });
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/scenes/services/selected/src/main/ets/components/PremiumVideo.ets b/scenes/services/selected/src/main/ets/components/PremiumVideo.ets
+index 4d0ebdee49d94edc20992b5d2e098e6a95cc67ce..df2813fdc82d00fbee9a2aa10af87a4dca64c34f 100644
+--- a/scenes/services/selected/src/main/ets/components/PremiumVideo.ets
++++ b/scenes/services/selected/src/main/ets/components/PremiumVideo.ets
+@@ -1,5 +1,5 @@
+ import { DataGenerator, VideoCard, VideoCollection } from '@ohos_agcit/children_education_datasource';
+-import { GlobalInfoModel, TagLabelCard } from '@ohos_agcit/children_education_utils';
++import { BreakpointType, CommonConstants, GlobalInfoModel, TagLabelCard } from '@ohos_agcit/children_education_utils';
+ import { AppStorageV2 } from '@kit.ArkUI';
+ 
+ 
+@@ -74,12 +74,29 @@ export struct PremiumVideo {
+       }, (item: VideoCard) => JSON.stringify(item));
+     }
+     .width('100%')
+-    .columnsGap(8)
+-    .columnsTemplate('1fr '.repeat(1))
++    .columnsGap(new BreakpointType<number>({
++      sm: 8,
++      md: 12,
++      lg: 16,
++    }).getValue(this.globalInfo.currentBreakpoint))
++    .columnsTemplate('1fr '.repeat(new BreakpointType<number>({
++      sm: 1,
++      md: 2,
++      lg: 3,
++    }).getValue(this.globalInfo.currentBreakpoint)))
+   }
+ 
+   private getMaxDisplayCount(): number {
+-    return 3;
++    const breakpoint = this.globalInfo.currentBreakpoint;
++
++    switch (breakpoint) {
++      case 'md':
++        return 6;
++      case 'lg':
++        return 9;
++      default:
++        return 3;
++    }
+   }
+ 
+   private get displayPremiumArray(): VideoCard[] {
+@@ -99,4 +116,4 @@ export struct PremiumVideo {
+       this.dividerWidth = width
+     }
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/scenes/services/selected/src/main/ets/views/SelectedPage.ets b/scenes/services/selected/src/main/ets/views/SelectedPage.ets
+index 6c95faab5ff92c6b4fdb90876f73a13256e8f1f7..f4a7b6304c9a69d17fe309fbb31a6715b7409134 100644
+--- a/scenes/services/selected/src/main/ets/views/SelectedPage.ets
++++ b/scenes/services/selected/src/main/ets/views/SelectedPage.ets
+@@ -1,5 +1,6 @@
+ import { DataGenerator, SelectedPageData, VideoCard } from '@ohos_agcit/children_education_datasource';
+ import {
++  BreakpointType,
+   CommonConstants,
+   CompactCardComponent,
+   FeedTitle,
+@@ -22,6 +23,19 @@ export struct SelectedPage {
+   @Local paddingNum: number = 16;
+   @Consumer('age') age: string = '0-3岁';
+ 
++  @Monitor('globalInfo.currentBreakpoint')
++  onBreakPointChange() {
++    this.paddingNum = new BreakpointType<number>({
++      sm: 16,
++      md: 24,
++      lg: 32,
++    }).getValue(this.globalInfo.currentBreakpoint)
++  }
++
++  aboutToAppear(): void {
++    this.onBreakPointChange()
++  }
++
+   @Monitor('age')
+   onAgeChange() {
+     if (this.age === '3-6岁') {
+@@ -42,8 +56,16 @@ export struct SelectedPage {
+           });
+         }
+         .padding({
+-          left: 16,
+-          right: 16
++          left: new BreakpointType<number>({
++            sm: 16,
++            md: 0,
++            lg: 0,
++          }).getValue(this.globalInfo.currentBreakpoint),
++          right: new BreakpointType<number>({
++            sm: 16,
++            md: 0,
++            lg: 0,
++          }).getValue(this.globalInfo.currentBreakpoint)
+         })
+ 
+         ListItem() {
+diff --git a/scenes/services/selected/src/main/ets/views/detail/AudioDetail.ets b/scenes/services/selected/src/main/ets/views/detail/AudioDetail.ets
+index 1606ab973fd776075e5bcc5836c4f2222d7bd5ef..2a3f89963d3e8944b65fe509cc19de3216376cf6 100644
+--- a/scenes/services/selected/src/main/ets/views/detail/AudioDetail.ets
++++ b/scenes/services/selected/src/main/ets/views/detail/AudioDetail.ets
+@@ -1,6 +1,7 @@
+ import { User, VideoCardDetail, VideoCollection, VipRecord } from '@ohos_agcit/children_education_datasource';
+ import {
+   AvoidArea,
++  BreakpointType,
+   CommonConstants,
+   GlobalContext,
+   GlobalInfoModel,
+@@ -113,16 +114,32 @@ export struct AudioDetailListView {
+               }
+             }, (item: VideoCardDetail) => JSON.stringify(item));
+           }
+-          .columnsGap(8)
+-          .columnsTemplate('1fr '.repeat(1))
++          .columnsGap(new BreakpointType<number>({
++            sm: 8,
++            md: 12,
++            lg: 16,
++          }).getValue(this.globalInfo.currentBreakpoint))
++          .columnsTemplate('1fr '.repeat(new BreakpointType<number>({
++            sm: 1,
++            md: 2,
++            lg: 3,
++          }).getValue(this.globalInfo.currentBreakpoint)))
+         }
+         .id('audio-list')
+       }
+       .scrollBar(BarState.Off)
+       .width('100%')
+       .padding({
+-        left: 16,
+-        right: 16
++        left: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint),
++        right: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint)
+       })
+     }
+     .padding({
+@@ -199,4 +216,4 @@ export struct AudioListItem {
+     }
+     return this.index + 1 + CommonConstants.EMPTY_STRING;
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/scenes/services/selected/src/main/ets/views/detail/VideoDetail.ets b/scenes/services/selected/src/main/ets/views/detail/VideoDetail.ets
+index 43739f3d97f0359fad35133e7e02d9c8431199b5..8d344f8c3f17580990b2e2be2f2882abc5a2d9fa 100644
+--- a/scenes/services/selected/src/main/ets/views/detail/VideoDetail.ets
++++ b/scenes/services/selected/src/main/ets/views/detail/VideoDetail.ets
+@@ -1,6 +1,7 @@
+ import { User, VideoCardDetail, VideoCollection, VipRecord } from '@ohos_agcit/children_education_datasource';
+ import {
+   AvoidArea,
++  BreakpointType,
+   CommonConstants,
+   GlobalContext,
+   GlobalInfoModel,
+@@ -132,19 +133,39 @@ export struct VideoDetailListView {
+           }, (item: VideoCardDetail) => JSON.stringify(item));
+         }
+         .scrollBar(BarState.Off)
+-        .id('content-detail-root')
+         .width(CommonConstants.FULL_PERCENT)
+-        .rowsGap(8)
+-        .columnsGap(8)
+-        .columnsTemplate('1fr '.repeat(2))
++        .rowsGap(new BreakpointType<number>({
++          sm: 8,
++          md: 12,
++          lg: 16,
++        }).getValue(this.globalInfo.currentBreakpoint))
++        .columnsGap(new BreakpointType<number>({
++          sm: 8,
++          md: 12,
++          lg: 16,
++        }).getValue(this.globalInfo.currentBreakpoint))
++        .columnsTemplate('1fr '.repeat(new BreakpointType<number>({
++          sm: 2,
++          md: 3,
++          lg: 4,
++        }).getValue(this.globalInfo.currentBreakpoint)))
+         .layoutWeight(1)
+       }
+       .width('100%')
+       .padding({
+-        left: 16,
+-        right: 16
++        left: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint),
++        right: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint)
+       })
+     }
++    .id('content-detail-root')
+     .padding({
+       top: this.getUIContext().px2vp(this.avoidArea.topRectHeight),
+     })
+diff --git a/scenes/services/selected/src/main/ets/views/more/AudioSectionListView.ets b/scenes/services/selected/src/main/ets/views/more/AudioSectionListView.ets
+index adea58d8298603f99eba49e05fb3321815d084b2..4a8620eb3b347020f6ad74ab01c645ea852cfa57 100644
+--- a/scenes/services/selected/src/main/ets/views/more/AudioSectionListView.ets
++++ b/scenes/services/selected/src/main/ets/views/more/AudioSectionListView.ets
+@@ -1,6 +1,7 @@
+ import { DataGenerator, VideoCard, VideoCollection } from '@ohos_agcit/children_education_datasource';
+ import {
+   AvoidArea,
++  BreakpointType,
+   CommonConstants,
+   GlobalInfoModel,
+   Title,
+@@ -46,12 +47,32 @@ export struct AudioSectionListView {
+           };
+         }, (item: VideoCard) => JSON.stringify(item));
+       }
+-      .rowsGap(8)
+-      .columnsGap(8)
+-      .columnsTemplate('1fr '.repeat(1))
++      .rowsGap(new BreakpointType<number>({
++        sm: 8,
++        md: 12,
++        lg: 16,
++      }).getValue(this.globalInfo.currentBreakpoint))
++      .columnsGap(new BreakpointType<number>({
++        sm: 8,
++        md: 12,
++        lg: 16,
++      }).getValue(this.globalInfo.currentBreakpoint))
++      .columnsTemplate('1fr '.repeat(new BreakpointType<number>({
++        sm: 1,
++        md: 2,
++        lg: 3,
++      }).getValue(this.globalInfo.currentBreakpoint)))
+       .padding({
+-        left: 16,
+-        right: 16
++        left: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint),
++        right: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint)
+       })
+       .scrollBar(BarState.Off)
+       .width(CommonConstants.FULL_PERCENT)
+diff --git a/scenes/services/selected/src/main/ets/views/more/HotAnimationListView.ets b/scenes/services/selected/src/main/ets/views/more/HotAnimationListView.ets
+index 062aa27bb95e8312125226725b357b68a4e50412..f331a9369437f7244635d0cd1aec09489381f79d 100644
+--- a/scenes/services/selected/src/main/ets/views/more/HotAnimationListView.ets
++++ b/scenes/services/selected/src/main/ets/views/more/HotAnimationListView.ets
+@@ -1,6 +1,7 @@
+ import { DataGenerator, VideoCard } from '@ohos_agcit/children_education_datasource';
+ import {
+   AvoidArea,
++  BreakpointType,
+   CommonConstants,
+   GlobalInfoModel,
+   StandardCardComponent,
+@@ -38,8 +39,16 @@ struct HotAnimationListView {
+       .id('hot-animation-more-content')
+       .width(CommonConstants.FULL_PERCENT)
+       .padding({
+-        left: 16,
+-        right: 16
++        left: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint),
++        right: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint)
+       })
+     }
+     .padding({
+diff --git a/scenes/services/selected/src/main/ets/views/more/PremiumInteractiveVideoListView.ets b/scenes/services/selected/src/main/ets/views/more/PremiumInteractiveVideoListView.ets
+index 9caee9692f5f3e02059133e28c4a34b07a6d6cc0..7c4ec1a2a274ec8889b44f38ca42456b48ab7e43 100644
+--- a/scenes/services/selected/src/main/ets/views/more/PremiumInteractiveVideoListView.ets
++++ b/scenes/services/selected/src/main/ets/views/more/PremiumInteractiveVideoListView.ets
+@@ -1,6 +1,7 @@
+ import { DataGenerator, VideoCard, VideoCollection } from '@ohos_agcit/children_education_datasource';
+ import {
+   AvoidArea,
++  BreakpointType,
+   CommonConstants,
+   GlobalInfoModel,
+   TagLabelCard,
+@@ -42,13 +43,33 @@ export struct PremiumInteractiveVideoListView {
+       .id('premium-more-content')
+       .padding({
+         top: 8,
+-        left: 16,
+-        right: 17
++        left: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint),
++        right: new BreakpointType<number>({
++          sm: 17,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint)
+       })
+       .width(CommonConstants.FULL_PERCENT)
+-      .rowsGap(8)
+-      .columnsGap(8)
+-      .columnsTemplate('1fr '.repeat(1))
++      .rowsGap(new BreakpointType<number>({
++        sm: 8,
++        md: 12,
++        lg: 16,
++      }).getValue(this.globalInfo.currentBreakpoint))
++      .columnsGap(new BreakpointType<number>({
++        sm: 8,
++        md: 12,
++        lg: 16,
++      }).getValue(this.globalInfo.currentBreakpoint))
++      .columnsTemplate('1fr '.repeat(new BreakpointType<number>({
++        sm: 1,
++        md: 2,
++        lg: 3,
++      }).getValue(this.globalInfo.currentBreakpoint)))
+     }
+     .title(Title(this.title))
+     .onReady((cxt: NavDestinationContext) => {
+diff --git a/scenes/services/sing/src/main/ets/views/SingPage.ets b/scenes/services/sing/src/main/ets/views/SingPage.ets
+index 5381a88b7476769e3041cc1dd4401ccb94961345..8160e9c8189c289606b6e4d73e51b4fba1ce4826 100644
+--- a/scenes/services/sing/src/main/ets/views/SingPage.ets
++++ b/scenes/services/sing/src/main/ets/views/SingPage.ets
+@@ -1,11 +1,7 @@
+ import { DataGenerator } from '@ohos_agcit/children_education_datasource';
+-import {
+-  CommonConstants,
+-  FeedTitle,
+-  NoMoreTab,
+-  CompactCardComponent,
+-  GlobalInfoModel
+-} from '@ohos_agcit/children_education_utils';
++import { CommonConstants, FeedTitle, NoMoreTab, CompactCardComponent,
++  BreakpointType,
++  GlobalInfoModel} from '@ohos_agcit/children_education_utils';
+ import { AppStorageV2 } from '@kit.ArkUI';
+ 
+ @ComponentV2
+@@ -47,8 +43,16 @@ export struct SingPage {
+       .height(CommonConstants.FULL_PERCENT)
+       .width(CommonConstants.FULL_PERCENT)
+       .padding({
+-        left: 16,
+-        right: 16
++        left: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint),
++        right: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint)
+       })
+     }
+   }
+diff --git a/scenes/tabs/homepage/src/main/ets/views/HomePage.ets b/scenes/tabs/homepage/src/main/ets/views/HomePage.ets
+index 9c6296cbb182c5c2bda40b001a8d33a0eeb8a2ec..91d10b8de5f6ef8cdb9b1b85676fad9b886e85c6 100644
+--- a/scenes/tabs/homepage/src/main/ets/views/HomePage.ets
++++ b/scenes/tabs/homepage/src/main/ets/views/HomePage.ets
+@@ -5,8 +5,10 @@ import { SingPage } from '@ohos_agcit/children_education_sing';
+ import { ChinesePage } from '@ohos_agcit/children_education_chinese';
+ import {
+   AvoidArea,
++  BreakpointType,
+   CommonConstants,
+-  DialogUtils
++  DialogUtils,
++  GlobalInfoModel
+ } from '@ohos_agcit/children_education_utils';
+ import { AppStorageV2 } from '@kit.ArkUI';
+ 
+@@ -16,6 +18,13 @@ export struct HomePage {
+   @Local currentIndex: number = 0;
+   @Provider('age') age: string = '0-3岁';
+   @Local avoidArea: AvoidArea = AppStorageV2.connect(AvoidArea, () => new AvoidArea(0, 0))!;
++  @Local globalInfo: GlobalInfoModel =
++    AppStorageV2.connect<GlobalInfoModel>(GlobalInfoModel, () => new GlobalInfoModel())!;
++  @Local isVertical: boolean = new BreakpointType<boolean>({
++    sm: false,
++    md: false,
++    lg: true,
++  }).getValue(this.globalInfo.currentBreakpoint)
+   private ageArray: Resource = $r('app.strarray.age_array');
+   private controller: TabsController = new TabsController();
+   @Local scrollMargin: number = 0;
+@@ -53,7 +62,11 @@ export struct HomePage {
+       }
+       .margin({
+         top: 10,
+-        left: 16,
++        left: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint),
+       })
+       .alignSelf(ItemAlign.Start)
+       .onClick(() => {
+@@ -64,7 +77,11 @@ export struct HomePage {
+ 
+       // custom tabBar
+       Row({
+-        space: 24
++        space: new BreakpointType<number>({
++          sm: 24,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint)
+       }) {
+         ForEach(CommonConstants.TABS, (item: string, index: number) => {
+           Text(item)
+@@ -81,8 +98,16 @@ export struct HomePage {
+       .width(360)
+       .alignSelf(ItemAlign.Start)
+       .padding({
+-        left: 16,
+-        right: 16
++        left: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint),
++        right: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint)
+       })
+       .alignItems(VerticalAlign.Center)
+       .height(48)
+@@ -128,4 +153,4 @@ export struct HomePage {
+       top: this.getUIContext().px2vp(this.avoidArea.topRectHeight)
+     })
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/scenes/tabs/minepage/src/main/ets/components/CommonServices.ets b/scenes/tabs/minepage/src/main/ets/components/CommonServices.ets
+index 695be9cb0e5b295cf0251891a85efc0de85125f4..655d8721c0993b1ab56581068e3e922cac36d505 100644
+--- a/scenes/tabs/minepage/src/main/ets/components/CommonServices.ets
++++ b/scenes/tabs/minepage/src/main/ets/components/CommonServices.ets
+@@ -1,5 +1,7 @@
+ import { CommonServiceModel, mineCommonService } from '@ohos_agcit/children_education_datasource';
+ import {
++  BreakpointType,
++  BreakpointTypeEnum,
+   CommonConstants,
+   GlobalInfoModel,
+   rightArrow
+@@ -31,7 +33,13 @@ export struct CommonServices {
+   }
+ 
+   private getHeight() {
+-    return 56 * this.mineCommonService.length + (this.mineCommonService.length - 1)
++    let col = new BreakpointType<number>({
++      sm: 1,
++      md: 1,
++      lg: 2,
++    }).getValue(this.globalInfo.currentBreakpoint)
++
++    return 56 * Math.ceil(this.mineCommonService.length / col) + (this.mineCommonService.length - 1)
+   }
+ 
+   build() {
+@@ -67,8 +75,16 @@ export struct CommonServices {
+                 }
+                 this.globalInfo.navStack.pushPathByName(item.pageName, undefined);
+               });
+-              if (index !== mineCommonService.length - 1) {
+-                Divider().id('common-services-divider').width('100%').alignSelf(ItemAlign.End);
++
++
++              if (this.globalInfo.currentBreakpoint !== BreakpointTypeEnum.LG) {
++                if (index !== mineCommonService.length - 1) {
++                  Divider().id('common-services-divider').width('100%').alignSelf(ItemAlign.End);
++                }
++              } else {
++                if (index !== mineCommonService.length - 1 && index !== mineCommonService.length - 2) {
++                  Divider().id('common-services-divider').width('100%').alignSelf(ItemAlign.End);
++                }
+               }
+             }
+           }
+@@ -79,11 +95,24 @@ export struct CommonServices {
+       .width(CommonConstants.FULL_PERCENT)
+       .rowsGap(0)
+       .columnsGap(40)
++      .columnsTemplate('1fr '.repeat(new BreakpointType<number>({
++        sm: 1,
++        md: 1,
++        lg: 2,
++      }).getValue(this.globalInfo.currentBreakpoint)))
+     }
+     .id('common-services-root')
+     .padding({
+-      right: 16,
+-      left: 16
++      right: new BreakpointType<number>({
++        sm: 16,
++        md: 24,
++        lg: 32,
++      }).getValue(this.globalInfo.currentBreakpoint),
++      left: new BreakpointType<number>({
++        sm: 16,
++        md: 24,
++        lg: 32,
++      }).getValue(this.globalInfo.currentBreakpoint)
+     })
+     .alignItems(HorizontalAlign.Start)
+     .width(CommonConstants.FULL_PERCENT)
+@@ -93,4 +122,3 @@ export struct CommonServices {
+   }
+ }
+ 
+-
+diff --git a/scenes/tabs/minepage/src/main/ets/views/MinePage.ets b/scenes/tabs/minepage/src/main/ets/views/MinePage.ets
+index 67927d9bd88b56b44fa615bc9d9febe42c5c3b32..afc21642bb2536375f85992d17cda86f1a3b987e 100644
+--- a/scenes/tabs/minepage/src/main/ets/views/MinePage.ets
++++ b/scenes/tabs/minepage/src/main/ets/views/MinePage.ets
+@@ -1,5 +1,5 @@
+ import { User } from '@ohos_agcit/children_education_datasource';
+-import { AvoidArea, CommonConstants, GlobalInfoModel } from '@ohos_agcit/children_education_utils';
++import { AvoidArea, BreakpointType, CommonConstants, GlobalInfoModel } from '@ohos_agcit/children_education_utils';
+ import { CommonServices } from '../components/CommonServices';
+ import { LoginState } from '../components/LoginState';
+ import { AppStorageV2 } from '@kit.ArkUI';
+@@ -37,11 +37,19 @@ export struct MinePage {
+     .height(CommonConstants.FULL_PERCENT)
+     .padding({
+       top: this.getUIContext().px2vp(this.avoidArea.topRectHeight),
+-      left: 16,
+-      right: 16,
++      left: new BreakpointType<number>({
++        sm: 16,
++        md: 24,
++        lg: 32,
++      }).getValue(this.globalInfo.currentBreakpoint),
++      right: new BreakpointType<number>({
++        sm: 16,
++        md: 24,
++        lg: 32,
++      }).getValue(this.globalInfo.currentBreakpoint),
+       bottom:52
+ 
+     })
+     .backgroundColor($r('sys.color.background_secondary'))
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/scenes/tabs/minepage/src/main/ets/views/history/ViewHistory.ets b/scenes/tabs/minepage/src/main/ets/views/history/ViewHistory.ets
+index 13aa2ccd2dd15a9e2a4895fddbb74dba3daac1af..0b2a8b999bdf891ef2b81140a1a581e9b4fdc8fa 100644
+--- a/scenes/tabs/minepage/src/main/ets/views/history/ViewHistory.ets
++++ b/scenes/tabs/minepage/src/main/ets/views/history/ViewHistory.ets
+@@ -1,5 +1,6 @@
+ import {
+   AvoidArea,
++  BreakpointType,
+   CommonConstants,
+   GlobalContext,
+   GlobalInfoModel,
+@@ -74,12 +75,29 @@ export struct ViewHistory {
+           }, (item: History) => JSON.stringify(item));
+         }
+         .scrollBar(BarState.Off)
+-        .columnsGap(8)
++        .id('view-history-content')
++        .columnsGap(new BreakpointType<number>({
++          sm: 8,
++          md: 12,
++          lg: 16,
++        }).getValue(this.globalInfo.currentBreakpoint))
++        .columnsTemplate('1fr '.repeat(new BreakpointType<number>({
++          sm: 1,
++          md: 2,
++          lg: 3,
++        }).getValue(this.globalInfo.currentBreakpoint)))
+       }
+-      .id('view-history-content')
+       .padding({
+-        left: 16,
+-        right: 16
++        left: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint),
++        right: new BreakpointType<number>({
++          sm: 16,
++          md: 24,
++          lg: 32,
++        }).getValue(this.globalInfo.currentBreakpoint)
+       })
+     }
+     .title(Title('观看历史'))

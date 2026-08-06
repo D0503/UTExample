@@ -1,0 +1,58 @@
+import { webview } from '@kit.ArkWeb';
+import { SettingPageEnum } from '../types/SettingType';
+import { BaseViewModel } from '../models/BaseViewModel';
+import { hilog } from '@kit.PerformanceAnalysisKit';
+
+@ObservedV2
+export class SettingH5VM extends BaseViewModel {
+  logTag: string = 'SettingH5VM';
+  domainId: number = 0x0000;
+  // H5内容或者地址
+  @Trace content: string = '';
+  @Trace webViewController: webview.WebviewController = new webview.WebviewController();
+
+  getParams() {
+    const params = this.configInfo.pathStack.getParamByName(SettingPageEnum.SETTING_AGREEMENT) as string[];
+    if (params.length && params[params.length - 1]) {
+      this.content = params[params.length - 1];
+    }
+  }
+
+  onControllerAttached() {
+    if (this.isUrl(this.content)) {
+      try {
+        this.webViewController.loadUrl(this.content);
+      } catch (error) {
+        hilog.error(this.domainId, this.logTag,
+          `Error occurred. errCode is ${error.code}, errMessage is ${error.message}`);
+      }
+      return;
+    }
+    try {
+      this.webViewController.loadData(this.content, 'text/html', 'UTF-8', '', '');
+    } catch (error) {
+      hilog.error(this.domainId, this.logTag,
+        `Error occurred. errCode is ${error.code}, errMessage is ${error.message}`);
+    }
+  }
+
+  @Computed
+  get getDefaultFontSize() {
+    if (this.fontModel.followSystem) {
+      return 16;
+    }
+    return 16 * this.fontModel.fontSizeRatio;
+  }
+
+  @Computed
+  get getTextZoomRatio() {
+    if (this.fontModel.followSystem) {
+      return 100 * this.fontModel.sysFontSizeScale;
+    }
+    return 100;
+  }
+
+  isUrl(content: string) {
+    return content.startsWith('http://') || content.startsWith('https://');
+  }
+}

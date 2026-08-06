@@ -1,0 +1,13 @@
+{
+  "module": {
+    "name": "homepage",
+    "type": "shared",
+    "description": "$string:shared_desc",
+    "deviceTypes": [
+      "phone",
+      "tablet"
+    ],
+    "deliveryWithInstall": true,
+    "installationFree": true
+  }
+}
