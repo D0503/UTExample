@@ -1,0 +1,46 @@
+﻿{
+    "case_id":  "case-aggregated-login-example",
+    "mode":  "from_directories",
+    "source_base_commit":  null,
+    "source_answer_commit":  null,
+    "removal_commits":  [
+
+                        ],
+    "golden_commits":  [
+
+                       ],
+    "test_commits":  [
+
+                     ],
+    "generated_base_commit":  "d466cc42b7332f5e58d03573ca3d63484838d84f",
+    "generated_answer_commit":  "947a8587a720d68ad70002eb0d5c8016fc4da7f7",
+    "generated_test_commit":  "e1ac044ff3e1fad2cab5b252c60fc3388bf29ae6",
+    "golden_patch":  "golden_patch.patch",
+    "test_patch":  "test_patch.patch",
+    "base_project":  "base",
+    "fail_to_pass":  [
+                         "should_limit_primary_controls_to_448vp_on_md",
+                         "should_limit_primary_agree_privacy_box_to_448vp_on_md",
+                         "should_limit_phone_input_to_448vp_on_md",
+                         "should_limit_verify_input_to_448vp_on_md",
+                         "should_limit_login_button_to_448vp_on_md",
+                         "should_limit_other_agree_privacy_box_to_448vp_on_md",
+                         "should_reach_all_primary_page_controls_by_scroll_on_pura_x_outer",
+                         "should_reach_up_other_page_controls_by_scroll_on_pura_x_outer",
+                         "should_reach_down_other_page_controls_by_scroll_on_pura_x_outer",
+                         "should_scroll_back_to_page_top_on_pura_x_outer",
+                         "should_reach_all_primary_sheet_controls_by_scroll_on_pura_x_outer",
+                         "should_reach_up_other_sheet_controls_by_scroll_on_pura_x_outer",
+                         "should_reach_down_other_sheet_controls_by_scroll_on_pura_x_outer",
+                         "should_scroll_back_to_sheet_top_on_pura_x_outer"
+                     ],
+    "pass_to_pass":  [
+                         "should_show_page_and_sheet_entries",
+                         "should_keep_sm_page_inside_16vp_margins",
+                         "should_keep_sm_sheet_inside_bounds",
+                         "should_show_all_primary_page_controls_without_scroll_on_existing_devices",
+                         "should_show_all_other_page_controls_without_scroll_on_existing_devices",
+                         "should_show_all_primary_sheet_controls_without_scroll_on_existing_devices",
+                         "should_show_all_other_sheet_controls_without_scroll_on_existing_devices"
+                     ]
+}

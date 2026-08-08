@@ -1,0 +1,1469 @@
+diff --git a/.gitignore b/.gitignore
+index bc84d41..dec2d11 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,4 +1,4 @@
+-﻿/node_modules
++/node_modules
+ /oh_modules
+ /local.properties
+ /.preview
+@@ -10,5 +10,3 @@
+ /.test
+ oh-package-lock.json5
+ BuildProfile.ets
+-*.hap
+-*.har
+diff --git a/component/aggregated_login/src/main/ets/common/Constant.ets b/component/aggregated_login/src/main/ets/common/Constant.ets
+index 42463b8..f33261c 100644
+--- a/component/aggregated_login/src/main/ets/common/Constant.ets
++++ b/component/aggregated_login/src/main/ets/common/Constant.ets
+@@ -4,6 +4,7 @@ export class Constants {
+   public static readonly BACK_BACKGROUND_WIDTH: number = 40;
+   public static readonly BACK_BACKGROUND_HEIGHT: number = 40;
+   public static readonly BTN_HEIGHT: number = 40;
++  public static readonly MAX_WIDTH: number = 448;
+   public static readonly SHEET_TITLE_H: number = 56;
+   public static readonly ICON_WIDTH: number = 72;
+   public static readonly ICON_HEIGHT: number = 72;
+@@ -50,3 +51,4 @@ export enum LoginErrorCode {
+   ERROR_CODE_NOT_REQUIRED_SCOPE_OR_PERMISSION = 1001502014
+ }
+ 
++
+diff --git a/component/aggregated_login/src/main/ets/components/AggregatedLogin.ets b/component/aggregated_login/src/main/ets/components/AggregatedLogin.ets
+index 054548c..113118e 100644
+--- a/component/aggregated_login/src/main/ets/components/AggregatedLogin.ets
++++ b/component/aggregated_login/src/main/ets/components/AggregatedLogin.ets
+@@ -54,95 +54,101 @@ export struct AggregatedLogin {
+   @Builder
+   coreInfo() {
+     Column() {
+-      Column() {
+-        if (this.isSheet) {
+-          Column().height(Constants.SHEET_TITLE_H)
+-        } else {
+-          Column()
+-            .layoutWeight(1)
+-            .constraintSize({
+-              minHeight: Constants.MIN_HEIGHT_8
+-            })
+-        }
+-
+-        Image(this.icon)
+-          .width(Constants.ICON_WIDTH)
+-          .height(Constants.ICON_HEIGHT)
+-
++      Scroll() {
+         Column() {
+-          Text(this.vm.anonymousPhone)
+-            .fontSize($r('sys.float.Title_L'))
+-            .fontColor($r('sys.color.font_primary'))
+-            .fontWeight(FontWeight.Bold)
+-            .height(Constants.BTN_HEIGHT)
+-            .textAlign(TextAlign.Center)
+-            .maxLines(Constants.FONT_LINES);
++          if (this.isSheet) {
++            Column().height(Constants.SHEET_TITLE_H)
++          } else {
++            Column()
++              .layoutWeight(1)
++              .constraintSize({
++                minHeight: Constants.MIN_HEIGHT_8
++              })
++          }
+ 
+-          Text('华为账号绑定号码')
+-            .fontSize($r('sys.float.Body_S'))
+-            .fontColor($r('sys.color.font_secondary'))
+-            .fontWeight(FontWeight.Medium)
+-            .textAlign(TextAlign.Center)
+-            .maxLines(Constants.FONT_LINES)
+-            .margin({
+-              top: Constants.PADDING_S,
+-            });
+-        }
+-        .margin({
+-          top: Constants.CONTENT_MARGIN_TOP,
+-        });
++          Image(this.icon)
++            .width(Constants.ICON_WIDTH)
++            .height(Constants.ICON_HEIGHT)
+ 
+-        Column() {
+-          LoginWithHuaweiIDButton({
+-            params: {
+-              style: loginComponentManager.Style.BUTTON_CUSTOM,
+-              extraStyle: {
+-                buttonStyle: new loginComponentManager.ButtonStyle().loadingStyle({
+-                  show: true,
+-                }),
+-              },
+-              loginType: loginComponentManager.LoginType.QUICK_LOGIN,
+-              supportDarkMode: true,
+-              customButtonParams: {
+-                fontColor: loginComponentManager.FontColor.WHITE,
+-                backgroundColor: this.themeColor,
+-              },
+-            },
+-            controller: this.vm.controller,
++          Column() {
++            Text(this.vm.anonymousPhone)
++              .fontSize($r('sys.float.Title_L'))
++              .fontColor($r('sys.color.font_primary'))
++              .fontWeight(FontWeight.Bold)
++              .height(Constants.BTN_HEIGHT)
++              .textAlign(TextAlign.Center)
++              .maxLines(Constants.FONT_LINES);
++
++            Text('华为账号绑定号码')
++              .fontSize($r('sys.float.Body_S'))
++              .fontColor($r('sys.color.font_secondary'))
++              .fontWeight(FontWeight.Medium)
++              .textAlign(TextAlign.Center)
++              .maxLines(Constants.FONT_LINES)
++              .margin({
++                top: Constants.PADDING_S,
++              });
++          }
++          .margin({
++            top: Constants.CONTENT_MARGIN_TOP,
+           });
+-        }
+-        .height(Constants.BTN_HEIGHT)
+-        .width(Constants.FULL_PERCENT)
+-        .margin({
+-          top: Constants.SHEET_TITLE_H,
+-        });
+ 
+-        Button($r('app.string.login_in_other'))
+-          .width(Constants.FULL_PERCENT)
++          Column() {
++            LoginWithHuaweiIDButton({
++              params: {
++                style: loginComponentManager.Style.BUTTON_CUSTOM,
++                extraStyle: {
++                  buttonStyle: new loginComponentManager.ButtonStyle().loadingStyle({
++                    show: true,
++                  }),
++                },
++                loginType: loginComponentManager.LoginType.QUICK_LOGIN,
++                supportDarkMode: true,
++                customButtonParams: {
++                  fontColor: loginComponentManager.FontColor.WHITE,
++                  backgroundColor: this.themeColor,
++                },
++              },
++              controller: this.vm.controller,
++            });
++          }
+           .height(Constants.BTN_HEIGHT)
+-          .fontSize($r('sys.float.Body_L'))
+-          .fontColor($r('sys.color.font_primary'))
+-          .fontWeight(FontWeight.Medium)
+-          .backgroundColor($r('sys.color.comp_background_tertiary'))
++          .width(Constants.FULL_PERCENT)
++          .constraintSize({ maxWidth: Constants.MAX_WIDTH })
+           .margin({
+-            top: Constants.PADDING_M,
+-          })
+-          .onClick(() => {
+-            this.vm.resetParam()
+-            this.vm.phoneLogin(this.routerModule, {
+-              privacyContent: this.privacyContent,
+-              themeColor: this.themeColor,
+-              isSheet: this.isSheet,
+-              icon: this.icon,
+-              loginTypes: this.loginTypes,
+-              isPersistence: this.isPersistence,
+-            });
+-          })
++            top: Constants.SHEET_TITLE_H,
++          });
+ 
+-        Column().layoutWeight(3)
+-          .constraintSize({ minHeight: Constants.MIN_HEIGHT_12 })
++          Button($r('app.string.login_in_other'))
++            .width(Constants.FULL_PERCENT)
++            .height(Constants.BTN_HEIGHT)
++            .constraintSize({ maxWidth: Constants.MAX_WIDTH })
++            .fontSize($r('sys.float.Body_L'))
++            .fontColor($r('sys.color.font_primary'))
++            .fontWeight(FontWeight.Medium)
++            .backgroundColor($r('sys.color.comp_background_tertiary'))
++            .margin({
++              top: Constants.PADDING_M,
++            })
++            .onClick(() => {
++              this.vm.resetParam()
++              this.vm.phoneLogin(this.routerModule, {
++                privacyContent: this.privacyContent,
++                themeColor: this.themeColor,
++                isSheet: this.isSheet,
++                icon: this.icon,
++                loginTypes: this.loginTypes,
++                isPersistence: this.isPersistence,
++              });
++            })
++
++          Column().layoutWeight(3)
++            .constraintSize({ minHeight: Constants.MIN_HEIGHT_12 })
++        }
+       }
+       .layoutWeight(1)
++      .align(Alignment.Top)
++      .scrollBar(BarState.Off)
+ 
+       AgreePrivacyBox({
+         themeColor: this.themeColor,
+@@ -154,13 +160,15 @@ export struct AggregatedLogin {
+           top: Constants.PADDING_M,
+           bottom: Constants.PADDING_M,
+         })
++        .constraintSize({ maxWidth: Constants.MAX_WIDTH })
+         .height(Constants.SHEET_TITLE_H)
+         .width(Constants.FULL_PERCENT)
+     }
+     .alignItems(HorizontalAlign.Center)
+     .backgroundColor($r('sys.color.background_secondary'))
+     .padding({
+-      left: Constants.PADDING_L, right: Constants.PADDING_L
++      left: Constants.PADDING_L, right: Constants.PADDING_L,
++      bottom: this.isSheet ? Constants.WINDOW_BOTTOM_PADDING : Constants.ZERO
+     })
+     .layoutWeight(1)
+   }
+diff --git a/component/aggregated_login/src/main/ets/components/OtherLoginPage.ets b/component/aggregated_login/src/main/ets/components/OtherLoginPage.ets
+index 739173e..e1cd2b9 100644
+--- a/component/aggregated_login/src/main/ets/components/OtherLoginPage.ets
++++ b/component/aggregated_login/src/main/ets/components/OtherLoginPage.ets
+@@ -25,61 +25,46 @@ export struct OtherLoginPage {
+   @Builder
+   coreInfo() {
+     Column() {
+-      Column() {
+-        if (this.pageParam.isSheet) {
+-          Column().height(Constants.SHEET_TITLE_H)
+-        } else {
+-          Column()
+-            .layoutWeight(1)
+-            .constraintSize({
+-              minHeight: Constants.MIN_HEIGHT_8
+-            })
+-        }
++      Scroll() {
++        Column() {
++          if (this.pageParam.isSheet) {
++            Column().height(Constants.SHEET_TITLE_H)
++          } else {
++            Column()
++              .layoutWeight(1)
++              .constraintSize({
++                minHeight: Constants.MIN_HEIGHT_8
++              })
++          }
+ 
+-        Image(this.pageParam.icon)
+-          .width(Constants.ICON_WIDTH)
+-          .height(Constants.ICON_HEIGHT)
+-          .draggable(false)
+-          .copyOption(CopyOptions.None)
++          Image(this.pageParam.icon)
++            .width(Constants.ICON_WIDTH)
++            .height(Constants.ICON_HEIGHT)
++            .draggable(false)
++            .copyOption(CopyOptions.None)
+ 
+-        TextInput({
+-          placeholder: $r('app.string.mobile_number'),
+-          text: this.pageParam.isPersistence ? this.vm.persistenceData.phoneNumber : this.vm.phoneNum
+-        })
+-          .id('phone-input')
+-          .width(Constants.FULL_PERCENT)
+-          .height(Constants.INPUT_HEIGHT)
+-          .fontSize($r('sys.float.Body_L'))
+-          .fontColor($r('sys.color.font_primary'))
+-          .borderRadius($r('app.float.radius_20'))
+-          .backgroundColor($r('sys.color.background_primary'))
+-          .placeholderColor($r('sys.color.font_secondary'))
+-          .placeholderFont({ size: $r('sys.float.Body_L') })
+-          .onChange((value) => {
+-            if (this.pageParam.isPersistence) {
+-              this.vm.persistenceData.phoneNumber = value
+-            } else {
+-              this.vm.phoneNum = value
+-            }
+-          })
+-          .margin({ top: Constants.CONTENT_MARGIN_TOP })
+-          .padding({
+-            top: Constants.PADDING_INPUT,
+-            bottom: Constants.PADDING_INPUT,
+-            left: Constants.PADDING_L,
+-            right: Constants.PADDING_L
++          TextInput({
++            placeholder: $r('app.string.mobile_number'),
++            text: this.pageParam.isPersistence ? this.vm.persistenceData.phoneNumber : this.vm.phoneNum
+           })
+-
+-        Stack({ alignContent: Alignment.End }) {
+-          TextInput({ text: $$this.vm.verifyCode, placeholder: $r('app.string.verification_code') })
+-            .layoutWeight(1)
++            .id('phone-input')
++            .width(Constants.FULL_PERCENT)
++            .height(Constants.INPUT_HEIGHT)
++            .constraintSize({ maxWidth: Constants.MAX_WIDTH })
+             .fontSize($r('sys.float.Body_L'))
+             .fontColor($r('sys.color.font_primary'))
+-            .backgroundColor(Color.Transparent)
++            .borderRadius($r('app.float.radius_20'))
++            .backgroundColor($r('sys.color.background_primary'))
+             .placeholderColor($r('sys.color.font_secondary'))
+             .placeholderFont({ size: $r('sys.float.Body_L') })
+-            .onChange((value) => this.vm.verifyCode = value)
+-            .textAlign(TextAlign.Start)
++            .onChange((value) => {
++              if (this.pageParam.isPersistence) {
++                this.vm.persistenceData.phoneNumber = value
++              } else {
++                this.vm.phoneNum = value
++              }
++            })
++            .margin({ top: Constants.CONTENT_MARGIN_TOP })
+             .padding({
+               top: Constants.PADDING_INPUT,
+               bottom: Constants.PADDING_INPUT,
+@@ -87,105 +72,127 @@ export struct OtherLoginPage {
+               right: Constants.PADDING_L
+             })
+ 
+-          if (this.vm.verifyCodeTime === 0) {
+-            Text($r('app.string.obtaining_verification_code'))
+-              .fontColor($r('sys.color.warning'))
++          Stack({ alignContent: Alignment.End }) {
++            TextInput({ text: $$this.vm.verifyCode, placeholder: $r('app.string.verification_code') })
++              .layoutWeight(1)
+               .fontSize($r('sys.float.Body_L'))
+-              .textAlign(TextAlign.End)
+-              .padding({ right: Constants.PADDING_L })
+-              .onClick(() => {
+-                this.vm.getVerifyCode()
+-              });
+-          } else {
+-            Row() {
+-              Text(`${this.vm.verifyCodeTime}`)
+-                .fontColor($r('sys.color.warning'))
+-                .fontSize($r('sys.float.Body_L'))
+-              Text($r('app.string.obtain_in_seconds'))
++              .fontColor($r('sys.color.font_primary'))
++              .backgroundColor(Color.Transparent)
++              .placeholderColor($r('sys.color.font_secondary'))
++              .placeholderFont({ size: $r('sys.float.Body_L') })
++              .onChange((value) => this.vm.verifyCode = value)
++              .textAlign(TextAlign.Start)
++              .padding({
++                top: Constants.PADDING_INPUT,
++                bottom: Constants.PADDING_INPUT,
++                left: Constants.PADDING_L,
++                right: Constants.PADDING_L
++              })
++
++            if (this.vm.verifyCodeTime === 0) {
++              Text($r('app.string.obtaining_verification_code'))
+                 .fontColor($r('sys.color.warning'))
+                 .fontSize($r('sys.float.Body_L'))
++                .textAlign(TextAlign.End)
++                .padding({ right: Constants.PADDING_L })
++                .onClick(() => {
++                  this.vm.getVerifyCode()
++                });
++            } else {
++              Row() {
++                Text(`${this.vm.verifyCodeTime}`)
++                  .fontColor($r('sys.color.warning'))
++                  .fontSize($r('sys.float.Body_L'))
++                Text($r('app.string.obtain_in_seconds'))
++                  .fontColor($r('sys.color.warning'))
++                  .fontSize($r('sys.float.Body_L'))
++              }
++              .padding({ right: Constants.PADDING_L })
+             }
+-            .padding({ right: Constants.PADDING_L })
+           }
+-        }
+-        .id('verify-code-input')
+-        .width(Constants.FULL_PERCENT)
+-        .height(Constants.INPUT_HEIGHT)
+-        .backgroundColor($r('sys.color.background_primary'))
+-        .borderRadius($r('app.float.radius_20'))
+-        .margin({
+-          top: Constants.PADDING_M,
+-        })
+-
+-        Button() {
+-          Row({ space: Constants.SPACE_S }) {
+-            LoadingProgress()
+-              .width(Constants.BACK_WIDTH)
+-              .aspectRatio(1)
+-              .color($r('sys.color.icon_on_primary'))
+-              .visibility(this.vm.isLoading ? Visibility.Visible : Visibility.None)
+-            Text($r('app.string.login'))
+-              .fontSize($r('sys.float.Body_L'))
+-              .fontColor($r('sys.color.font_on_primary'))
+-              .fontWeight(FontWeight.Medium)
+-          }
+-        }
+-        .id('verify-login-button')
+-        .width(Constants.FULL_PERCENT)
+-        .height(Constants.BTN_HEIGHT)
+-        .backgroundColor(this.pageParam.themeColor)
+-        .fontColor($r('sys.color.font_on_primary'))
+-        .margin({ top: Constants.LOGIN_MARGIN_TOP })
+-        .enabled(!this.vm.isLoading)
+-        .onClick(() => {
+-          this.vm.clickLogInButton()
+-        })
++          .id('verify-code-input')
++          .width(Constants.FULL_PERCENT)
++          .height(Constants.INPUT_HEIGHT)
++          .constraintSize({ maxWidth: Constants.MAX_WIDTH })
++          .backgroundColor($r('sys.color.background_primary'))
++          .borderRadius($r('app.float.radius_20'))
++          .margin({
++            top: Constants.PADDING_M,
++          })
+ 
+-        Text($r('app.string.login_in_other'))
+-          .height(Constants.TEXT_HEIGHT)
+-          .fontSize($r('app.float.fontsize_12'))
+-          .fontColor($r('sys.color.font_tertiary'))
+-          .margin({ top: Constants.BTN_HEIGHT })
+-
+-        Row({ space: Constants.ROW_SPACE }) {
+-          Column({ space: Constants.PADDING_S }) {
+-            Image($r('app.media.huawei_count'))
+-              .width(Constants.IMAGE_WIDTH)
+-              .height(Constants.IMAGE_HEIGHT)
+-              .objectFit(ImageFit.Cover);
+-            Text($r('app.string.quickly_login'))
+-              .fontSize($r('app.float.fontsize_10'))
+-              .fontColor($r('sys.color.font_tertiary'))
++          Button() {
++            Row({ space: Constants.SPACE_S }) {
++              LoadingProgress()
++                .width(Constants.BACK_WIDTH)
++                .aspectRatio(1)
++                .color($r('sys.color.icon_on_primary'))
++                .visibility(this.vm.isLoading ? Visibility.Visible : Visibility.None)
++              Text($r('app.string.login'))
++                .fontSize($r('sys.float.Body_L'))
++                .fontColor($r('sys.color.font_on_primary'))
++                .fontWeight(FontWeight.Medium)
++            }
+           }
+-          .width(Constants.COMB_WIDTH)
++          .id('verify-login-button')
++          .width(Constants.FULL_PERCENT)
++          .height(Constants.BTN_HEIGHT)
++          .constraintSize({ maxWidth: Constants.MAX_WIDTH })
++          .backgroundColor(this.pageParam.themeColor)
++          .fontColor($r('sys.color.font_on_primary'))
++          .margin({ top: Constants.LOGIN_MARGIN_TOP })
++          .enabled(!this.vm.isLoading)
+           .onClick(() => {
+-            this.routerModule.pop();
++            this.vm.clickLogInButton()
+           })
+ 
+-          ForEach(this.pageParam.loginTypes, (item: Channel) => {
++          Text($r('app.string.login_in_other'))
++            .height(Constants.TEXT_HEIGHT)
++            .fontSize($r('app.float.fontsize_12'))
++            .fontColor($r('sys.color.font_tertiary'))
++            .margin({ top: Constants.BTN_HEIGHT })
++
++          Row({ space: Constants.ROW_SPACE }) {
+             Column({ space: Constants.PADDING_S }) {
+-              Image(item.icon)
++              Image($r('app.media.huawei_count'))
+                 .width(Constants.IMAGE_WIDTH)
+                 .height(Constants.IMAGE_HEIGHT)
+                 .objectFit(ImageFit.Cover);
+-              Text(item.name)
++              Text($r('app.string.quickly_login'))
+                 .fontSize($r('app.float.fontsize_10'))
+                 .fontColor($r('sys.color.font_tertiary'))
+             }
+             .width(Constants.COMB_WIDTH)
+             .onClick(() => {
+-              if (item.type === LoginType.WECHAT) {
+-                this.vm.wechatLogin(item.extraInfo);
+-              }
++              this.routerModule.pop();
+             })
+-          }, (item: Channel) => item.name)
+-        }
+-        .margin({ top: Constants.PADDING_M })
+ 
+-        Column().layoutWeight(3)
+-	  .constraintSize({ minHeight: Constants.MIN_HEIGHT_12 })
++            ForEach(this.pageParam.loginTypes, (item: Channel) => {
++              Column({ space: Constants.PADDING_S }) {
++                Image(item.icon)
++                  .width(Constants.IMAGE_WIDTH)
++                  .height(Constants.IMAGE_HEIGHT)
++                  .objectFit(ImageFit.Cover);
++                Text(item.name)
++                  .fontSize($r('app.float.fontsize_10'))
++                  .fontColor($r('sys.color.font_tertiary'))
++              }
++              .width(Constants.COMB_WIDTH)
++              .onClick(() => {
++                if (item.type === LoginType.WECHAT) {
++                  this.vm.wechatLogin(item.extraInfo);
++                }
++              })
++            }, (item: Channel) => item.name)
++          }
++          .margin({ top: Constants.PADDING_M })
++
++          Column().layoutWeight(3)
++            .constraintSize({ minHeight: Constants.MIN_HEIGHT_12 })
++        }
+       }
+       .layoutWeight(1)
++      .align(Alignment.Top)
++      .scrollBar(BarState.Off)
+ 
+       AgreePrivacyBox({
+         themeColor: this.pageParam.themeColor,
+@@ -193,6 +200,7 @@ export struct OtherLoginPage {
+         routerModule: this.routerModule,
+         isSheet: this.pageParam.isSheet,
+       })
++        .constraintSize({ maxWidth: Constants.MAX_WIDTH })
+         .height(Constants.SHEET_TITLE_H)
+         .width(Constants.FULL_PERCENT)
+         .padding({
+diff --git a/component/aggregated_login/src/main/ets/utils/LoginSheetUtils.ets b/component/aggregated_login/src/main/ets/utils/LoginSheetUtils.ets
+index 7c2a183..712b319 100644
+--- a/component/aggregated_login/src/main/ets/utils/LoginSheetUtils.ets
++++ b/component/aggregated_login/src/main/ets/utils/LoginSheetUtils.ets
+@@ -67,4 +67,4 @@ export class LoginSheetUtils {
+   static close() {
+     PopViewUtils.closeSheet()
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/component/aggregated_login/src/main/ets/views/AggregatedLoginPage.ets b/component/aggregated_login/src/main/ets/views/AggregatedLoginPage.ets
+index 0b7425d..833425b 100644
+--- a/component/aggregated_login/src/main/ets/views/AggregatedLoginPage.ets
++++ b/component/aggregated_login/src/main/ets/views/AggregatedLoginPage.ets
+@@ -42,4 +42,4 @@ struct AggregatedLoginPage {
+ @Builder
+ export function AggregatedLoginPageBuilder() {
+   AggregatedLoginPage()
+-}
++}
+\ No newline at end of file
+diff --git a/component/aggregated_login/src/main/ets/views/ProtocolWebView.ets b/component/aggregated_login/src/main/ets/views/ProtocolWebView.ets
+index 6dbb337..efded18 100644
+--- a/component/aggregated_login/src/main/ets/views/ProtocolWebView.ets
++++ b/component/aggregated_login/src/main/ets/views/ProtocolWebView.ets
+@@ -44,7 +44,12 @@ struct ProtocolWebView {
+           bottom: Constants.SPACE_S,
+         })
+ 
+-        this.coreInfo()
++        Scroll() {
++          this.coreInfo()
++        }
++        .layoutWeight(1)
++        .align(Alignment.Top)
++        .scrollBar(BarState.Off)
+       }
+       .padding({
+         left: Constants.PADDING_L,
+diff --git a/component/aggregated_login/src/main/module.json5 b/component/aggregated_login/src/main/module.json5
+index 88f1ac8..99e33a1 100644
+--- a/component/aggregated_login/src/main/module.json5
++++ b/component/aggregated_login/src/main/module.json5
+@@ -16,4 +16,4 @@
+       }
+     ]
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/entry/src/ohosTest/ets/test/00_common_pass_to_pass/AllBreakpointPassToPass.test.ets b/entry/src/ohosTest/ets/test/00_common_pass_to_pass/AllBreakpointPassToPass.test.ets
+new file mode 100644
+index 0000000..c4ddfa6
+--- /dev/null
++++ b/entry/src/ohosTest/ets/test/00_common_pass_to_pass/AllBreakpointPassToPass.test.ets
+@@ -0,0 +1,26 @@
++import { afterAll, beforeAll, describe, it, Level } from '@ohos/hypium';
++import { Driver } from '@kit.TestKit';
++import { expectTextVisible, startAbility } from '../common/TestHelper';
++import { ENTRY_PAGE_TEXT, ENTRY_SHEET_TEXT } from '../common/LoginActionHelper';
++
++// 套件说明：保护所有断点下两个登录入口均可被用户发现。
++export default function allBreakpointPassToPassTest(): void {
++  describe('AllBreakpointPassToPassTest', () => {
++    let driver: Driver;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      await startAbility(driver);
++    })
++
++    afterAll(async () => {
++      await driver.delayMs(500);
++    })
++
++    // 用例说明：验证首页同时提供 Page 和 Sheet 两个文字入口。
++    it('should_show_page_and_sheet_entries', Level.LEVEL0, async () => {
++      await expectTextVisible(driver, ENTRY_PAGE_TEXT);
++      await expectTextVisible(driver, ENTRY_SHEET_TEXT);
++    })
++  })
++}
+diff --git a/entry/src/ohosTest/ets/test/01_width_layout/WidthMdLgXlFailToPass.test.ets b/entry/src/ohosTest/ets/test/01_width_layout/WidthMdLgXlFailToPass.test.ets
+new file mode 100644
+index 0000000..bd9115b
+--- /dev/null
++++ b/entry/src/ohosTest/ets/test/01_width_layout/WidthMdLgXlFailToPass.test.ets
+@@ -0,0 +1,78 @@
++import { afterAll, beforeAll, describe, it, Level } from '@ohos/hypium';
++import { Driver } from '@kit.TestKit';
++import { startAbility } from '../common/TestHelper';
++import { expectBreakpointIn } from '../common/DeviceHelper';
++import {
++  HW_LOGIN_TEXT,
++  openLoginPage,
++  openOtherLogin,
++  OTHER_LOGIN_TEXT,
++} from '../common/LoginActionHelper';
++import {
++  expectIdComponentLimitedAndCentered,
++  expectTextLimitedAndCentered,
++} from '../common/LoginScenarioHelper';
++
++const AGREE_PRIVACY_BOX_ID: string = 'agree-privacy-box';
++const PHONE_INPUT_ID: string = 'phone-input';
++const VERIFY_CODE_INPUT_ID: string = 'verify-code-input';
++const VERIFY_LOGIN_BUTTON_ID: string = 'verify-login-button';
++
++// 套件说明：验证 md 断点下登录控件限宽并居中。
++export default function widthMdLgXlFailToPassTest(): void {
++  describe('WidthMdLgXlFailToPassTest', () => {
++    let driver: Driver;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      await startAbility(driver);
++      await expectBreakpointIn(driver, ['md', 'lg', 'xl']);
++    })
++
++    afterAll(async () => {
++      await driver.delayMs(500);
++    })
++
++    // 用例说明：验证 md 华为登录主要控件不超过 448vp 且居中。
++    it('should_limit_primary_controls_to_448vp_on_md', Level.LEVEL1, async () => {
++      await openLoginPage(driver);
++      await expectTextLimitedAndCentered(driver, HW_LOGIN_TEXT);
++      await expectTextLimitedAndCentered(driver, OTHER_LOGIN_TEXT);
++    })
++
++    // 用例说明：验证 md 华为登录 AgreePrivacyBox 协议区域不超过 448vp 且居中。
++    it('should_limit_primary_agree_privacy_box_to_448vp_on_md', Level.LEVEL1, async () => {
++      await openLoginPage(driver);
++      await expectIdComponentLimitedAndCentered(driver, AGREE_PRIVACY_BOX_ID);
++    })
++
++    // 用例说明：验证 md 手机号输入框不超过 448vp 且居中。
++    it('should_limit_phone_input_to_448vp_on_md', Level.LEVEL1, async () => {
++      await openLoginPage(driver);
++      await openOtherLogin(driver);
++      await expectIdComponentLimitedAndCentered(driver, PHONE_INPUT_ID);
++    })
++
++    // 用例说明：验证 md 验证码输入框不超过 448vp 且居中。
++    it('should_limit_verify_input_to_448vp_on_md', Level.LEVEL1, async () => {
++      await openLoginPage(driver);
++      await openOtherLogin(driver);
++      await expectIdComponentLimitedAndCentered(driver, VERIFY_CODE_INPUT_ID);
++    })
++
++    // 用例说明：验证 md 验证码登录按钮不超过 448vp 且居中。
++    it('should_limit_login_button_to_448vp_on_md', Level.LEVEL1, async () => {
++      await openLoginPage(driver);
++      await openOtherLogin(driver);
++      await expectIdComponentLimitedAndCentered(driver, VERIFY_LOGIN_BUTTON_ID);
++    })
++
++
++    // 用例说明：验证 md 其他登录 AgreePrivacyBox 协议区域不超过 448vp 且居中。
++    it('should_limit_other_agree_privacy_box_to_448vp_on_md', Level.LEVEL1, async () => {
++      await openLoginPage(driver);
++      await openOtherLogin(driver);
++      await expectIdComponentLimitedAndCentered(driver, AGREE_PRIVACY_BOX_ID);
++    })
++  })
++}
+diff --git a/entry/src/ohosTest/ets/test/01_width_layout/WidthSmPassToPass.test.ets b/entry/src/ohosTest/ets/test/01_width_layout/WidthSmPassToPass.test.ets
+new file mode 100644
+index 0000000..afe4383
+--- /dev/null
++++ b/entry/src/ohosTest/ets/test/01_width_layout/WidthSmPassToPass.test.ets
+@@ -0,0 +1,39 @@
++import { afterAll, beforeAll, describe, it, Level } from '@ohos/hypium';
++import { Driver } from '@kit.TestKit';
++import { expectBreakpointIn, getWindowBounds } from '../common/DeviceHelper';
++import { expectHorizontalEdgeSpaceAtLeast, expectInBounds, expectLeftEdgeSpaceNear } from '../common/LayoutAssertHelper';
++import { openLoginPage, openLoginSheet, OTHER_LOGIN_TEXT } from '../common/LoginActionHelper';
++import { boundsOf, findByText, findFirstByType, startAbility } from '../common/TestHelper';
++
++// 套件说明：保护 sm 断点下 Page 和 Bottom Sheet 的基础宽度布局。
++export default function widthSmPassToPassTest(): void {
++  describe('WidthSmPassToPassTest', () => {
++    let driver: Driver;
++    beforeAll(async () => {
++      driver = Driver.create();
++      await startAbility(driver);
++      await expectBreakpointIn(driver, ['sm']);
++    })
++
++    afterAll(async () => {
++      await driver.delayMs(500);
++    })
++
++    // 用例说明：验证 sm Page 内容及协议勾选框保留约 16vp 左边距。
++    it('should_keep_sm_page_inside_16vp_margins', Level.LEVEL1, async () => {
++      await openLoginPage(driver);
++      const windowRect = await getWindowBounds(driver);
++      expectHorizontalEdgeSpaceAtLeast(windowRect,
++        await boundsOf(await findByText(driver, OTHER_LOGIN_TEXT)), 16);
++      expectLeftEdgeSpaceNear(windowRect,
++        await boundsOf(await findFirstByType(driver, 'Checkbox')), 16);
++    })
++
++    // 用例说明：验证 sm Sheet 内容完整位于窗口边界内。
++    it('should_keep_sm_sheet_inside_bounds', Level.LEVEL1, async () => {
++      await openLoginSheet(driver);
++      expectInBounds(await getWindowBounds(driver),
++        await boundsOf(await findByText(driver, OTHER_LOGIN_TEXT)));
++    })
++  })
++}
+diff --git a/entry/src/ohosTest/ets/test/02_page_height_scroll/AllDevicePagePassToPass.test.ets b/entry/src/ohosTest/ets/test/02_page_height_scroll/AllDevicePagePassToPass.test.ets
+new file mode 100644
+index 0000000..e9d3758
+--- /dev/null
++++ b/entry/src/ohosTest/ets/test/02_page_height_scroll/AllDevicePagePassToPass.test.ets
+@@ -0,0 +1,44 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { Driver } from '@kit.TestKit';
++import { isPuraXOuterHeight } from '../common/DeviceHelper';
++import {
++  expectOtherControlsVisibleWithoutScroll,
++  expectPrimaryControlsVisibleWithoutScroll,
++  prepareLogin
++} from '../common/LoginScenarioHelper';
++import { startAbility } from '../common/TestHelper';
++
++// 套件说明：保护除 Pura X 外屏外现有设备的 Page 关键控件首屏可见性。
++export default function allDevicePagePassToPassTest(): void {
++  describe('AllDevicePagePassToPassTest', () => {
++    let driver: Driver;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      await startAbility(driver);
++    })
++
++    afterAll(async () => {
++      await driver.delayMs(500);
++    })
++
++    // 用例说明：常规高度设备的华为登录 Page 无需滚动即可看到全部关键控件。
++    it('should_show_all_primary_page_controls_without_scroll_on_existing_devices', Level.LEVEL1, async () => {
++      if (await isPuraXOuterHeight(driver)) {
++        expect(false).assertTrue();
++      }
++      await prepareLogin(driver, false, false);
++      await expectPrimaryControlsVisibleWithoutScroll(driver);
++    })
++
++    // 用例说明：常规高度设备的其他登录 Page 无需滚动即可看到全部关键控件。
++    it('should_show_all_other_page_controls_without_scroll_on_existing_devices', Level.LEVEL1, async () => {
++      if (await isPuraXOuterHeight(driver)) {
++        expect(false).assertTrue();
++      }
++      await prepareLogin(driver, false, true);
++      await driver.delayMs(1000);
++      await expectOtherControlsVisibleWithoutScroll(driver);
++    })
++  })
++}
+diff --git a/entry/src/ohosTest/ets/test/02_page_height_scroll/PuraXOuterPageFailToPass.test.ets b/entry/src/ohosTest/ets/test/02_page_height_scroll/PuraXOuterPageFailToPass.test.ets
+new file mode 100644
+index 0000000..117592b
+--- /dev/null
++++ b/entry/src/ohosTest/ets/test/02_page_height_scroll/PuraXOuterPageFailToPass.test.ets
+@@ -0,0 +1,60 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { Driver } from '@kit.TestKit';
++import { isPuraXOuterHeight } from '../common/DeviceHelper';
++import { findAppIcon, openOtherLogin } from '../common/LoginActionHelper';
++import {
++  expectOtherDownControlsReachable,
++  expectOtherUpperControlsReachable,
++  expectPrimaryControlsReachable,
++  prepareLogin
++} from '../common/LoginScenarioHelper';
++import { getLoginScroll, scrollBackToTop, scrollUntilIdVisible } from '../common/ScrollAssertHelper';
++import { boundsOf, expectVisible, startAbility } from '../common/TestHelper';
++
++// 套件说明：验证 Pura X 外屏极低高度 Page 的内部滚动适配。
++export default function puraXOuterPageFailToPassTest(): void {
++  describe('PuraXOuterPageFailToPassTest', () => {
++    let driver: Driver;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      await startAbility(driver);
++      if (!(await isPuraXOuterHeight(driver))) {
++        expect(false).assertTrue();
++      }
++    })
++
++    afterAll(async () => {
++      await driver.delayMs(250);
++    })
++
++    // 用例说明：Pura X 外屏华为登录 Page 可滚动到全部关键控件。
++    it('should_reach_all_primary_page_controls_by_scroll_on_pura_x_outer', Level.LEVEL1, async () => {
++      await prepareLogin(driver, false, false);
++      await expectPrimaryControlsReachable(driver);
++    })
++
++    // 用例说明：Pura X 外屏其他登录 Page 可滚动到上半部分关键控件。
++    it('should_reach_up_other_page_controls_by_scroll_on_pura_x_outer', Level.LEVEL1, async () => {
++      await prepareLogin(driver, false, true, true);
++      await driver.delayMs(300);
++      await expectOtherUpperControlsReachable(driver);
++    })
++
++    // 用例说明：Pura X 外屏其他登录 Page 可滚动到下半部分关键控件。
++    it('should_reach_down_other_page_controls_by_scroll_on_pura_x_outer', Level.LEVEL1, async () => {
++      const scroll = await getLoginScroll(driver);
++      await scroll.scrollToBottom(1000);
++      await openOtherLogin(driver);
++      await expectOtherDownControlsReachable(driver);
++    })
++
++    // 用例说明：Pura X 外屏 Page 滚动到底后可以返回顶部。
++    it('should_scroll_back_to_page_top_on_pura_x_outer', Level.LEVEL1, async () => {
++      await prepareLogin(driver, false, false);
++      await scrollUntilIdVisible(driver, 'agree-privacy-box');
++      await scrollBackToTop(driver);
++      expectVisible(await boundsOf(await findAppIcon(driver)));
++    })
++  })
++}
+diff --git a/entry/src/ohosTest/ets/test/03_sheet_height_scroll/AllDeviceSheetPassToPass.test.ets b/entry/src/ohosTest/ets/test/03_sheet_height_scroll/AllDeviceSheetPassToPass.test.ets
+new file mode 100644
+index 0000000..18960de
+--- /dev/null
++++ b/entry/src/ohosTest/ets/test/03_sheet_height_scroll/AllDeviceSheetPassToPass.test.ets
+@@ -0,0 +1,44 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { Driver } from '@kit.TestKit';
++import { isPuraXOuterHeight } from '../common/DeviceHelper';
++import {
++  expectOtherControlsVisibleWithoutScroll,
++  expectPrimaryControlsVisibleWithoutScroll,
++  prepareLogin
++} from '../common/LoginScenarioHelper';
++import { startAbility } from '../common/TestHelper';
++
++// 套件说明：保护除 Pura X 外屏外现有设备的 Sheet 关键控件首屏可见性。
++export default function allDeviceSheetPassToPassTest(): void {
++  describe('AllDeviceSheetPassToPassTest', () => {
++    let driver: Driver;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      await startAbility(driver);
++    })
++
++    afterAll(async () => {
++      await driver.delayMs(500);
++    })
++
++    // 用例说明：常规高度设备的华为登录 Sheet 无需滚动即可看到全部关键控件。
++    it('should_show_all_primary_sheet_controls_without_scroll_on_existing_devices', Level.LEVEL1, async () => {
++      if (await isPuraXOuterHeight(driver)) {
++        expect(false).assertTrue();
++      }
++      await prepareLogin(driver, true, false);
++      await expectPrimaryControlsVisibleWithoutScroll(driver);
++    })
++
++    // 用例说明：常规高度设备的其他登录 Sheet 无需滚动即可看到全部关键控件。
++    it('should_show_all_other_sheet_controls_without_scroll_on_existing_devices', Level.LEVEL1, async () => {
++      if (await isPuraXOuterHeight(driver)) {
++        expect(false).assertTrue();
++      }
++      await prepareLogin(driver, true, true);
++      await driver.delayMs(1000);
++      await expectOtherControlsVisibleWithoutScroll(driver);
++    })
++  })
++}
+diff --git a/entry/src/ohosTest/ets/test/03_sheet_height_scroll/PuraXOuterSheetFailToPass.test.ets b/entry/src/ohosTest/ets/test/03_sheet_height_scroll/PuraXOuterSheetFailToPass.test.ets
+new file mode 100644
+index 0000000..928073d
+--- /dev/null
++++ b/entry/src/ohosTest/ets/test/03_sheet_height_scroll/PuraXOuterSheetFailToPass.test.ets
+@@ -0,0 +1,60 @@
++import { afterAll, beforeAll, describe, expect, it, Level } from '@ohos/hypium';
++import { Driver } from '@kit.TestKit';
++import { isPuraXOuterHeight } from '../common/DeviceHelper';
++import { findAppIcon, openOtherLogin } from '../common/LoginActionHelper';
++import {
++  expectOtherDownControlsReachable,
++  expectOtherUpperControlsReachable,
++  expectPrimaryControlsReachable,
++  prepareLogin
++} from '../common/LoginScenarioHelper';
++import { getLoginScroll, scrollBackToTop, scrollUntilIdVisible } from '../common/ScrollAssertHelper';
++import { boundsOf, expectVisible, startAbility } from '../common/TestHelper';
++
++// 套件说明：验证 Pura X 外屏极低高度 Bottom Sheet 的内部滚动适配。
++export default function puraXOuterSheetFailToPassTest(): void {
++  describe('PuraXOuterSheetFailToPassTest', () => {
++    let driver: Driver;
++
++    beforeAll(async () => {
++      driver = Driver.create();
++      await startAbility(driver);
++      if (!(await isPuraXOuterHeight(driver))) {
++        expect(false).assertTrue();
++      }
++    })
++
++    afterAll(async () => {
++      await driver.delayMs(250);
++    })
++
++    // 用例说明：Pura X 外屏华为登录 Bottom Sheet 可滚动到全部关键控件。
++    it('should_reach_all_primary_sheet_controls_by_scroll_on_pura_x_outer', Level.LEVEL1, async () => {
++      await prepareLogin(driver, true, false);
++      await expectPrimaryControlsReachable(driver);
++    })
++
++    // 用例说明：Pura X 外屏其他登录 Bottom Sheet 可滚动到上半部分关键控件。
++    it('should_reach_up_other_sheet_controls_by_scroll_on_pura_x_outer', Level.LEVEL1, async () => {
++      await prepareLogin(driver, true, true, true);
++      await driver.delayMs(300);
++      await expectOtherUpperControlsReachable(driver);
++    })
++
++    // 用例说明：Pura X 外屏其他登录 Bottom Sheet 可滚动到下半部分关键控件。
++    it('should_reach_down_other_sheet_controls_by_scroll_on_pura_x_outer', Level.LEVEL1, async () => {
++      const scroll = await getLoginScroll(driver);
++      await scroll.scrollToBottom(1000);
++      await openOtherLogin(driver);
++      await expectOtherDownControlsReachable(driver);
++    })
++
++    // 用例说明：Pura X 外屏 Bottom Sheet 滚动到底后可以返回顶部。
++    it('should_scroll_back_to_sheet_top_on_pura_x_outer', Level.LEVEL1, async () => {
++      await prepareLogin(driver, true, false);
++      await scrollUntilIdVisible(driver, 'agree-privacy-box');
++      await scrollBackToTop(driver);
++      expectVisible(await boundsOf(await findAppIcon(driver)));
++    })
++  })
++}
+diff --git a/entry/src/ohosTest/ets/test/List.test.ets b/entry/src/ohosTest/ets/test/List.test.ets
+new file mode 100644
+index 0000000..9a1aa34
+--- /dev/null
++++ b/entry/src/ohosTest/ets/test/List.test.ets
+@@ -0,0 +1,18 @@
++import allBreakpointPassToPassTest from './00_common_pass_to_pass/AllBreakpointPassToPass.test';
++import widthSmPassToPassTest from './01_width_layout/WidthSmPassToPass.test';
++import widthMdLgXlFailToPassTest from './01_width_layout/WidthMdLgXlFailToPass.test';
++import allDevicePagePassToPassTest from './02_page_height_scroll/AllDevicePagePassToPass.test';
++import puraXOuterPageFailToPassTest from './02_page_height_scroll/PuraXOuterPageFailToPass.test';
++import allDeviceSheetPassToPassTest from './03_sheet_height_scroll/AllDeviceSheetPassToPass.test';
++import puraXOuterSheetFailToPassTest from './03_sheet_height_scroll/PuraXOuterSheetFailToPass.test';
++
++// 方法说明：统一注册模板用例和全部登录一多适配测试套件。
++export default function testsuite() {
++  allBreakpointPassToPassTest();
++  widthSmPassToPassTest();
++  widthMdLgXlFailToPassTest();
++  allDevicePagePassToPassTest();
++  puraXOuterPageFailToPassTest();
++  allDeviceSheetPassToPassTest();
++  puraXOuterSheetFailToPassTest();
++}
+diff --git a/entry/src/ohosTest/ets/test/common/DeviceHelper.ets b/entry/src/ohosTest/ets/test/common/DeviceHelper.ets
+new file mode 100644
+index 0000000..feb34ad
+--- /dev/null
++++ b/entry/src/ohosTest/ets/test/common/DeviceHelper.ets
+@@ -0,0 +1,38 @@
++import { expect } from '@ohos/hypium';
++import { abilityDelegatorRegistry, Driver } from '@kit.TestKit';
++import { normalizeRect, Rect } from './TestHelper';
++
++// 方法说明：获取当前被测应用活动窗口的 bounds。
++export async function getWindowBounds(driver: Driver): Promise<Rect> {
++  const bundleName = abilityDelegatorRegistry.getArguments().bundleName;
++  const win = await driver.findWindow({ bundleName: bundleName, active: true });
++  return normalizeRect(await win.getBounds());
++}
++
++// 方法说明：根据窗口 vp 宽度计算 sm、md、lg 或 xl 断点。
++export function getBreakpointName(widthVp: number): string {
++  if (widthVp < 600) {
++    return 'sm';
++  }
++  if (widthVp < 840) {
++    return 'md';
++  }
++  if (widthVp < 1440) {
++    return 'lg';
++  }
++  return 'xl';
++}
++
++// 方法说明：断言当前窗口处于指定断点集合。
++export async function expectBreakpointIn(driver: Driver, expected: string[]): Promise<string> {
++  const windowRect = await getWindowBounds(driver);
++  const breakpoint = getBreakpointName(px2vp(windowRect.right - windowRect.left));
++  expect(expected.includes(breakpoint)).assertTrue();
++  return breakpoint;
++}
++
++// 方法说明：判断当前窗口是否为 Pura X 外屏一类高度不超过 400vp 的极低高度窗口。
++export async function isPuraXOuterHeight(driver: Driver): Promise<boolean> {
++  const windowRect = await getWindowBounds(driver);
++  return px2vp(windowRect.bottom - windowRect.top) <= 400;
++}
+diff --git a/entry/src/ohosTest/ets/test/common/LayoutAssertHelper.ets b/entry/src/ohosTest/ets/test/common/LayoutAssertHelper.ets
+new file mode 100644
+index 0000000..77c46a2
+--- /dev/null
++++ b/entry/src/ohosTest/ets/test/common/LayoutAssertHelper.ets
+@@ -0,0 +1,41 @@
++import { expect } from '@ohos/hypium';
++import { Rect, rectWidth } from './TestHelper';
++
++const TOLERANCE_VP: number = 4;
++
++// 方法说明：断言内容完整位于指定容器内。
++export function expectInBounds(container: Rect, content: Rect): void {
++  expect(content.left >= container.left).assertTrue();
++  expect(content.right <= container.right).assertTrue();
++  expect(content.top >= container.top).assertTrue();
++  expect(content.bottom <= container.bottom).assertTrue();
++}
++
++// 方法说明：断言内容宽度不超过指定 vp 上限。
++export function expectWidthAtMost(rect: Rect, expectedVp: number): void {
++  expect(px2vp(rectWidth(rect)) <= expectedVp + TOLERANCE_VP).assertTrue();
++}
++
++// 方法说明：断言内容与容器水平中心基本重合。
++export function expectCentered(container: Rect, content: Rect): void {
++  const containerCenter = (container.left + container.right) / 2;
++  const contentCenter = (content.left + content.right) / 2;
++  expect(Math.abs(px2vp(containerCenter - contentCenter)) <= TOLERANCE_VP).assertTrue();
++}
++
++// 方法说明：断言内容左右至少保留指定边距。
++export function expectHorizontalEdgeSpaceAtLeast(container: Rect, content: Rect, expectedVp: number): void {
++  expect(px2vp(content.left - container.left) >= expectedVp - TOLERANCE_VP).assertTrue();
++  expect(px2vp(container.right - content.right) >= expectedVp - TOLERANCE_VP).assertTrue();
++}
++
++// 方法说明：断言内容左边缘与容器左边缘至少保留指定边距。
++export function expectLeftEdgeSpaceNear(container: Rect, content: Rect, expectedVp: number): void {
++  const leftSpaceVp = px2vp(content.left - container.left);
++  expect(leftSpaceVp >= expectedVp - TOLERANCE_VP).assertTrue();
++}
++
++// 方法说明：断言第二个组件位于第一个组件下方。
++export function expectBelow(first: Rect, second: Rect): void {
++  expect(second.top >= first.bottom - vp2px(TOLERANCE_VP)).assertTrue();
++}
+diff --git a/entry/src/ohosTest/ets/test/common/LoginActionHelper.ets b/entry/src/ohosTest/ets/test/common/LoginActionHelper.ets
+new file mode 100644
+index 0000000..d1d5600
+--- /dev/null
++++ b/entry/src/ohosTest/ets/test/common/LoginActionHelper.ets
+@@ -0,0 +1,70 @@
++import { Component, Driver } from '@kit.TestKit';
++import { findByText, findFirstByType, findFirstText, tryFindByText } from './TestHelper';
++
++export const ENTRY_PAGE_TEXT: string = '打开 LoginPage';
++
++export const ENTRY_SHEET_TEXT: string = '打开 LoginSheet';
++
++export const PHONE_TEXT: string = '183******12';
++
++export const PHONE_BINDING_TEXT: string = '华为账号绑定号码';
++
++export const HW_LOGIN_TEXT: string = '华为账号一键登录';
++
++export const OTHER_LOGIN_TEXT: string = '其他方式登录';
++
++export const PHONE_INPUT_TEXT: string = '请输入账号';
++
++export const VERIFY_INPUT_TEXT: string = '短信验证码';
++
++export const LOGIN_TEXT: string = '登录';
++
++export const CHANNEL_TEXT: string = '微信';
++
++export const PRIVACY_TEXT: string = '《用户协议》';
++
++// 方法说明：连续返回直到登录示例首页出现。
++export async function returnToEntry(driver: Driver): Promise<void> {
++  for (let index = 0; index < 4; index++) {
++    if (await tryFindByText(driver, ENTRY_PAGE_TEXT) !== null) {
++      return;
++    }
++    await driver.pressBack();
++    await driver.delayMs(250);
++  }
++}
++
++// 方法说明：通过首页文字入口打开 LoginPage。
++export async function openLoginPage(driver: Driver): Promise<void> {
++  await returnToEntry(driver);
++  await (await findByText(driver, ENTRY_PAGE_TEXT)).click();
++  await driver.delayMs(500);
++}
++
++// 方法说明：通过首页文字入口打开 LoginSheet。
++export async function openLoginSheet(driver: Driver): Promise<void> {
++  await returnToEntry(driver);
++  await (await findByText(driver, ENTRY_SHEET_TEXT)).click();
++  await driver.delayMs(500);
++}
++
++// 方法说明：点击“其他方式登录”进入验证码登录形态。
++export async function openOtherLogin(driver: Driver): Promise<void> {
++  await (await findByText(driver, OTHER_LOGIN_TEXT)).click();
++  await driver.delayMs(250);
++}
++
++// 方法说明：使用匿名号码或绑定号码说明文字定位号码区域。
++export async function findAnonymousPhone(driver: Driver): Promise<Component> {
++  return findFirstText(driver, [PHONE_TEXT, PHONE_BINDING_TEXT]);
++}
++
++// 方法说明：按稳定 Image 类型定位登录应用图标。
++export async function findAppIcon(driver: Driver): Promise<Component> {
++  return findFirstByType(driver, 'Image');
++}
++
++// 方法说明：使用候选文字定位华为一键登录主按钮区域。
++export async function findPrimaryLoginButton(driver: Driver): Promise<Component> {
++  return findFirstText(driver, ['本机号码一键登录', '一键登录', PHONE_BINDING_TEXT]);
++}
+diff --git a/entry/src/ohosTest/ets/test/common/LoginScenarioHelper.ets b/entry/src/ohosTest/ets/test/common/LoginScenarioHelper.ets
+new file mode 100644
+index 0000000..fc6096b
+--- /dev/null
++++ b/entry/src/ohosTest/ets/test/common/LoginScenarioHelper.ets
+@@ -0,0 +1,95 @@
++import { Driver } from '@kit.TestKit';
++import { boundsOf, expectVisible, findById, findByText, findByTypeAndText } from './TestHelper';
++import { getWindowBounds } from './DeviceHelper';
++import { expectCentered, expectWidthAtMost } from './LayoutAssertHelper';
++import {
++  CHANNEL_TEXT,
++  findAnonymousPhone,
++  findAppIcon,
++  findPrimaryLoginButton,
++  openLoginPage,
++  openLoginSheet,
++  openOtherLogin,
++  OTHER_LOGIN_TEXT,
++  PRIVACY_TEXT
++} from './LoginActionHelper';
++import { getLoginScroll, scrollUntilIdVisible, scrollUntilTextVisible } from './ScrollAssertHelper';
++
++// 方法说明：按 Page/Sheet 和主登录/其他登录参数准备测试页面。
++export async function prepareLogin(driver: Driver, sheet: boolean, other: boolean, needScroll: boolean = false): Promise<void> {
++  if (sheet) {
++    await openLoginSheet(driver);
++  } else {
++    await openLoginPage(driver);
++  }
++  if (other) {
++    if (needScroll) {
++      const scroll = await getLoginScroll(driver);
++      await scroll.scrollToBottom(1000);
++      await driver.delayMs(250);
++    }
++    await openOtherLogin(driver);
++  }
++}
++
++// 方法说明：验证华为登录形态的全部关键控件可通过滚动到达。
++export async function expectPrimaryControlsReachable(driver: Driver): Promise<void> {
++  expectVisible(await boundsOf(await findAppIcon(driver)));
++  expectVisible(await boundsOf(await findAnonymousPhone(driver)));
++  await scrollUntilTextVisible(driver, OTHER_LOGIN_TEXT);
++  await scrollUntilIdVisible(driver, 'agree-privacy-box');
++}
++
++// 方法说明：验证其他登录形态的输入、按钮、渠道和协议均可达。
++export async function expectOtherUpperControlsReachable(driver: Driver): Promise<void> {
++  expectVisible(await boundsOf(await findAppIcon(driver)));
++  await scrollUntilIdVisible(driver, 'phone-input');
++}
++
++// 方法说明：验证其他登录形态的输入、按钮、渠道和协议均可达。
++export async function expectOtherDownControlsReachable(driver: Driver): Promise<void> {
++  await scrollUntilIdVisible(driver, 'verify-login-button');
++  expectVisible(await boundsOf(await findByText(driver, CHANNEL_TEXT)));
++  expectVisible(await boundsOf(await findById(driver, 'agree-privacy-box')));
++}
++
++// 方法说明：不执行滚动，验证华为登录形态的全部关键控件均在首屏可见。
++export async function expectPrimaryControlsVisibleWithoutScroll(driver: Driver): Promise<void> {
++  expectVisible(await boundsOf(await findAppIcon(driver)));
++  expectVisible(await boundsOf(await findAnonymousPhone(driver)));
++  expectVisible(await boundsOf(await findPrimaryLoginButton(driver)));
++  expectVisible(await boundsOf(await findByText(driver, OTHER_LOGIN_TEXT)));
++  expectVisible(await boundsOf(await findById(driver, 'agree-privacy-box')));
++}
++
++// 方法说明：不执行滚动，验证其他登录形态的全部关键控件均在首屏可见。
++export async function expectOtherControlsVisibleWithoutScroll(driver: Driver): Promise<void> {
++  expectVisible(await boundsOf(await findAppIcon(driver)));
++  expectVisible(await boundsOf(await findById(driver, 'phone-input')));
++  expectVisible(await boundsOf(await findById(driver, 'verify-code-input')));
++  expectVisible(await boundsOf(await findById(driver, 'verify-login-button')));
++  expectVisible(await boundsOf(await findByText(driver, CHANNEL_TEXT)));
++  expectVisible(await boundsOf(await findById(driver, 'agree-privacy-box')));
++}
++
++// 方法说明：按文字定位组件并验证 448vp 限宽和水平居中。
++export async function expectTextLimitedAndCentered(driver: Driver, text: string): Promise<void> {
++  const content = await boundsOf(await findByText(driver, text));
++  expectWidthAtMost(content, 448);
++  expectCentered(await getWindowBounds(driver), content);
++}
++
++// 方法说明：按组件类型和文字定位外层组件，并验证 448vp 限宽和水平居中。
++export async function expectTypedComponentLimitedAndCentered(driver: Driver, type: string,
++  text: string): Promise<void> {
++  const content = await boundsOf(await findByTypeAndText(driver, type, text));
++  expectWidthAtMost(content, 448);
++  expectCentered(await getWindowBounds(driver), content);
++}
++
++// 方法说明：按稳定 ID 定位外层组件，并验证 448vp 限宽和水平居中。
++export async function expectIdComponentLimitedAndCentered(driver: Driver, id: string): Promise<void> {
++  const content = await boundsOf(await findById(driver, id));
++  expectWidthAtMost(content, 448);
++  expectCentered(await getWindowBounds(driver), content);
++}
+diff --git a/entry/src/ohosTest/ets/test/common/ScrollAssertHelper.ets b/entry/src/ohosTest/ets/test/common/ScrollAssertHelper.ets
+new file mode 100644
+index 0000000..3f0f929
+--- /dev/null
++++ b/entry/src/ohosTest/ets/test/common/ScrollAssertHelper.ets
+@@ -0,0 +1,54 @@
++import { expect } from '@ohos/hypium';
++import { Component, Driver } from '@kit.TestKit';
++import { getWindowBounds } from './DeviceHelper';
++import { boundsOf, expectVisible, findById, findFirstByType, tryFindById, tryFindByText } from './TestHelper';
++
++// 方法说明：按稳定 Scroll 类型获取登录组件内部滚动容器。
++export async function getLoginScroll(driver: Driver): Promise<Component> {
++  await driver.delayMs(500);
++  return findFirstByType(driver, 'Scroll');
++}
++
++// 方法说明：必要时滚动到底部，并按文字确认目标控件可见。
++export async function scrollUntilTextVisible(driver: Driver, text: string): Promise<Component> {
++  let component = await tryFindByText(driver, text);
++  if (component !== null) {
++    const initial = await boundsOf(component);
++    if (initial.right > initial.left && initial.bottom > initial.top) {
++      return component;
++    }
++  }
++  const scroll = await getLoginScroll(driver);
++  await scroll.scrollToBottom(1000);
++  await driver.delayMs(250);
++  component = await tryFindByText(driver, text);
++  expect(component !== null).assertTrue();
++  const found = component as Component;
++  expectVisible(await boundsOf(found));
++  return found;
++}
++
++// 方法说明：滚动登录组件后按稳定 ID 查找目标组件并验证其完整可见。
++export async function scrollUntilIdVisible(driver: Driver, id: string): Promise<Component> {
++  let component = await tryFindById(driver, id);
++  if (component !== null) {
++    const initialBounds = await boundsOf(component);
++    const windowBounds = await getWindowBounds(driver);
++    if (initialBounds.top >= windowBounds.top && initialBounds.bottom <= windowBounds.bottom) {
++      expectVisible(initialBounds);
++      return component;
++    }
++  }
++  const scroll = await getLoginScroll(driver);
++  await scroll.scrollToBottom(1000);
++  component = await findById(driver, id);
++  expectVisible(await boundsOf(component));
++  return component;
++}
++
++// 方法说明：将登录组件内部滚动容器恢复到顶部。
++export async function scrollBackToTop(driver: Driver): Promise<void> {
++  const scroll = await getLoginScroll(driver);
++  await scroll.scrollToTop(500);
++  await driver.delayMs(250);
++}
+diff --git a/entry/src/ohosTest/ets/test/common/TestHelper.ets b/entry/src/ohosTest/ets/test/common/TestHelper.ets
+new file mode 100644
+index 0000000..a0535a8
+--- /dev/null
++++ b/entry/src/ohosTest/ets/test/common/TestHelper.ets
+@@ -0,0 +1,121 @@
++import { Want } from '@kit.AbilityKit';
++import { abilityDelegatorRegistry, Component, Driver, ON } from '@kit.TestKit';
++import { expect } from '@ohos/hypium';
++
++export interface Rect {
++  left: number;
++  top: number;
++  right: number;
++  bottom: number;
++}
++
++// 方法说明：启动被测 EntryAbility，并等待首页完成渲染。
++export async function startAbility(driver: Driver): Promise<void> {
++  const want: Want = {
++    bundleName: abilityDelegatorRegistry.getArguments().bundleName,
++    abilityName: 'EntryAbility',
++  };
++  await abilityDelegatorRegistry.getAbilityDelegator().startAbility(want);
++  await driver.delayMs(500);
++}
++
++// 方法说明：按完整可见文字查找组件，找不到时使断言失败。
++export async function findByText(driver: Driver, text: string): Promise<Component> {
++  const component = await driver.findComponent(ON.text(text));
++  expect(component !== null).assertTrue();
++  return component;
++}
++
++// 方法说明：按稳定组件 ID 查找无法通过独立文字节点定位的组件。
++export async function findById(driver: Driver, id: string): Promise<Component> {
++  const component = await driver.findComponent(ON.id(id));
++  expect(component !== null).assertTrue();
++  return component;
++}
++
++// 方法说明：尝试按稳定组件 ID 查找组件，组件不存在或当前不可定位时返回 null。
++export async function tryFindById(driver: Driver, id: string): Promise<Component | null> {
++  try {
++    return await driver.findComponent(ON.id(id));
++  } catch (error) {
++    return null;
++  }
++}
++
++// 方法说明：尝试按文字查找组件，组件不存在时返回 null。
++export async function tryFindByText(driver: Driver, text: string): Promise<Component | null> {
++  try {
++    return await driver.findComponent(ON.text(text));
++  } catch (error) {
++    return null;
++  }
++}
++
++// 方法说明：按候选文字顺序返回第一个可定位组件。
++export async function findFirstText(driver: Driver, texts: string[]): Promise<Component> {
++  for (const text of texts) {
++    const component = await tryFindByText(driver, text);
++    if (component !== null) {
++      return component;
++    }
++  }
++  expect(false).assertTrue();
++  return driver.findComponent(ON.text(texts[0]));
++}
++
++// 方法说明：按稳定组件类型返回当前页面的第一个匹配组件。
++export async function findFirstByType(driver: Driver, type: string): Promise<Component> {
++  const components = await driver.findComponents(ON.type(type));
++  expect(components.length).assertLarger(0);
++  return components[0];
++}
++
++// 方法说明：先按组件类型筛选，再根据组件文本返回精确匹配项。
++export async function findByTypeAndText(driver: Driver, type: string, text: string): Promise<Component> {
++  const components = await driver.findComponents(ON.type(type));
++  for (const component of components) {
++    if (await component.getText() === text) {
++      return component;
++    }
++  }
++  expect(false).assertTrue();
++  return driver.findComponent(ON.type(type));
++}
++
++// 方法说明：将 TestKit bounds 转换为统一矩形结构。
++export function normalizeRect(bounds: ESObject): Rect {
++  return {
++    left: bounds.left as number,
++    top: bounds.top as number,
++    right: bounds.right as number,
++    bottom: bounds.bottom as number,
++  };
++}
++
++// 方法说明：读取组件 bounds 并转换为统一矩形结构。
++export async function boundsOf(component: Component): Promise<Rect> {
++  return normalizeRect(await component.getBounds());
++}
++
++// 方法说明：计算矩形宽度。
++export function rectWidth(rect: Rect): number {
++  return rect.right - rect.left;
++}
++
++// 方法说明：计算矩形高度。
++export function rectHeight(rect: Rect): number {
++  return rect.bottom - rect.top;
++}
++
++// 方法说明：断言矩形具有有效宽高。
++export function expectVisible(rect: Rect): void {
++  expect(rectWidth(rect)).assertLarger(0);
++  expect(rectHeight(rect)).assertLarger(0);
++}
++
++// 方法说明：按文字查找组件并断言其可见。
++export async function expectTextVisible(driver: Driver, text: string): Promise<Rect> {
++  const rect = await boundsOf(await findByText(driver, text));
++  expectVisible(rect);
++  return rect;
++}

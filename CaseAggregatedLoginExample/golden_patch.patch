@@ -1,0 +1,597 @@
+diff --git a/.gitignore b/.gitignore
+index bc84d41..dec2d11 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,4 +1,4 @@
+-﻿/node_modules
++/node_modules
+ /oh_modules
+ /local.properties
+ /.preview
+@@ -10,5 +10,3 @@
+ /.test
+ oh-package-lock.json5
+ BuildProfile.ets
+-*.hap
+-*.har
+diff --git a/component/aggregated_login/src/main/ets/common/Constant.ets b/component/aggregated_login/src/main/ets/common/Constant.ets
+index 42463b8..f33261c 100644
+--- a/component/aggregated_login/src/main/ets/common/Constant.ets
++++ b/component/aggregated_login/src/main/ets/common/Constant.ets
+@@ -4,6 +4,7 @@ export class Constants {
+   public static readonly BACK_BACKGROUND_WIDTH: number = 40;
+   public static readonly BACK_BACKGROUND_HEIGHT: number = 40;
+   public static readonly BTN_HEIGHT: number = 40;
++  public static readonly MAX_WIDTH: number = 448;
+   public static readonly SHEET_TITLE_H: number = 56;
+   public static readonly ICON_WIDTH: number = 72;
+   public static readonly ICON_HEIGHT: number = 72;
+@@ -50,3 +51,4 @@ export enum LoginErrorCode {
+   ERROR_CODE_NOT_REQUIRED_SCOPE_OR_PERMISSION = 1001502014
+ }
+ 
++
+diff --git a/component/aggregated_login/src/main/ets/components/AggregatedLogin.ets b/component/aggregated_login/src/main/ets/components/AggregatedLogin.ets
+index 054548c..113118e 100644
+--- a/component/aggregated_login/src/main/ets/components/AggregatedLogin.ets
++++ b/component/aggregated_login/src/main/ets/components/AggregatedLogin.ets
+@@ -54,95 +54,101 @@ export struct AggregatedLogin {
+   @Builder
+   coreInfo() {
+     Column() {
+-      Column() {
+-        if (this.isSheet) {
+-          Column().height(Constants.SHEET_TITLE_H)
+-        } else {
+-          Column()
+-            .layoutWeight(1)
+-            .constraintSize({
+-              minHeight: Constants.MIN_HEIGHT_8
+-            })
+-        }
+-
+-        Image(this.icon)
+-          .width(Constants.ICON_WIDTH)
+-          .height(Constants.ICON_HEIGHT)
+-
++      Scroll() {
+         Column() {
+-          Text(this.vm.anonymousPhone)
+-            .fontSize($r('sys.float.Title_L'))
+-            .fontColor($r('sys.color.font_primary'))
+-            .fontWeight(FontWeight.Bold)
+-            .height(Constants.BTN_HEIGHT)
+-            .textAlign(TextAlign.Center)
+-            .maxLines(Constants.FONT_LINES);
++          if (this.isSheet) {
++            Column().height(Constants.SHEET_TITLE_H)
++          } else {
++            Column()
++              .layoutWeight(1)
++              .constraintSize({
++                minHeight: Constants.MIN_HEIGHT_8
++              })
++          }
+ 
+-          Text('华为账号绑定号码')
+-            .fontSize($r('sys.float.Body_S'))
+-            .fontColor($r('sys.color.font_secondary'))
+-            .fontWeight(FontWeight.Medium)
+-            .textAlign(TextAlign.Center)
+-            .maxLines(Constants.FONT_LINES)
+-            .margin({
+-              top: Constants.PADDING_S,
+-            });
+-        }
+-        .margin({
+-          top: Constants.CONTENT_MARGIN_TOP,
+-        });
++          Image(this.icon)
++            .width(Constants.ICON_WIDTH)
++            .height(Constants.ICON_HEIGHT)
+ 
+-        Column() {
+-          LoginWithHuaweiIDButton({
+-            params: {
+-              style: loginComponentManager.Style.BUTTON_CUSTOM,
+-              extraStyle: {
+-                buttonStyle: new loginComponentManager.ButtonStyle().loadingStyle({
+-                  show: true,
+-                }),
+-              },
+-              loginType: loginComponentManager.LoginType.QUICK_LOGIN,
+-              supportDarkMode: true,
+-              customButtonParams: {
+-                fontColor: loginComponentManager.FontColor.WHITE,
+-                backgroundColor: this.themeColor,
+-              },
+-            },
+-            controller: this.vm.controller,
++          Column() {
++            Text(this.vm.anonymousPhone)
++              .fontSize($r('sys.float.Title_L'))
++              .fontColor($r('sys.color.font_primary'))
++              .fontWeight(FontWeight.Bold)
++              .height(Constants.BTN_HEIGHT)
++              .textAlign(TextAlign.Center)
++              .maxLines(Constants.FONT_LINES);
++
++            Text('华为账号绑定号码')
++              .fontSize($r('sys.float.Body_S'))
++              .fontColor($r('sys.color.font_secondary'))
++              .fontWeight(FontWeight.Medium)
++              .textAlign(TextAlign.Center)
++              .maxLines(Constants.FONT_LINES)
++              .margin({
++                top: Constants.PADDING_S,
++              });
++          }
++          .margin({
++            top: Constants.CONTENT_MARGIN_TOP,
+           });
+-        }
+-        .height(Constants.BTN_HEIGHT)
+-        .width(Constants.FULL_PERCENT)
+-        .margin({
+-          top: Constants.SHEET_TITLE_H,
+-        });
+ 
+-        Button($r('app.string.login_in_other'))
+-          .width(Constants.FULL_PERCENT)
++          Column() {
++            LoginWithHuaweiIDButton({
++              params: {
++                style: loginComponentManager.Style.BUTTON_CUSTOM,
++                extraStyle: {
++                  buttonStyle: new loginComponentManager.ButtonStyle().loadingStyle({
++                    show: true,
++                  }),
++                },
++                loginType: loginComponentManager.LoginType.QUICK_LOGIN,
++                supportDarkMode: true,
++                customButtonParams: {
++                  fontColor: loginComponentManager.FontColor.WHITE,
++                  backgroundColor: this.themeColor,
++                },
++              },
++              controller: this.vm.controller,
++            });
++          }
+           .height(Constants.BTN_HEIGHT)
+-          .fontSize($r('sys.float.Body_L'))
+-          .fontColor($r('sys.color.font_primary'))
+-          .fontWeight(FontWeight.Medium)
+-          .backgroundColor($r('sys.color.comp_background_tertiary'))
++          .width(Constants.FULL_PERCENT)
++          .constraintSize({ maxWidth: Constants.MAX_WIDTH })
+           .margin({
+-            top: Constants.PADDING_M,
+-          })
+-          .onClick(() => {
+-            this.vm.resetParam()
+-            this.vm.phoneLogin(this.routerModule, {
+-              privacyContent: this.privacyContent,
+-              themeColor: this.themeColor,
+-              isSheet: this.isSheet,
+-              icon: this.icon,
+-              loginTypes: this.loginTypes,
+-              isPersistence: this.isPersistence,
+-            });
+-          })
++            top: Constants.SHEET_TITLE_H,
++          });
+ 
+-        Column().layoutWeight(3)
+-          .constraintSize({ minHeight: Constants.MIN_HEIGHT_12 })
++          Button($r('app.string.login_in_other'))
++            .width(Constants.FULL_PERCENT)
++            .height(Constants.BTN_HEIGHT)
++            .constraintSize({ maxWidth: Constants.MAX_WIDTH })
++            .fontSize($r('sys.float.Body_L'))
++            .fontColor($r('sys.color.font_primary'))
++            .fontWeight(FontWeight.Medium)
++            .backgroundColor($r('sys.color.comp_background_tertiary'))
++            .margin({
++              top: Constants.PADDING_M,
++            })
++            .onClick(() => {
++              this.vm.resetParam()
++              this.vm.phoneLogin(this.routerModule, {
++                privacyContent: this.privacyContent,
++                themeColor: this.themeColor,
++                isSheet: this.isSheet,
++                icon: this.icon,
++                loginTypes: this.loginTypes,
++                isPersistence: this.isPersistence,
++              });
++            })
++
++          Column().layoutWeight(3)
++            .constraintSize({ minHeight: Constants.MIN_HEIGHT_12 })
++        }
+       }
+       .layoutWeight(1)
++      .align(Alignment.Top)
++      .scrollBar(BarState.Off)
+ 
+       AgreePrivacyBox({
+         themeColor: this.themeColor,
+@@ -154,13 +160,15 @@ export struct AggregatedLogin {
+           top: Constants.PADDING_M,
+           bottom: Constants.PADDING_M,
+         })
++        .constraintSize({ maxWidth: Constants.MAX_WIDTH })
+         .height(Constants.SHEET_TITLE_H)
+         .width(Constants.FULL_PERCENT)
+     }
+     .alignItems(HorizontalAlign.Center)
+     .backgroundColor($r('sys.color.background_secondary'))
+     .padding({
+-      left: Constants.PADDING_L, right: Constants.PADDING_L
++      left: Constants.PADDING_L, right: Constants.PADDING_L,
++      bottom: this.isSheet ? Constants.WINDOW_BOTTOM_PADDING : Constants.ZERO
+     })
+     .layoutWeight(1)
+   }
+diff --git a/component/aggregated_login/src/main/ets/components/OtherLoginPage.ets b/component/aggregated_login/src/main/ets/components/OtherLoginPage.ets
+index 739173e..e1cd2b9 100644
+--- a/component/aggregated_login/src/main/ets/components/OtherLoginPage.ets
++++ b/component/aggregated_login/src/main/ets/components/OtherLoginPage.ets
+@@ -25,61 +25,46 @@ export struct OtherLoginPage {
+   @Builder
+   coreInfo() {
+     Column() {
+-      Column() {
+-        if (this.pageParam.isSheet) {
+-          Column().height(Constants.SHEET_TITLE_H)
+-        } else {
+-          Column()
+-            .layoutWeight(1)
+-            .constraintSize({
+-              minHeight: Constants.MIN_HEIGHT_8
+-            })
+-        }
++      Scroll() {
++        Column() {
++          if (this.pageParam.isSheet) {
++            Column().height(Constants.SHEET_TITLE_H)
++          } else {
++            Column()
++              .layoutWeight(1)
++              .constraintSize({
++                minHeight: Constants.MIN_HEIGHT_8
++              })
++          }
+ 
+-        Image(this.pageParam.icon)
+-          .width(Constants.ICON_WIDTH)
+-          .height(Constants.ICON_HEIGHT)
+-          .draggable(false)
+-          .copyOption(CopyOptions.None)
++          Image(this.pageParam.icon)
++            .width(Constants.ICON_WIDTH)
++            .height(Constants.ICON_HEIGHT)
++            .draggable(false)
++            .copyOption(CopyOptions.None)
+ 
+-        TextInput({
+-          placeholder: $r('app.string.mobile_number'),
+-          text: this.pageParam.isPersistence ? this.vm.persistenceData.phoneNumber : this.vm.phoneNum
+-        })
+-          .id('phone-input')
+-          .width(Constants.FULL_PERCENT)
+-          .height(Constants.INPUT_HEIGHT)
+-          .fontSize($r('sys.float.Body_L'))
+-          .fontColor($r('sys.color.font_primary'))
+-          .borderRadius($r('app.float.radius_20'))
+-          .backgroundColor($r('sys.color.background_primary'))
+-          .placeholderColor($r('sys.color.font_secondary'))
+-          .placeholderFont({ size: $r('sys.float.Body_L') })
+-          .onChange((value) => {
+-            if (this.pageParam.isPersistence) {
+-              this.vm.persistenceData.phoneNumber = value
+-            } else {
+-              this.vm.phoneNum = value
+-            }
+-          })
+-          .margin({ top: Constants.CONTENT_MARGIN_TOP })
+-          .padding({
+-            top: Constants.PADDING_INPUT,
+-            bottom: Constants.PADDING_INPUT,
+-            left: Constants.PADDING_L,
+-            right: Constants.PADDING_L
++          TextInput({
++            placeholder: $r('app.string.mobile_number'),
++            text: this.pageParam.isPersistence ? this.vm.persistenceData.phoneNumber : this.vm.phoneNum
+           })
+-
+-        Stack({ alignContent: Alignment.End }) {
+-          TextInput({ text: $$this.vm.verifyCode, placeholder: $r('app.string.verification_code') })
+-            .layoutWeight(1)
++            .id('phone-input')
++            .width(Constants.FULL_PERCENT)
++            .height(Constants.INPUT_HEIGHT)
++            .constraintSize({ maxWidth: Constants.MAX_WIDTH })
+             .fontSize($r('sys.float.Body_L'))
+             .fontColor($r('sys.color.font_primary'))
+-            .backgroundColor(Color.Transparent)
++            .borderRadius($r('app.float.radius_20'))
++            .backgroundColor($r('sys.color.background_primary'))
+             .placeholderColor($r('sys.color.font_secondary'))
+             .placeholderFont({ size: $r('sys.float.Body_L') })
+-            .onChange((value) => this.vm.verifyCode = value)
+-            .textAlign(TextAlign.Start)
++            .onChange((value) => {
++              if (this.pageParam.isPersistence) {
++                this.vm.persistenceData.phoneNumber = value
++              } else {
++                this.vm.phoneNum = value
++              }
++            })
++            .margin({ top: Constants.CONTENT_MARGIN_TOP })
+             .padding({
+               top: Constants.PADDING_INPUT,
+               bottom: Constants.PADDING_INPUT,
+@@ -87,105 +72,127 @@ export struct OtherLoginPage {
+               right: Constants.PADDING_L
+             })
+ 
+-          if (this.vm.verifyCodeTime === 0) {
+-            Text($r('app.string.obtaining_verification_code'))
+-              .fontColor($r('sys.color.warning'))
++          Stack({ alignContent: Alignment.End }) {
++            TextInput({ text: $$this.vm.verifyCode, placeholder: $r('app.string.verification_code') })
++              .layoutWeight(1)
+               .fontSize($r('sys.float.Body_L'))
+-              .textAlign(TextAlign.End)
+-              .padding({ right: Constants.PADDING_L })
+-              .onClick(() => {
+-                this.vm.getVerifyCode()
+-              });
+-          } else {
+-            Row() {
+-              Text(`${this.vm.verifyCodeTime}`)
+-                .fontColor($r('sys.color.warning'))
+-                .fontSize($r('sys.float.Body_L'))
+-              Text($r('app.string.obtain_in_seconds'))
++              .fontColor($r('sys.color.font_primary'))
++              .backgroundColor(Color.Transparent)
++              .placeholderColor($r('sys.color.font_secondary'))
++              .placeholderFont({ size: $r('sys.float.Body_L') })
++              .onChange((value) => this.vm.verifyCode = value)
++              .textAlign(TextAlign.Start)
++              .padding({
++                top: Constants.PADDING_INPUT,
++                bottom: Constants.PADDING_INPUT,
++                left: Constants.PADDING_L,
++                right: Constants.PADDING_L
++              })
++
++            if (this.vm.verifyCodeTime === 0) {
++              Text($r('app.string.obtaining_verification_code'))
+                 .fontColor($r('sys.color.warning'))
+                 .fontSize($r('sys.float.Body_L'))
++                .textAlign(TextAlign.End)
++                .padding({ right: Constants.PADDING_L })
++                .onClick(() => {
++                  this.vm.getVerifyCode()
++                });
++            } else {
++              Row() {
++                Text(`${this.vm.verifyCodeTime}`)
++                  .fontColor($r('sys.color.warning'))
++                  .fontSize($r('sys.float.Body_L'))
++                Text($r('app.string.obtain_in_seconds'))
++                  .fontColor($r('sys.color.warning'))
++                  .fontSize($r('sys.float.Body_L'))
++              }
++              .padding({ right: Constants.PADDING_L })
+             }
+-            .padding({ right: Constants.PADDING_L })
+           }
+-        }
+-        .id('verify-code-input')
+-        .width(Constants.FULL_PERCENT)
+-        .height(Constants.INPUT_HEIGHT)
+-        .backgroundColor($r('sys.color.background_primary'))
+-        .borderRadius($r('app.float.radius_20'))
+-        .margin({
+-          top: Constants.PADDING_M,
+-        })
+-
+-        Button() {
+-          Row({ space: Constants.SPACE_S }) {
+-            LoadingProgress()
+-              .width(Constants.BACK_WIDTH)
+-              .aspectRatio(1)
+-              .color($r('sys.color.icon_on_primary'))
+-              .visibility(this.vm.isLoading ? Visibility.Visible : Visibility.None)
+-            Text($r('app.string.login'))
+-              .fontSize($r('sys.float.Body_L'))
+-              .fontColor($r('sys.color.font_on_primary'))
+-              .fontWeight(FontWeight.Medium)
+-          }
+-        }
+-        .id('verify-login-button')
+-        .width(Constants.FULL_PERCENT)
+-        .height(Constants.BTN_HEIGHT)
+-        .backgroundColor(this.pageParam.themeColor)
+-        .fontColor($r('sys.color.font_on_primary'))
+-        .margin({ top: Constants.LOGIN_MARGIN_TOP })
+-        .enabled(!this.vm.isLoading)
+-        .onClick(() => {
+-          this.vm.clickLogInButton()
+-        })
++          .id('verify-code-input')
++          .width(Constants.FULL_PERCENT)
++          .height(Constants.INPUT_HEIGHT)
++          .constraintSize({ maxWidth: Constants.MAX_WIDTH })
++          .backgroundColor($r('sys.color.background_primary'))
++          .borderRadius($r('app.float.radius_20'))
++          .margin({
++            top: Constants.PADDING_M,
++          })
+ 
+-        Text($r('app.string.login_in_other'))
+-          .height(Constants.TEXT_HEIGHT)
+-          .fontSize($r('app.float.fontsize_12'))
+-          .fontColor($r('sys.color.font_tertiary'))
+-          .margin({ top: Constants.BTN_HEIGHT })
+-
+-        Row({ space: Constants.ROW_SPACE }) {
+-          Column({ space: Constants.PADDING_S }) {
+-            Image($r('app.media.huawei_count'))
+-              .width(Constants.IMAGE_WIDTH)
+-              .height(Constants.IMAGE_HEIGHT)
+-              .objectFit(ImageFit.Cover);
+-            Text($r('app.string.quickly_login'))
+-              .fontSize($r('app.float.fontsize_10'))
+-              .fontColor($r('sys.color.font_tertiary'))
++          Button() {
++            Row({ space: Constants.SPACE_S }) {
++              LoadingProgress()
++                .width(Constants.BACK_WIDTH)
++                .aspectRatio(1)
++                .color($r('sys.color.icon_on_primary'))
++                .visibility(this.vm.isLoading ? Visibility.Visible : Visibility.None)
++              Text($r('app.string.login'))
++                .fontSize($r('sys.float.Body_L'))
++                .fontColor($r('sys.color.font_on_primary'))
++                .fontWeight(FontWeight.Medium)
++            }
+           }
+-          .width(Constants.COMB_WIDTH)
++          .id('verify-login-button')
++          .width(Constants.FULL_PERCENT)
++          .height(Constants.BTN_HEIGHT)
++          .constraintSize({ maxWidth: Constants.MAX_WIDTH })
++          .backgroundColor(this.pageParam.themeColor)
++          .fontColor($r('sys.color.font_on_primary'))
++          .margin({ top: Constants.LOGIN_MARGIN_TOP })
++          .enabled(!this.vm.isLoading)
+           .onClick(() => {
+-            this.routerModule.pop();
++            this.vm.clickLogInButton()
+           })
+ 
+-          ForEach(this.pageParam.loginTypes, (item: Channel) => {
++          Text($r('app.string.login_in_other'))
++            .height(Constants.TEXT_HEIGHT)
++            .fontSize($r('app.float.fontsize_12'))
++            .fontColor($r('sys.color.font_tertiary'))
++            .margin({ top: Constants.BTN_HEIGHT })
++
++          Row({ space: Constants.ROW_SPACE }) {
+             Column({ space: Constants.PADDING_S }) {
+-              Image(item.icon)
++              Image($r('app.media.huawei_count'))
+                 .width(Constants.IMAGE_WIDTH)
+                 .height(Constants.IMAGE_HEIGHT)
+                 .objectFit(ImageFit.Cover);
+-              Text(item.name)
++              Text($r('app.string.quickly_login'))
+                 .fontSize($r('app.float.fontsize_10'))
+                 .fontColor($r('sys.color.font_tertiary'))
+             }
+             .width(Constants.COMB_WIDTH)
+             .onClick(() => {
+-              if (item.type === LoginType.WECHAT) {
+-                this.vm.wechatLogin(item.extraInfo);
+-              }
++              this.routerModule.pop();
+             })
+-          }, (item: Channel) => item.name)
+-        }
+-        .margin({ top: Constants.PADDING_M })
+ 
+-        Column().layoutWeight(3)
+-	  .constraintSize({ minHeight: Constants.MIN_HEIGHT_12 })
++            ForEach(this.pageParam.loginTypes, (item: Channel) => {
++              Column({ space: Constants.PADDING_S }) {
++                Image(item.icon)
++                  .width(Constants.IMAGE_WIDTH)
++                  .height(Constants.IMAGE_HEIGHT)
++                  .objectFit(ImageFit.Cover);
++                Text(item.name)
++                  .fontSize($r('app.float.fontsize_10'))
++                  .fontColor($r('sys.color.font_tertiary'))
++              }
++              .width(Constants.COMB_WIDTH)
++              .onClick(() => {
++                if (item.type === LoginType.WECHAT) {
++                  this.vm.wechatLogin(item.extraInfo);
++                }
++              })
++            }, (item: Channel) => item.name)
++          }
++          .margin({ top: Constants.PADDING_M })
++
++          Column().layoutWeight(3)
++            .constraintSize({ minHeight: Constants.MIN_HEIGHT_12 })
++        }
+       }
+       .layoutWeight(1)
++      .align(Alignment.Top)
++      .scrollBar(BarState.Off)
+ 
+       AgreePrivacyBox({
+         themeColor: this.pageParam.themeColor,
+@@ -193,6 +200,7 @@ export struct OtherLoginPage {
+         routerModule: this.routerModule,
+         isSheet: this.pageParam.isSheet,
+       })
++        .constraintSize({ maxWidth: Constants.MAX_WIDTH })
+         .height(Constants.SHEET_TITLE_H)
+         .width(Constants.FULL_PERCENT)
+         .padding({
+diff --git a/component/aggregated_login/src/main/ets/utils/LoginSheetUtils.ets b/component/aggregated_login/src/main/ets/utils/LoginSheetUtils.ets
+index 7c2a183..712b319 100644
+--- a/component/aggregated_login/src/main/ets/utils/LoginSheetUtils.ets
++++ b/component/aggregated_login/src/main/ets/utils/LoginSheetUtils.ets
+@@ -67,4 +67,4 @@ export class LoginSheetUtils {
+   static close() {
+     PopViewUtils.closeSheet()
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/component/aggregated_login/src/main/ets/views/AggregatedLoginPage.ets b/component/aggregated_login/src/main/ets/views/AggregatedLoginPage.ets
+index 0b7425d..833425b 100644
+--- a/component/aggregated_login/src/main/ets/views/AggregatedLoginPage.ets
++++ b/component/aggregated_login/src/main/ets/views/AggregatedLoginPage.ets
+@@ -42,4 +42,4 @@ struct AggregatedLoginPage {
+ @Builder
+ export function AggregatedLoginPageBuilder() {
+   AggregatedLoginPage()
+-}
++}
+\ No newline at end of file
+diff --git a/component/aggregated_login/src/main/ets/views/ProtocolWebView.ets b/component/aggregated_login/src/main/ets/views/ProtocolWebView.ets
+index 6dbb337..efded18 100644
+--- a/component/aggregated_login/src/main/ets/views/ProtocolWebView.ets
++++ b/component/aggregated_login/src/main/ets/views/ProtocolWebView.ets
+@@ -44,7 +44,12 @@ struct ProtocolWebView {
+           bottom: Constants.SPACE_S,
+         })
+ 
+-        this.coreInfo()
++        Scroll() {
++          this.coreInfo()
++        }
++        .layoutWeight(1)
++        .align(Alignment.Top)
++        .scrollBar(BarState.Off)
+       }
+       .padding({
+         left: Constants.PADDING_L,
+diff --git a/component/aggregated_login/src/main/module.json5 b/component/aggregated_login/src/main/module.json5
+index 88f1ac8..99e33a1 100644
+--- a/component/aggregated_login/src/main/module.json5
++++ b/component/aggregated_login/src/main/module.json5
+@@ -16,4 +16,4 @@
+       }
+     ]
+   }
+-}
++}
+\ No newline at end of file
